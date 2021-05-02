@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "baseUrl": ".",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "jsx": "react",
+        "skipDefaultLibCheck": true,
+        "noUnusedLocals": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "paths": {
+            "@/*": ["src/*"],
+            "@@/*": ["src/@tmp/*"]
+        }
+    },
+    "exclude": ["node_modules", "build", "dist"]
+}

@@ -1,0 +1,12 @@
+# dependencies
+node_modules
+yarn.lock
+
+# log
+log
+yarn-error.log
+
+# production
+/build
+/bin
+/dist

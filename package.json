@@ -1,0 +1,25 @@
+{
+	"name": "rli",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"dependencies": {
+		"@babel/core": "^7.13.16",
+		"@babel/plugin-transform-typescript": "^7.13.0",
+		"@babel/preset-react": "^7.13.13",
+		"@swallowj/logjs": "^2.0.3",
+		"@types/node": "^15.0.1",
+		"@types/react": "^17.0.4",
+		"@types/react-dom": "^17.0.3",
+		"@types/webpack": "^5.28.0",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"ts-node": "^9.1.1",
+		"typescript": "^4.2.4",
+		"webpack": "^5.36.1"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"start": "ts-node script/start"
+	}
+}
