@@ -10,3 +10,7 @@ yarn-error.log
 /build
 /bin
 /dist
+
+# local
+
+*local.env

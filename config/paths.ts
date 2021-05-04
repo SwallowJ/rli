@@ -21,11 +21,6 @@ const resolveModule = (filePath: string) => {
 
 export default {
     /**
-     * 环境变量文件
-     */
-    dotenv: resolveApp(".env"),
-
-    /**
      * build 输出目录
      */
     appBuild: resolveApp("build"),
