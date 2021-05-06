@@ -16,16 +16,29 @@ process.on("unhandledRejection", (err) => {
 
 import fs from "fs";
 import webpack from "webpack";
-import paths from "../config/paths";
+import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
-import { loadEnvironment } from "../config/env";
+import { HostUtils, loadEnvironment } from "./utils";
+import WebPackConfig from "./utils/webpack.config";
 
+Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "start" });
-
-// logger.Info(paths);
 
 try {
     loadEnvironment();
+    start();
 } catch (err) {
     console.log(err);
+}
+
+async function start() {
+    const HOST = process.env.HOST || "0.0.0.0";
+
+    const PORT = await HostUtils.choosePort();
+
+    /**
+     * webpack配置
+     */
+    const configuration = WebPackConfig.createConfig();
+    console.log(configuration);
 }

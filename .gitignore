@@ -12,5 +12,5 @@ yarn-error.log
 /dist
 
 # local
-
+config/config*.local.[j|t]s
 *local.env

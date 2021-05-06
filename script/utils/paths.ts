@@ -6,6 +6,7 @@
  */
 import fs from "fs";
 import path from "path";
+import config from "./config";
 
 export const moduleFileExtensions = ["js", "ts", "tsx", "json", "jsx"];
 
@@ -23,12 +24,12 @@ export default {
     /**
      * build 输出目录
      */
-    appBuild: resolveApp("build"),
+    appBuild: resolveApp(config.output || "build"),
 
     /**
      * web入口文件
      */
-    appIndexJs: resolveModule("src/@boot/index"),
+    appIndexJs: resolveModule(config.input || "src/index"),
 
     /**
      * 静态文件

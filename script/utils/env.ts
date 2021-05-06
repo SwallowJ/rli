@@ -50,6 +50,8 @@ const parse = (source: string) => {
  * 加载环境变量
  */
 export const loadEnvironment = () => {
+    logger.Info("开始加载环境变量");
+
     const { NODE_ENV } = process.env;
 
     if (!NODE_ENV) {
@@ -64,8 +66,11 @@ export const loadEnvironment = () => {
         .map((f) => path.resolve(process.cwd(), f))
         .reduce((obj, file) => {
             if (fs.existsSync(file)) {
+                logger.Debug(`开始解析文件: ${file}`);
                 const source = parse(fs.readFileSync(file, { encoding: "utf8" }));
                 obj = { ...obj, ...source };
+
+                logger.Debug(`解析完成: ${file} `);
             }
             return obj;
         }, Object({}));
@@ -73,4 +78,6 @@ export const loadEnvironment = () => {
     Object.entries(envObj).map(([key, value]) => {
         process.env[key] = value;
     });
+
+    logger.Success("环境变量加载完成");
 };
