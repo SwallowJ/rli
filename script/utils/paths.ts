@@ -8,12 +8,12 @@ import fs from "fs";
 import path from "path";
 import config from "./config";
 
-export const moduleFileExtensions = ["js", "ts", "tsx", "json", "jsx"];
+export const moduleFileExtensions = [".js", ".ts", ".tsx", ".json", ".jsx"];
 
 const resolveApp = (relativePath: string) => path.resolve(process.cwd(), relativePath);
 
 const resolveModule = (filePath: string) => {
-    const extension = moduleFileExtensions.find((ex) => fs.existsSync(resolveApp(`${filePath}.${ex}`)));
+    const extension = moduleFileExtensions.find((ex) => fs.existsSync(resolveApp(`${filePath}${ex}`)));
     if (extension) {
         return resolveApp(`${filePath}.${extension}`);
     }
@@ -49,4 +49,6 @@ export default {
      * js 配置文件
      */
     appJsConfig: resolveApp("jsconfig.json"),
+
+    publicPath: "/",
 };

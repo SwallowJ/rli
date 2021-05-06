@@ -1,5 +1,5 @@
 export declare namespace GlobalConfig {
-    type NODE_ENV = NodeJS.ProcessEnv["NODE_ENV"];
+    type NODE_ENV = "development" | "production";
 
     interface ConfigApi {
         /**
@@ -21,5 +21,7 @@ export declare namespace GlobalConfig {
          * 打包输出文件
          */
         output?: string;
+
+        sourcemap?: string | false;
     }
 }
