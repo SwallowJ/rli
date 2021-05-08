@@ -23,5 +23,7 @@ export declare namespace GlobalConfig {
         output?: string;
 
         sourcemap?: string | false;
+
+        favicon?: string;
     }
 }

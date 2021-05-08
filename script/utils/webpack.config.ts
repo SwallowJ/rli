@@ -7,9 +7,14 @@
 
 import config from "./config";
 import { Configuration } from "webpack";
+import { getLocalIdent } from "./cssLocalIdent";
 import { GlobalConfig } from "../../typing/config";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 import paths, { moduleFileExtensions } from "./paths";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+
+const postcssNormalize = require("postcss-normalize");
 
 class WebPackConfig {
     private static isEnvPro: boolean;
@@ -44,6 +49,8 @@ class WebPackConfig {
                     : "static/js/[name].bundle.js",
 
                 publicPath: paths.publicPath,
+
+                assetModuleFilename: "images/[hash][ext][query]",
             },
 
             /**
@@ -85,8 +92,153 @@ class WebPackConfig {
 
             module: {
                 strictExportPresence: false,
+                rules: [
+                    { parser: { requireEnsure: false } },
+                    {
+                        oneOf: [
+                            {
+                                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                                type: "asset/inline",
+                            },
+
+                            /**
+                             * js| ts 解析
+                             */
+                            {
+                                test: /\.(js|mjs|jsx|ts|tsx)$/,
+                                loader: require.resolve("babel-load"),
+                                options: {
+                                    cacheDirectory: true,
+                                    cacheCompression: false,
+                                    compact: this.isEnvPro,
+                                },
+                            },
+
+                            /**
+                             * 解析css
+                             */
+                            {
+                                test: /\.css$/,
+                                exclude: /\.module\.css$/,
+                                use: this._getStyleLoaders({ importLoaders: 1, sourceMap: this.isEnvPro }),
+                                sideEffects: true,
+                            },
+
+                            /**
+                             * 模块化解析css
+                             */
+                            {
+                                test: /\.module\.css$/,
+                                use: this._getStyleLoaders({
+                                    importLoaders: 1,
+                                    sourceMap: this.isEnvPro,
+                                    modules: { getLocalIdent },
+                                }),
+                                sideEffects: true,
+                            },
+
+                            /**
+                             * 解析less, 默认模块化
+                             */
+                            {
+                                test: /\.less$/,
+                                use: this._getStyleLoaders(
+                                    {
+                                        importLoaders: 1,
+                                        sourceMap: this.isEnvPro,
+                                        modules: { getLocalIdent },
+                                    },
+                                    "less-loader"
+                                ),
+                                sideEffects: true,
+                            },
+
+                            {
+                                loader: require.resolve("file-loader"),
+                                exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+                                options: {
+                                    name: "static/media/[name].[hash:8].[ext]",
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
+
+            plugins: [
+                new HtmlWebpackPlugin({
+                    inject: true,
+                    template: paths.appHtml,
+                    ...(this.isEnvPro
+                        ? {
+                              minify: {
+                                  removeComments: true,
+                                  collapseWhitespace: true,
+                                  removeRedundantAttributes: true,
+                                  useShortDoctype: true,
+                                  removeEmptyAttributes: true,
+                                  removeStyleLinkTypeAttributes: true,
+                                  keepClosingSlash: true,
+                                  minifyJS: true,
+                                  minifyCSS: true,
+                                  minifyURLs: true,
+                              },
+                          }
+                        : {}),
+                    favicon: paths.favicon,
+                }),
+            ],
         };
+    }
+
+    private static _getStyleLoaders(options: Object, preProcessor?: string) {
+        const loaders: any = [
+            this.isEnvDev && require.resolve("style-loader"),
+            this.isEnvPro && {
+                loader: MiniCssExtractPlugin.loader,
+                options: paths.publicPath.startsWith(".") ? { publicPath: "../../" } : {},
+            },
+            {
+                loader: require.resolve("css-loader"),
+                options,
+            },
+            {
+                loader: require.resolve("postcss-loader"),
+                options: {
+                    ident: "postcss",
+                    plugins: () => [
+                        require("postcss-flexbugs-fixes"),
+                        require("postcss-preset-env")({
+                            autoprefixer: {
+                                flexbox: "no-2009",
+                            },
+                            stage: 3,
+                        }),
+                        postcssNormalize(),
+                    ],
+                    sourceMap: this.isEnvPro,
+                },
+            },
+        ].filter(Boolean);
+
+        if (preProcessor) {
+            loaders.push(
+                {
+                    loader: require.resolve("resolve-url-loader"),
+                    options: {
+                        sourceMap: this.isEnvPro,
+                    },
+                },
+                {
+                    loader: require.resolve(preProcessor),
+                    options: {
+                        sourceMap: true,
+                    },
+                }
+            );
+        }
+
+        return loaders;
     }
 }
 
