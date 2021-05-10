@@ -6,13 +6,15 @@
  */
 
 import config from "./config";
-import { Configuration } from "webpack";
 import { getLocalIdent } from "./cssLocalIdent";
+import webpack, { Configuration } from "webpack";
 import { GlobalConfig } from "../../typing/config";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+// import { WebpackManifestPlugin } from "webpack-manifest-plugin";
 import paths, { moduleFileExtensions } from "./paths";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 const postcssNormalize = require("postcss-normalize");
 
@@ -43,7 +45,7 @@ class WebPackConfig {
             output: {
                 path: paths.appBuild,
                 pathinfo: this.isEnvDev,
-                filename: this.isEnvPro ? "static/js/[name].[contenthash:8].js" : "static/js/bundle.js",
+                filename: this.isEnvPro ? "static/js/[name].[contenthash:8].js" : "static/js/[name].bundle.js",
                 chunkFilename: this.isEnvPro
                     ? "static/js/[name].[contenthash:8].chunk.js"
                     : "static/js/[name].bundle.js",
@@ -106,7 +108,7 @@ class WebPackConfig {
                              */
                             {
                                 test: /\.(js|mjs|jsx|ts|tsx)$/,
-                                loader: require.resolve("babel-load"),
+                                loader: require.resolve("babel-loader"),
                                 options: {
                                     cacheDirectory: true,
                                     cacheCompression: false,
@@ -187,7 +189,42 @@ class WebPackConfig {
                         : {}),
                     favicon: paths.favicon,
                 }),
+
+                new webpack.DefinePlugin({
+                    PRODUCTION: JSON.stringify(this.isEnvPro),
+                    VERSION: JSON.stringify("5fa3b9"),
+                    BROWSER_SUPPORTS_HTML5: true,
+                    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+                }),
+
+                /**
+                 * 热更新
+                 */
+                this.isEnvDev ? new webpack.HotModuleReplacementPlugin() : this.__emptyPlugin,
+
+                this.isEnvPro
+                    ? new MiniCssExtractPlugin({
+                          filename: "static/css/[name].[contenthash:8].css",
+                          chunkFilename: "static/css/[name].[contenthash:8].css",
+                      })
+                    : this.__emptyPlugin,
+
+                new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
+
+                /**
+                 * 在单独的进程上进行Typescript类型检查
+                 * TODO 待添加es-lint 检查
+                 */
+                new ForkTsCheckerWebpackPlugin({
+                    typescript: config.typescript,
+                    async: this.isEnvDev,
+                }),
             ],
+
+            /**
+             * TODO
+             */
+            performance: false,
         };
     }
 
@@ -240,6 +277,8 @@ class WebPackConfig {
 
         return loaders;
     }
+
+    private static __emptyPlugin() {}
 }
 
 export default WebPackConfig;

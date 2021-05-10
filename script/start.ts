@@ -15,11 +15,13 @@ process.on("unhandledRejection", (err) => {
 });
 
 import fs from "fs";
-import webpack from "webpack";
+import webpack, { Compiler } from "webpack";
 import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
-import { HostUtils, loadEnvironment } from "./utils";
 import WebPackConfig from "./utils/webpack.config";
+import config from "./utils/config";
+import WebpackDevServer from "webpack-dev-server";
+import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./utils";
 
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "start" });
@@ -28,7 +30,7 @@ try {
     loadEnvironment();
     start();
 } catch (err) {
-    console.log(err);
+    logger.Error(err);
 }
 
 async function start() {
@@ -40,5 +42,35 @@ async function start() {
      * webpack配置
      */
     const configuration = WebPackConfig.createConfig();
-    console.log(configuration);
+    logger.Info("webpack 配置加载完成");
+
+    const compiler = createCompiler(configuration);
+
+    const serverConfiguration = DevserverConfig.createConfig();
+
+    /**
+     * TODO
+     */
+    //@ts-ignore
+    const server = new WebpackDevServer(compiler, serverConfiguration);
+
+    server.listen(PORT, HOST, (err) => {
+        if (err) {
+            logger.Error(err);
+            return;
+        }
+
+        Logger.clear();
+        logger.Info("服务器启动中...");
+    });
+
+    process.on("SIGINT", () => {
+        server.close();
+        process.exit();
+    });
+
+    process.on("SIGINT", () => {
+        server.close();
+        process.exit();
+    });
 }

@@ -21,6 +21,14 @@ const resolveConfig = () => {
         throw new Error("缺少环境变量 NODE_ENV");
     }
 
+    const initObj: GlobalConfig.ConfigApi = {
+        typescript: true,
+        disableHostCheck: false,
+        sockHost: "rli.test",
+        sockPath: "/sockjs-node",
+        host: "0.0.0.0",
+    };
+
     const res = ["config", "config.local", `config.${NODE_ENV}`, `config.${NODE_ENV}.local`]
         .map((f) => path.resolve(process.cwd(), "./config", f))
         .reduce<GlobalConfig.ConfigApi>((o, f) => {
@@ -32,7 +40,7 @@ const resolveConfig = () => {
                 logger.FailedLine(`文件 ${f}.js|ts 不存在`);
                 return o;
             }
-        }, {});
+        }, initObj);
 
     logger.lineOver();
     logger.Success("配置加载完成");

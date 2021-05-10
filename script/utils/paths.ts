@@ -15,7 +15,7 @@ const resolveApp = (relativePath: string) => path.resolve(process.cwd(), relativ
 const resolveModule = (filePath: string) => {
     const extension = moduleFileExtensions.find((ex) => fs.existsSync(resolveApp(`${filePath}${ex}`)));
     if (extension) {
-        return resolveApp(`${filePath}.${extension}`);
+        return resolveApp(`${filePath}${extension}`);
     }
     return resolveApp(`${filePath}.js`);
 };
