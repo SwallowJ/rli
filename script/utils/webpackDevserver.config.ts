@@ -10,7 +10,9 @@ import config from "./config";
 import { Configuration } from "webpack-dev-server";
 
 export class DevserverConfig {
-    static createConfig() {}
+    static createConfig() {
+        return this.__config();
+    }
 
     private static __config(): Configuration {
         return {

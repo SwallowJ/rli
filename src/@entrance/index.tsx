@@ -1,5 +1,8 @@
-const el = document.getElementById("root")!;
+import React from "react";
+import ReactDOM from "react-dom";
 
-el.innerHTML = "Hello Worldss";
+ReactDOM.render(
+    <h1>{"hello Worlds"}</h1>,
 
-el.appendChild(document.createElement("h1", { is: "hello" }));
+    document.getElementById("root")
+);
