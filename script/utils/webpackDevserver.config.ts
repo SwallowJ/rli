@@ -47,7 +47,7 @@ export class DevserverConfig {
             /**
              * 注入客户端
              */
-            injectClient: false,
+            injectClient: true,
 
             sockHost: config.sockHost,
             sockPath: config.sockPath,

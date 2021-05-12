@@ -25,7 +25,7 @@ const resolveConfig = () => {
     const initObj: GlobalConfig.ConfigApi = {
         typescript: true,
         disableHostCheck: false,
-        sockHost: "rli.test",
+        sockHost: address.ip(),
         sockPath: "/sockjs-node",
         host: address.ip(),
         appName: require(path.resolve(process.cwd(), "package.json")).name,
