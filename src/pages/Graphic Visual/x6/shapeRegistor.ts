@@ -1,4 +1,4 @@
-import { Shape } from "@antv/x6";
+import { Graph } from "@antv/x6";
 
 const createPort = (position: "left" | "right" | "top" | "bottom" | "line" | "ellipse") => ({
     position,
@@ -8,15 +8,25 @@ const createPort = (position: "left" | "right" | "top" | "bottom" | "line" | "el
 });
 
 /**
- * 注册自定义节点
+ * 注册自定义节点/边
  */
 export const register = () => {
-    Shape.Rect.define({
-        shape: "base-Rect",
-        width: 80,
+    Graph.registerNode("base-rect-node", {
+        inherit: "rect",
+        width: 100,
         height: 40,
-        label: "新增节点",
         zIndex: 2,
+        data: {},
+        attrs: {
+            body: {
+                fill: "#ffffff",
+                stroke: "#000",
+            },
+            label: {
+                fill: "#353535",
+                fontSize: 13,
+            },
+        },
         ports: {
             groups: {
                 groupl: createPort("left"),
@@ -31,6 +41,49 @@ export const register = () => {
                 { id: "portt", group: "groupt" },
                 { id: "portb", group: "groupb" },
             ],
+        },
+    });
+
+    Graph.registerNode("base-ellipse-node", {
+        inherit: "ellipse",
+        width: 100,
+        height: 60,
+        zIndex: 2,
+        data: {},
+        attrs: {
+            body: {
+                fill: "pink",
+                stroke: "#000",
+            },
+            label: {
+                fill: "#353535",
+                fontSize: 13,
+            },
+        },
+        ports: {
+            groups: {
+                groupl: createPort("left"),
+                groupr: createPort("right"),
+                groupt: createPort("top"),
+                groupb: createPort("bottom"),
+            },
+
+            items: [
+                { id: "portl", group: "groupl" },
+                { id: "portr", group: "groupr" },
+                { id: "portt", group: "groupt" },
+                { id: "portb", group: "groupb" },
+            ],
+        },
+    });
+
+    Graph.registerEdge("base-line-edge", {
+        inherit: "edge",
+        label: "",
+        attrs: {
+            line: {
+                stroke: "#353535",
+            },
         },
     });
 };

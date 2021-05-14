@@ -1,4 +1,14 @@
 {
     "presets": ["@babel/preset-typescript", "@babel/preset-react"],
-    "plugins": [["@babel/plugin-transform-typescript", { "allowNamespaces": true }]]
+    "plugins": [
+        ["@babel/plugin-transform-typescript", { "allowNamespaces": true }],
+        [
+            "import",
+            {
+                "libraryName": "antd",
+                "libraryDirectory": "es",
+                "style": "css"
+            }
+        ]
+    ]
 }
