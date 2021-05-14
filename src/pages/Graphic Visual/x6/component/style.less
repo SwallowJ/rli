@@ -1,0 +1,43 @@
+.workbench {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .head {
+        padding: 12px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ccc;
+        height: 80px;
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #353535;
+        }
+
+        span {
+            font-size: 13px;
+            color: #757575;
+        }
+    }
+
+    .content {
+        flex: 1;
+        padding: 12px 10px;
+        min-height: 300px;
+        overflow: auto;
+    }
+
+    .footer {
+        height: 80px;
+        padding: 12px 10px;
+        border-top: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+}

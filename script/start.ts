@@ -14,12 +14,8 @@ process.on("unhandledRejection", (err) => {
     throw err;
 });
 
-import fs from "fs";
-import webpack, { Compiler } from "webpack";
-import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
 import WebPackConfig from "./utils/webpack.config";
-import config from "./utils/config";
 import WebpackDevServer from "webpack-dev-server";
 import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./utils";
 
@@ -31,6 +27,7 @@ try {
     start();
 } catch (err) {
     logger.Error(err);
+    process.exit(1);
 }
 
 async function start() {

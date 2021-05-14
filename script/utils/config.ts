@@ -6,6 +6,7 @@
  */
 
 import path from "path";
+import address from "address";
 import Logger from "@swallowj/logjs";
 import { GlobalConfig } from "../../typing/config";
 
@@ -24,9 +25,10 @@ const resolveConfig = () => {
     const initObj: GlobalConfig.ConfigApi = {
         typescript: true,
         disableHostCheck: false,
-        sockHost: "rli.test",
+        sockHost: address.ip(),
         sockPath: "/sockjs-node",
-        host: "0.0.0.0",
+        host: address.ip(),
+        appName: require(path.resolve(process.cwd(), "package.json")).name,
     };
 
     const res = ["config", "config.local", `config.${NODE_ENV}`, `config.${NODE_ENV}.local`]

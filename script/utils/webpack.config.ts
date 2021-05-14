@@ -242,17 +242,18 @@ class WebPackConfig {
             {
                 loader: require.resolve("postcss-loader"),
                 options: {
-                    ident: "postcss",
-                    plugins: () => [
-                        require("postcss-flexbugs-fixes"),
-                        require("postcss-preset-env")({
-                            autoprefixer: {
-                                flexbox: "no-2009",
-                            },
-                            stage: 3,
-                        }),
-                        postcssNormalize(),
-                    ],
+                    postcssOptions: {
+                        plugins: [
+                            require("postcss-flexbugs-fixes"),
+                            require("postcss-preset-env")({
+                                autoprefixer: {
+                                    flexbox: "no-2009",
+                                },
+                                stage: 3,
+                            }),
+                            postcssNormalize(),
+                        ],
+                    },
                     sourceMap: this.isEnvPro,
                 },
             },

@@ -3,10 +3,19 @@ export declare namespace GlobalConfig {
 
     interface ConfigApi {
         /**
+         * app名称
+         * default=package.json[name]
+         */
+        appName?: string;
+
+        /**
          * 启动端口号
          */
         port?: number;
 
+        /**
+         * 主机地址
+         */
         host?: string;
 
         /**
