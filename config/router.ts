@@ -3,7 +3,7 @@ import { RouterApi } from "../script/utils/tools";
 export default RouterApi([
     {
         path: "/graphVisual",
-        routes: [
+        routers: [
             {
                 path: "/graphVisual/x6",
                 component: "@/pages/GraphicVisual/x6",
@@ -12,7 +12,7 @@ export default RouterApi([
     },
     {
         path: "/System",
-        routes: [
+        routers: [
             {
                 path: "/System/role",
                 component: "@/pages/System/role",
@@ -22,5 +22,9 @@ export default RouterApi([
                 component: "@/pages/System/user",
             },
         ],
+    },
+    {
+        path: "/",
+        redirect: "/System/user",
     },
 ]);

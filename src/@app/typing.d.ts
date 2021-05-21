@@ -19,7 +19,7 @@ declare namespace Aplication {
         /**
          * 子路由
          */
-        routes?: RouterApi[];
+        routers?: router[];
 
         /**
          * 名称
@@ -36,4 +36,6 @@ declare namespace Aplication {
          */
         data?: Object;
     }
+
+    type routers = router[];
 }

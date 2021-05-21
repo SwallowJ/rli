@@ -23,16 +23,6 @@ import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./u
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "start" });
 
-try {
-    // loadEnvironment();
-    loadRouter();
-    console.log("=========");
-    // start();
-} catch (err) {
-    logger.Error(err);
-    process.exit(1);
-}
-
 async function start() {
     const HOST = process.env.HOST || "0.0.0.0";
 
@@ -73,4 +63,13 @@ async function start() {
         server.close();
         process.exit();
     });
+}
+
+try {
+    loadEnvironment();
+    loadRouter();
+    start();
+} catch (err) {
+    logger.Error(err);
+    process.exit(1);
 }

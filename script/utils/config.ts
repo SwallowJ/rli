@@ -145,8 +145,8 @@ export const loadRouter = () => {
 
                 Object.entries(router).forEach(([key, value]) => {
                     switch (key) {
-                        case "routes":
-                            writeStream?.write(`${t2}routes: [\n`);
+                        case "routers":
+                            writeStream?.write(`${t2}${key}: [\n`);
                             parseRouter(value, t + 2);
                             writeStream?.write(`${t2}],\n`);
                             return;

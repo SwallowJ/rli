@@ -83,7 +83,7 @@ export declare namespace GlobalConfig {
         /**
          * 子路由
          */
-        routes?: RouterApi[];
+        routers?: RouterApi[];
 
         /**
          * 名称
