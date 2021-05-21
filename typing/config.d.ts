@@ -56,4 +56,60 @@ export declare namespace GlobalConfig {
         sockPath?: string;
         sockPort?: number | string;
     }
+
+    type dataType = ObjectCode | number | string | boolean | Array<dataType>;
+
+    interface ObjectCode {
+        [key: string]: dataType;
+    }
+
+    interface RouterApi {
+        /**
+         * 路径
+         */
+        path: string;
+
+        /**
+         * 组件
+         */
+        component?: any;
+        push?: boolean;
+
+        /**
+         * 重定向地址
+         */
+        redirect?: string;
+
+        /**
+         * 子路由
+         */
+        routes?: RouterApi[];
+
+        /**
+         * 名称
+         */
+        name?: string;
+
+        /**
+         * 图标
+         */
+        icon?: string;
+
+        /**
+         * 额外的数据
+         */
+        data?: dataType;
+    }
+
+    interface loadFileProps<T = {}> {
+        /**
+         * 需要加载的文件名
+         */
+        filename: string;
+
+        /**
+         * 初始值
+         */
+        init: T;
+    }
 }

@@ -7,6 +7,6 @@
 import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "@/pages/Graphic Visual/x6/index";
+import App from "@/pages/Test/index";
 
 ReactDOM.render(<App />, document.getElementById("root"));

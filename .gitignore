@@ -13,7 +13,11 @@ yarn-error.log
 
 # local
 config/config*.local.[j | t]s
+config/router*.local.[j | t]s
 *local.env
 
 # test
 /test
+
+# temp
+*/@temp
