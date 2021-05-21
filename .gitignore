@@ -12,8 +12,7 @@ yarn-error.log
 /dist
 
 # local
-config/config*.local.[j | t]s
-config/router*.local.[j | t]s
+config/*.local.[j | t]s
 *local.env
 
 # test
