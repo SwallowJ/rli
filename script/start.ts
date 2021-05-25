@@ -15,7 +15,7 @@ process.on("unhandledRejection", (err) => {
 });
 
 import Logger from "@swallowj/logjs";
-import { loadRouter } from "./utils/config";
+import { loadRouter, loadModel } from "./utils/config";
 import WebPackConfig from "./utils/webpack.config";
 import WebpackDevServer from "webpack-dev-server";
 import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./utils";
@@ -68,6 +68,7 @@ async function start() {
 try {
     loadEnvironment();
     loadRouter();
+    loadModel();
     start();
 } catch (err) {
     logger.Error(err);

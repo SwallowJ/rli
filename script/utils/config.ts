@@ -8,12 +8,18 @@
 import fs from "fs";
 import path from "path";
 import dayjs from "dayjs";
+import crypto from "crypto";
 import address from "address";
 import { loadFile } from "./tools";
 import Logger from "@swallowj/logjs";
 import { GlobalConfig } from "../../typing/config";
 
 const logger = Logger.New({ name: "config" });
+
+const __Reg_Model = /(namespace:)(\S|\s)*(state:)(\S|\s)*(effects:)(\S|\s)*(reducers:)(\S|\s)*(export default).*/;
+
+const __Src_Path = path.resolve(process.cwd(), "src");
+const __Temp_Path = path.resolve(process.cwd(), "@temp");
 
 const __checkEnv = () => {
     const { NODE_ENV } = process.env;
@@ -52,18 +58,19 @@ const resolveConfig = (function () {
  * 零时文件目
  */
 const tempPath = (function () {
-    const tempPath = path.resolve(process.cwd(), "src", "@temp");
-    if (fs.existsSync(tempPath)) {
-        if (fs.statSync(tempPath).isFile()) {
-            fs.unlinkSync(tempPath);
-            fs.mkdirSync(tempPath);
+    // const tempPath = paths.tempPath;
+    if (fs.existsSync(__Temp_Path)) {
+        if (fs.statSync(__Temp_Path).isFile()) {
+            fs.unlinkSync(__Temp_Path);
+            fs.mkdirSync(__Temp_Path);
         }
     } else {
-        fs.mkdirSync(tempPath);
+        fs.mkdirSync(__Temp_Path);
     }
-
-    return tempPath;
+    return __Temp_Path;
 })();
+
+const resolvePath = (...args: string[]) => args.reduce((a, p) => (p.startsWith(a) ? p : a + p), "");
 
 /**
  *路由加载
@@ -109,7 +116,7 @@ export const loadRouter = () => {
         const parseData = (data: GlobalConfig.dataType, t: number) => {
             const t1 = new Array(t).fill("\t").join("");
             const t2 = new Array(t + 1).fill("\t").join("");
-            console.log(data);
+
             switch (Object.prototype.toString.call(data)) {
                 case "[object String]":
                     writeStream?.write(`"${data}",`);
@@ -136,18 +143,19 @@ export const loadRouter = () => {
             }
         };
 
-        const parseRouter = (routers: GlobalConfig.RouterApi[], t = 1) => {
+        const parseRouter = (routers: GlobalConfig.RouterApi[], t = 1, rootPath = "/") => {
             const t1 = new Array(t).fill("\t").join("");
             const t2 = new Array(t + 1).fill("\t").join("");
 
             routers.forEach((router) => {
+                const currentPath = resolvePath(rootPath, router.path);
                 writeStream?.write(`${t1}{\n`);
 
                 Object.entries(router).forEach(([key, value]) => {
                     switch (key) {
                         case "routers":
                             writeStream?.write(`${t2}${key}: [\n`);
-                            parseRouter(value, t + 2);
+                            parseRouter(value, t + 2, currentPath);
                             writeStream?.write(`${t2}],\n`);
                             return;
 
@@ -159,7 +167,9 @@ export const loadRouter = () => {
                             parseData(value, t + 1);
                             writeStream?.write("\n");
                             return;
-
+                        case "path":
+                            writeStream?.write(`${t2}${key}: "${currentPath}",\n`);
+                            return;
                         default:
                             writeStream?.write(`${t2}${key}: "${value}",\n`);
                             return;
@@ -173,6 +183,64 @@ export const loadRouter = () => {
         parseRouter(routers);
 
         writeStream.write(`];\n\nexport default routers;\n`);
+    } catch (err) {
+        logger.Error(err);
+        process.exit(1);
+    } finally {
+        writeStream?.close();
+    }
+};
+
+const __scanModels = (dir: string, writeStream: fs.WriteStream, isModel: boolean) => {
+    fs.readdirSync(dir).forEach((f) => {
+        const p = path.resolve(dir, f);
+
+        if (fs.statSync(p).isFile()) {
+            if (!/.[t|j]sx?$/.test(path.extname(p))) {
+                return;
+            }
+
+            logger.CommonLine(`扫描目录 ${path.relative(__Src_Path, p)}`);
+
+            const name = f.substring(0, f.lastIndexOf("."));
+
+            if (isModel && name != "model") {
+                logger.lineOver();
+                return;
+            }
+
+            const content = fs.readFileSync(p, { encoding: "utf8" });
+
+            if (__Reg_Model.test(content)) {
+                const hash8 = crypto.createHash("sha256").update(content).copy().digest("hex").slice(0, 8);
+                writeStream.write(`export * as ${name}_${hash8} from "${path.resolve(dir, name)}";\n`);
+                logger.SuccessLine(`文件 ${path.relative(__Src_Path, p)} 加载完成`);
+            }
+        } else {
+            __scanModels(p, writeStream, isModel);
+        }
+    });
+};
+
+/**
+ * 加载model
+ * 集成redux
+ */
+export const loadModel = () => {
+    let writeStream: fs.WriteStream | null = null;
+    try {
+        writeStream = fs.createWriteStream(path.resolve(tempPath, "models.ts"));
+
+        const __Model_Path = path.resolve(__Src_Path, "models");
+        const __Page_Path = path.resolve(__Src_Path, "pages");
+
+        fs.existsSync(__Model_Path) &&
+            fs.statSync(__Model_Path).isDirectory() &&
+            __scanModels(__Model_Path, writeStream, false);
+
+        fs.existsSync(__Page_Path) &&
+            fs.statSync(__Page_Path).isDirectory() &&
+            __scanModels(__Page_Path, writeStream, true);
     } catch (err) {
         logger.Error(err);
         process.exit(1);

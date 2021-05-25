@@ -9,5 +9,12 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import AppRouter from "./router";
+import store from "./reducer";
+import { Provider } from "react-redux";
 
-ReactDOM.render(<AppRouter />, document.getElementById("root"));
+ReactDOM.render(
+    <Provider store={store}>
+        <AppRouter />
+    </Provider>,
+    document.getElementById("root")
+);

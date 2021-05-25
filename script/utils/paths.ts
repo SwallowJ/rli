@@ -24,12 +24,12 @@ export default {
     /**
      * build 输出目录
      */
-    appBuild: resolveApp(config.output ?? "build"),
+    appBuild: resolveApp(config?.output ?? "build"),
 
     /**
      * web入口文件
      */
-    appIndexJs: resolveModule(config.input ?? "src/index"),
+    appIndexJs: resolveModule(config?.input ?? "src/index"),
 
     /**
      * 静态文件
@@ -54,5 +54,7 @@ export default {
 
     appHtml: resolveApp("public/index.html"),
 
-    favicon: resolveApp(config.favicon ?? "public/favicon.ico"),
+    favicon: resolveApp(config?.favicon ?? "public/favicon.ico"),
+
+    tempPath: resolveApp("src/@temp"),
 };
