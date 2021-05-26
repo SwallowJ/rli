@@ -19,7 +19,7 @@ const logger = Logger.New({ name: "config" });
 const __Reg_Model = /(namespace:)(\S|\s)*(state:)(\S|\s)*(effects:)(\S|\s)*(reducers:)(\S|\s)*(export default).*/;
 
 const __Src_Path = path.resolve(process.cwd(), "src");
-const __Temp_Path = path.resolve(process.cwd(), "@temp");
+const __Temp_Path = path.resolve(process.cwd(), "src/@temp");
 
 const __checkEnv = () => {
     const { NODE_ENV } = process.env;
@@ -58,7 +58,6 @@ const resolveConfig = (function () {
  * 零时文件目
  */
 const tempPath = (function () {
-    // const tempPath = paths.tempPath;
     if (fs.existsSync(__Temp_Path)) {
         if (fs.statSync(__Temp_Path).isFile()) {
             fs.unlinkSync(__Temp_Path);

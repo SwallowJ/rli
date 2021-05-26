@@ -1,5 +1,5 @@
 /**
- * Author        jiangfh
+ * Author        feihongjiang
  * Date          2021-04-29
  * email         feihongjiang@caih.com
  * Description   开发环境启动项目
@@ -15,17 +15,18 @@ process.on("unhandledRejection", (err) => {
 });
 
 import Logger from "@swallowj/logjs";
-import { loadRouter, loadModel } from "./utils/config";
-import WebPackConfig from "./utils/webpack.config";
 import WebpackDevServer from "webpack-dev-server";
+import WebPackConfig from "./utils/webpack.config";
+import { loadRouter, loadModel } from "./utils/config";
 import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./utils";
 
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "start" });
 
 async function start() {
-    const HOST = process.env.HOST || "0.0.0.0";
+    logger.Info("项目启动中...");
 
+    const HOST = process.env.HOST || "0.0.0.0";
     const PORT = await HostUtils.choosePort();
 
     /**

@@ -28,7 +28,6 @@
 		"@types/webpack-dev-server": "^3.11.4",
 		"@types/webpack-manifest-plugin": "^3.0.4",
 		"address": "^1.1.2",
-		"antd": "^4.15.5",
 		"babel-loader": "^8.2.2",
 		"babel-plugin-import": "^1.13.3",
 		"css-loader": "^5.2.4",
@@ -58,8 +57,13 @@
 		"webpack-dev-server": "^3.11.2",
 		"webpack-manifest-plugin": "^3.1.1"
 	},
-	"devDependencies": {},
+	"devDependencies": {
+		"antd": "^4.15.5",
+		"http-server": "^0.12.3"
+	},
 	"scripts": {
-		"start": "ts-node script/start"
+		"start": "ts-node script/start",
+		"build": "ts-node script/build",
+		"server": "http-server ./build"
 	}
 }

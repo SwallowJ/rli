@@ -17,6 +17,7 @@ import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 const postcssNormalize = require("postcss-normalize");
+const TerserPlugin = require("terser-webpack-plugin");
 
 class WebPackConfig {
     private static isEnvPro: boolean;
@@ -71,9 +72,18 @@ class WebPackConfig {
                             ],
                         },
                     }),
+
+                    new TerserPlugin(),
                 ],
 
                 splitChunks: {
+                    cacheGroups: {
+                        vendor: {
+                            test: /[\\/]node_modules[\\/]/,
+                            name: "vendors",
+                            chunks: "all",
+                        },
+                    },
                     chunks: "all",
                     name: false,
                 },
