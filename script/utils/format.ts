@@ -8,7 +8,8 @@
 import dayjs from "dayjs";
 import config from "./config";
 import Logger from "@swallowj/logjs";
-import { StatsCompilation } from "webpack";
+import { GlobalConfig } from "../../typing/config";
+import webpack, { StatsCompilation } from "webpack";
 
 export class FormatUtils {
     static logger = Logger.New({ name: "compiler" });
@@ -35,5 +36,27 @@ export class FormatUtils {
     static durationTime(startTime: Date, endTime: Date) {
         const str = String(endTime.getTime() - startTime.getTime());
         return `${str.slice(0, -3)}.${str.slice(-3)}s`;
+    }
+
+    static analysis(runTime: number, stats?: webpack.Stats) {
+        if (!stats) {
+            return;
+        }
+
+        const res = stats.toJson();
+        console.log(res.env);
+        console.log(res.name);
+        console.log(res.hash);
+        console.log(res.version);
+        console.log(res.time);
+
+        const result: GlobalConfig.resultProps = {
+            runTime,
+            compileTime: res.time,
+        };
+
+        console.log("=========================");
+        console.log(result);
+        console.log();
     }
 }

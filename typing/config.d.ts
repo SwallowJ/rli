@@ -112,4 +112,16 @@ export declare namespace GlobalConfig {
          */
         init: T;
     }
+
+    interface resultProps {
+        /**
+         * 程序运行时间
+         */
+        runTime: number;
+
+        /**
+         * 编译时间
+         */
+        compileTime?: number;
+    }
 }
