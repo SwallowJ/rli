@@ -31,4 +31,9 @@ export class FormatUtils {
         console.log(`Development build is not optimized.`);
         console.log(`\x1B[3m\x1B[90m${dayjs().format("YYYY-MM-DD HH:mm:ss.SSS")}\x1B[0m`);
     }
+
+    static durationTime(startTime: Date, endTime: Date) {
+        const str = String(endTime.getTime() - startTime.getTime());
+        return `${str.slice(0, -3)}.${str.slice(-3)}s`;
+    }
 }

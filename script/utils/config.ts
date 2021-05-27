@@ -24,8 +24,6 @@ const __Temp_Path = path.resolve(process.cwd(), "src/@temp");
 const __checkEnv = () => {
     const { NODE_ENV } = process.env;
 
-    logger.Info("开始加载配置");
-
     if (!NODE_ENV) {
         throw new Error("缺少环境变量 NODE_ENV");
     }
@@ -34,6 +32,7 @@ const __checkEnv = () => {
 const resolveConfig = (function () {
     try {
         __checkEnv();
+        logger.Info("开始加载配置");
         const init: GlobalConfig.ConfigApi = {
             typescript: true,
             disableHostCheck: false,
