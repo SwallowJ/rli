@@ -4,10 +4,12 @@
  * email         feihongjiang@caih.com
  * Description   格式化输出工具
  */
-
+import fs from "fs";
+import path from "path";
 import dayjs from "dayjs";
 import config from "./config";
 import Logger from "@swallowj/logjs";
+import { execSync } from "child_process";
 import { GlobalConfig } from "../../typing/config";
 import webpack, { StatsCompilation } from "webpack";
 
@@ -43,22 +45,44 @@ export class FormatUtils {
             return;
         }
 
+        const size = parseInt(execSync("du -s -b build").toString("utf8").trim());
+
         const res = stats.toJson();
-        console.log(res.env);
-        console.log(res.name);
-        console.log(res.hash);
-        console.log(res.version);
-        console.log(res.time);
+        const assets = res.assets?.reduce<GlobalConfig.asserGroup>((o, assert) => {
+            const target = /static\/(\w*)\//.exec(assert.name);
+            const type = target ? target[1] : "others";
+
+            o[type] = o[type] || [];
+            o[type].push({
+                name: assert.name,
+                size: assert.size,
+                percent: `${((assert.size / size) * 100).toFixed(2)}%`,
+            });
+
+            return o;
+        }, {});
 
         const result: GlobalConfig.resultProps = {
             runTime,
+            time: dayjs().format("YYYY-MM-DD HH:mm:ss.SSS"),
             compileTime: res.time,
             hash: res.hash,
             ...config,
+            size,
+            assets,
         };
 
+        const analysisPath = path.relative(process.cwd(), "log/analysis");
+        fs.existsSync(analysisPath) || fs.mkdirSync(analysisPath);
+
+        const writeStream = fs.createWriteStream(
+            path.resolve(analysisPath, `${dayjs().format("YYYY_MM_DD")}_${res.hash?.slice(0, 6) || ""}.json`)
+        );
+        writeStream.write(JSON.stringify(result, null, "\t"));
+        writeStream.close();
+
         console.log("=========================");
-        console.log(result);
+        // console.log(result);
         console.log();
     }
 }

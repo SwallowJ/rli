@@ -127,11 +127,23 @@ export declare namespace GlobalConfig {
         init: T;
     }
 
+    interface assertType {
+        name: string;
+        size: number;
+        percent: string;
+    }
+
+    interface asserGroup {
+        [key: string]: assertType[];
+    }
+
     interface resultProps extends ConfigApi {
         /**
          * 程序运行时间
          */
         runTime: number;
+
+        time: string;
 
         /**
          * 编译时间
@@ -139,5 +151,11 @@ export declare namespace GlobalConfig {
         compileTime?: number;
 
         hash?: string;
+
+        publicPath?: string;
+        outputPath?: string;
+
+        assets?: asserGroup;
+        size: number;
     }
 }
