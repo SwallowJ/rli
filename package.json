@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"main": "index.js",
 	"license": "MIT",
+	"author": "Swallowj",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/SwallowJ/rli.git"

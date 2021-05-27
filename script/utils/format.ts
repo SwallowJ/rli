@@ -53,6 +53,8 @@ export class FormatUtils {
         const result: GlobalConfig.resultProps = {
             runTime,
             compileTime: res.time,
+            hash: res.hash,
+            ...config,
         };
 
         console.log("=========================");

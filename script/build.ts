@@ -23,6 +23,7 @@ import { loadEnvironment } from "./utils";
 import { FormatUtils } from "./utils/format";
 import WebPackConfig from "./utils/webpack.config";
 import { loadRouter, loadModel } from "./utils/config";
+import config from "./utils/config";
 
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "build" });
@@ -74,6 +75,9 @@ async function build() {
     loadEnvironment();
     loadRouter();
     loadModel();
+
+    // console.log(config);
+
     const stats = await compile();
     const endTime = new Date();
     const runTime = endTime.getTime() - startTime.getTime();

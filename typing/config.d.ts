@@ -8,6 +8,11 @@ export declare namespace GlobalConfig {
          */
         appName?: string;
 
+        author?: string;
+        gitVer?: string;
+        branch?: string;
+        email?: string;
+
         /**
          * 启动端口号
          */
@@ -55,9 +60,18 @@ export declare namespace GlobalConfig {
         sockHost?: string;
         sockPath?: string;
         sockPort?: number | string;
+
+        reactVer?: string;
+        webpackVer?: string;
+        repository?: string;
+        nodeVer?: string;
     }
 
     type dataType = ObjectCode | number | string | boolean | Array<dataType>;
+
+    interface code {
+        [key: string]: string | number;
+    }
 
     interface ObjectCode {
         [key: string]: dataType;
@@ -113,7 +127,7 @@ export declare namespace GlobalConfig {
         init: T;
     }
 
-    interface resultProps {
+    interface resultProps extends ConfigApi {
         /**
          * 程序运行时间
          */
@@ -123,5 +137,7 @@ export declare namespace GlobalConfig {
          * 编译时间
          */
         compileTime?: number;
+
+        hash?: string;
     }
 }

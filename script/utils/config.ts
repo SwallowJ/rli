@@ -12,6 +12,7 @@ import crypto from "crypto";
 import address from "address";
 import { loadFile } from "./tools";
 import Logger from "@swallowj/logjs";
+import { execSync } from "child_process";
 import { GlobalConfig } from "../../typing/config";
 
 const logger = Logger.New({ name: "config" });
@@ -29,17 +30,37 @@ const __checkEnv = () => {
     }
 };
 
+const __gitInfo = () => {
+    try {
+        const gitVer = execSync("git rev-parse --short=8 HEAD").toString("utf8").trim();
+        const author = execSync("git show -s --format=%cn").toString("utf8").trim();
+        const branch = execSync("git rev-parse --abbrev-ref HEAD").toString("utf8").trim();
+        const email = execSync("git show -s --format=%ce").toString().trim();
+        return { gitVer, author, branch, email };
+    } catch (err) {
+        return { gitVer: "-", author: "", branch: "", email: "" };
+    }
+};
+
 const resolveConfig = (function () {
     try {
         __checkEnv();
         logger.Info("开始加载配置");
+
+        const packageJson = require(path.resolve(process.cwd(), "package.json"));
+
         const init: GlobalConfig.ConfigApi = {
             typescript: true,
             disableHostCheck: false,
             sockHost: address.ip(),
             sockPath: "/sockjs-node",
             host: address.ip(),
-            appName: require(path.resolve(process.cwd(), "package.json")).name,
+            appName: packageJson.name,
+            ...__gitInfo(),
+            reactVer: (packageJson.dependencies?.react || "-").replace("^", ""),
+            webpackVer: (packageJson.dependencies?.webpack || "-").replace("^", ""),
+            repository: packageJson.repository?.url || "",
+            nodeVer: execSync("node -v").toString().trim(),
         };
 
         const res = loadFile({ filename: "config", init });

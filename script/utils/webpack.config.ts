@@ -202,7 +202,7 @@ class WebPackConfig {
 
                 new webpack.DefinePlugin({
                     PRODUCTION: JSON.stringify(this.isEnvPro),
-                    VERSION: JSON.stringify("5fa3b9"),
+                    VERSION: JSON.stringify(config.gitVer),
                     BROWSER_SUPPORTS_HTML5: true,
                     "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
                 }),
