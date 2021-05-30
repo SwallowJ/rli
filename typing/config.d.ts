@@ -7,6 +7,7 @@ export declare namespace GlobalConfig {
          * default=package.json[name]
          */
         appName?: string;
+        hostname?: string;
 
         author?: string;
         gitVer?: string;
@@ -22,6 +23,8 @@ export declare namespace GlobalConfig {
          * 主机地址
          */
         host?: string;
+
+        platform?: string;
 
         /**
          * 启用代码分割
@@ -127,10 +130,17 @@ export declare namespace GlobalConfig {
         init: T;
     }
 
-    interface assertType {
+    interface assertType extends code {
         name: string;
         size: number;
         percent: string;
+    }
+
+    interface ResulColumns<T = any> {
+        title: string;
+        width: number;
+        dataIndex: string;
+        render?: (data: T[ResulColumns["dataIndex"]]) => any;
     }
 
     interface asserGroup {
@@ -157,5 +167,10 @@ export declare namespace GlobalConfig {
 
         assets?: asserGroup;
         size: number;
+    }
+
+    interface tableProps {
+        color?: string;
+        width?: number;
     }
 }

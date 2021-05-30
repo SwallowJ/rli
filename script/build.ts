@@ -15,7 +15,6 @@ process.on("unhandledRejection", (err) => {
 });
 
 import fs from "fs";
-import path from "path";
 import webpack from "webpack";
 import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
@@ -23,7 +22,6 @@ import { loadEnvironment } from "./utils";
 import { FormatUtils } from "./utils/format";
 import WebPackConfig from "./utils/webpack.config";
 import { loadRouter, loadModel } from "./utils/config";
-import config from "./utils/config";
 
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "build" });
@@ -82,6 +80,7 @@ async function build() {
     const endTime = new Date();
     const runTime = endTime.getTime() - startTime.getTime();
     FormatUtils.analysis(runTime, stats);
+    console.log();
 }
 
 try {

@@ -5,6 +5,7 @@
  * Description   配置解析
  */
 
+import os from "os";
 import fs from "fs";
 import path from "path";
 import dayjs from "dayjs";
@@ -61,6 +62,8 @@ const resolveConfig = (function () {
             webpackVer: (packageJson.dependencies?.webpack || "-").replace("^", ""),
             repository: packageJson.repository?.url || "",
             nodeVer: execSync("node -v").toString().trim(),
+            hostname: os.hostname(),
+            platform: os.platform(),
         };
 
         const res = loadFile({ filename: "config", init });
