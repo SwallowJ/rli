@@ -1,0 +1,40 @@
+# ==================================================
+# 使用 nodejs 编译
+# ==================================================
+FROM node:alpine as builder
+
+WORKDIR /app
+
+# 先安装依赖包，分开两步是为了方便缓存
+COPY ./package.json /app/
+RUN yarn --registry=https://registry.npm.taobao.org
+
+ENV __VERSION_REV -
+
+# 拷贝其他文件，并编译
+COPY . /app/
+RUN yarn build
+
+# ==================================================
+# 最终镜像
+# ==================================================
+FROM nginx:alpine
+
+RUN rm /usr/share/nginx/html/*.html
+
+ENV APP_SERVER app:10200
+
+# ENTRYPOINT [ "docker-entrypoint.sh" ]
+CMD ["nginx", "-g", "daemon off;"]
+
+# COPY ./docker/bin /usr/local/bin/
+COPY ./docker/nginx /etc/nginx/
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+RUN find /usr/share/nginx/html -type f -regex ".*\.\(html\|js\|css\)" -exec sh -c "gzip < {} > {}.gz" \;
+
+# 标识
+LABEL maintainer="liujun <feihongjiang@caih.com>" \
+    version="3.0.0" \
+    release-date="2021-05-30"
