@@ -8,7 +8,7 @@ import fs from "fs";
 import path from "path";
 import config from "./config";
 
-export const moduleFileExtensions = [".js", ".ts", ".tsx", ".json", ".jsx"];
+export const moduleFileExtensions = [".js", ".ts", ".tsx", ".json", ".jsx", ".d.ts"];
 
 const resolveApp = (relativePath: string) => path.resolve(process.cwd(), relativePath);
 
@@ -57,4 +57,6 @@ export default {
     favicon: resolveApp(config?.favicon ?? "public/favicon.ico"),
 
     tempPath: resolveApp("src/@temp"),
+
+    mockPath: resolveApp("mock"),
 };

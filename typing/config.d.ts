@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 export declare namespace GlobalConfig {
     type NODE_ENV = "development" | "production";
 
@@ -172,5 +174,19 @@ export declare namespace GlobalConfig {
     interface tableProps {
         color?: string;
         width?: number;
+    }
+
+    type handlerFunc = (req: Request, res: Response) => void;
+
+    type methods = "POST" | "GET" | "PUT" | "DELETE" | string;
+
+    interface mockRouters {
+        [key: string]: handlerFunc;
+    }
+
+    interface mockApiType {
+        url: string;
+        method?: methods;
+        handler?: handlerFunc;
     }
 }

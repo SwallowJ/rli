@@ -93,7 +93,7 @@ export class DevserverConfig {
              * TODO
              * mock
              */
-            //  before
+            before(app) {},
 
             /**
              * TODO??

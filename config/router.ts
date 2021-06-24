@@ -24,6 +24,15 @@ export default RouterApi([
         ],
     },
     {
+        path: "/Virtual",
+        routers: [
+            {
+                path: "/table",
+                component: "@/pages/Virtual/table",
+            },
+        ],
+    },
+    {
         path: "/",
         redirect: "/System/user",
     },

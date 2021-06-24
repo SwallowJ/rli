@@ -17,6 +17,7 @@ config/*.local.[j | t]s
 
 # test
 /test
+/mock
 
 # temp
 */@temp
