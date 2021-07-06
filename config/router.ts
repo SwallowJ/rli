@@ -33,6 +33,10 @@ export default RouterApi([
         ],
     },
     {
+        path: "/test",
+        component: "@/pages/Test",
+    },
+    {
         path: "/",
         redirect: "/System/user",
     },
