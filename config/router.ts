@@ -2,42 +2,22 @@ import { RouterApi } from "../script/utils/tools";
 
 export default RouterApi([
     {
-        path: "/graphVisual",
-        routers: [
-            {
-                path: "/graphVisual/x6",
-                component: "@/pages/GraphicVisual/x6",
-            },
-        ],
+        path: "/login",
+        component: "@/pages/Login",
     },
     {
-        path: "/System",
+        path: "/XC",
+        component: "@/layout",
         routers: [
             {
-                path: "/System/role",
-                component: "@/pages/System/role",
-            },
-            {
-                path: "/System/user",
-                component: "@/pages/System/user",
+                path: "/home",
+                component: "@/pages/Home",
+                data: { permission: ["XC_PMS_TEST"] },
             },
         ],
-    },
-    {
-        path: "/Virtual",
-        routers: [
-            {
-                path: "/table",
-                component: "@/pages/Virtual/table",
-            },
-        ],
-    },
-    {
-        path: "/test",
-        component: "@/pages/Test",
     },
     {
         path: "/",
-        redirect: "/System/user",
+        redirect: "/XC/home",
     },
 ]);

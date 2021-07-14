@@ -1,3 +1,10 @@
+/**
+ * Author        feihongjiang
+ * Date          2021-07-13
+ * email         feihongjiang@caih.com
+ * Description   路由解析
+ */
+
 import React from "react";
 import routers from "@/@temp/router";
 import NotFoundPage from "@/pages/Common/404";
@@ -18,7 +25,7 @@ const RouterRegister: React.FC<registerProps> = ({ routers }) => {
                 if (r.component) {
                     const RouterComponent = r.component;
                     return (
-                        <Route key={r.path} path={r.path} exact={true}>
+                        <Route key={r.path} path={r.path}>
                             {(info) => (
                                 <RouterComponent {...info} routers={r.routers}>
                                     <RouterRegister routers={r.routers} />

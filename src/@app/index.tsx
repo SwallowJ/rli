@@ -8,9 +8,9 @@
 import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import AppRouter from "./router";
-import store from "./reducer";
+import store from "@/common/reducer";
 import { Provider } from "react-redux";
+import AppRouter from "../common/router";
 
 ReactDOM.render(
     <Provider store={store}>

@@ -74,8 +74,6 @@ async function build() {
     loadRouter();
     loadModel();
 
-    // console.log(config);
-
     const stats = await compile();
     const endTime = new Date();
     const runTime = endTime.getTime() - startTime.getTime();

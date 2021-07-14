@@ -1,0 +1,48 @@
+.Login {
+    height: 100%;
+    background-color: #e0eefc;
+
+    .wrap {
+        margin: auto;
+        height: 100%;
+        width: 1200px;
+
+        .head {
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 114px;
+                height: 44px;
+            }
+
+            .title {
+                font-size: 20px;
+                color: #353535;
+                margin-left: 12px;
+                padding-left: 12px;
+                position: relative;
+
+                &::before {
+                    left: 0;
+                    top: -4px;
+                    width: 1px;
+                    content: "";
+                    height: 34px;
+                    position: absolute;
+                    background-color: #00000066;
+                }
+            }
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+
+            .pic {
+                width: 703px;
+                height: 530px;
+            }
+        }
+    }
+}
