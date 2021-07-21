@@ -6,7 +6,15 @@
  */
 
 import * as models from "@/@temp/models";
+import { ReducersMapObject } from "@/typings/model";
 
 const __models = Object.values(models).map((model) => model.default);
 
-export default [...__models];
+const commonReducer: ReducersMapObject = {
+    changeStage(state, { params }) {
+        return { ...state, ...params };
+    },
+};
+
+//@ts-ignore
+export default [...__models].map((x) => ((x.__proto__ = commonReducer), x));

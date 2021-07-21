@@ -1,11 +1,16 @@
 import { modelType } from "@/typings/model";
+import LanguageManager from "@/common/core/language";
 
-export interface LangStateType {}
+export interface LangStateType {
+    lan?: Global.langType;
+}
 
 const LanguageModel: modelType<LangStateType> = {
     namespace: "language",
 
-    state: {},
+    state: {
+        lan: LanguageManager.init(),
+    },
 
     effects: {},
 

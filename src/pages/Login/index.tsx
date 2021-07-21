@@ -15,7 +15,9 @@ const login: React.FC = () => {
                 <div className={styles.content}>
                     <img src={picImg} className={styles.pic} />
 
-                    <div className={styles.loginWrap}></div>
+                    <div className={styles.loginWrap}>
+                        <label className={styles.loginLabel}>{"用户登录"}</label>
+                    </div>
                 </div>
             </div>
         </div>

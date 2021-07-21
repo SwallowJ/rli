@@ -1,5 +1,5 @@
 .Login {
-    height: 100%;
+    overflow: auto;
     background-color: #e0eefc;
 
     .wrap {
@@ -37,11 +37,26 @@
 
         .content {
             display: flex;
+            align-items: center;
             justify-content: space-between;
 
             .pic {
                 width: 703px;
                 height: 530px;
+            }
+
+            .loginWrap {
+                width: 416px;
+                padding: 48px 43px;
+                background: #fff;
+                box-sizing: border-box;
+
+                .loginLabel {
+                    font-size: 20px;
+                    font-weight: 700;
+                    line-height: 26px;
+                    color: #000000d9;
+                }
             }
         }
     }

@@ -11,10 +11,13 @@ import ReactDOM from "react-dom";
 import store from "@/common/reducer";
 import { Provider } from "react-redux";
 import AppRouter from "../common/router";
+import GlobalPage from "@/pages/Common/global";
 
 ReactDOM.render(
     <Provider store={store}>
-        <AppRouter />
+        <GlobalPage>
+            <AppRouter />
+        </GlobalPage>
     </Provider>,
     document.getElementById("root")
 );
