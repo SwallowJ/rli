@@ -5,18 +5,22 @@
  * Description   local
  */
 
-type handleFun<T = Global.baseType, R = void> = (key: string, value: T) => R;
+type handleFunc<T = Global.baseType, R = void> = (key: string, value: T) => R;
+
+type getFunc<T> = (key: string) => T;
 
 interface storeType {
     /**
      * 存储string类型
      */
-    save: handleFun;
+    save: handleFunc;
 
     /**
      * 存储对象类型
      */
-    saveObj: handleFun<Object>;
+    saveObj: handleFunc<Object>;
+
+    get: getFunc<Global.langType | undefined>;
 }
 
 class StoreManager {
@@ -56,6 +60,8 @@ class StoreManager {
             },
 
             saveObj: () => {},
+
+            get: (key: string) => engine.getItem(key) as Global.langType | undefined,
         };
     }
 }

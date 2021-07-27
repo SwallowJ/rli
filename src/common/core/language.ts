@@ -10,9 +10,11 @@ import StorageManager from "./storage";
 class LanguageManager {
     private storeName = "LANGUAGE_TYPE";
 
-    init(lan?: Global.langType) {
-        StorageManager.local.save(this.storeName, "Hello World");
-        return "zh-CN";
+    /**
+     * 获取初始语言类型
+     */
+    init(): Global.langType {
+        return StorageManager.local.get(this.storeName) ?? "zh-CN";
     }
 }
 

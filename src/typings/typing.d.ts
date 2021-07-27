@@ -11,7 +11,7 @@ declare namespace Global {
     /**
      * 语言类型
      */
-    type langType = "zh-CN" | "en-US" | string;
+    type langType = "zh-CN" | "en-US";
 
     /**
      * 基本数据类型
