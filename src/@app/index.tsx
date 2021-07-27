@@ -11,7 +11,10 @@ import ReactDOM from "react-dom";
 import store from "@/common/reducer";
 import { Provider } from "react-redux";
 import AppRouter from "../common/router";
+import load_Wasm from "@/common/core/wasm";
 import GlobalPage from "@/pages/Common/global";
+
+load_Wasm();
 
 ReactDOM.render(
     <Provider store={store}>

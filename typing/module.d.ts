@@ -9,6 +9,26 @@ declare namespace NodeJS {
     }
 }
 
+type cryptoFunc = (text: string, key?: string) => [string, string];
+
+class Go {
+    constructor();
+    importObject?: WebAssembly.Imports;
+    run(instance: WebAssembly.Instance);
+}
+
+interface Window {
+    /**
+     * AES加密
+     */
+    WASM_CRYPTO_enAES?: cryptoFunc;
+
+    /**
+     * AES解密
+     */
+    WASM_CRYPTO_deAES?: cryptoFunc;
+}
+
 declare module "*.bmp" {
     const src: string;
     export default src;

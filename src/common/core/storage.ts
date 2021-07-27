@@ -39,7 +39,7 @@ class StoreManager {
     }
 
     encode(value: Global.baseType) {
-        console.log("======");
+        // console.log("======");
         // const hash = createHmac("sha256", this.__Key).update(String(value)).digest("hex");
         // const hash = Crypto.HmacSHA256(String(value), this.__Key).toString();
         // const res = this.decode(hash);
