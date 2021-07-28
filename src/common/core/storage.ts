@@ -38,30 +38,27 @@ class StoreManager {
      */
     session = this.actions(sessionStorage);
 
-    decode(value: string) {
-        // return Crypto.HmacSHA256(value, this.__Key).toString();
-    }
+    decode(value: string) {}
 
     encode(value: Global.baseType) {
-        // console.log("======");
-        // const hash = createHmac("sha256", this.__Key).update(String(value)).digest("hex");
-        // const hash = Crypto.HmacSHA256(String(value), this.__Key).toString();
-        // const res = this.decode(hash);
-
-        // console.log(hash, res);
-
         return String(value);
     }
 
     actions(engine: Storage): storeType {
         return {
+            /**
+             *存储基本数据类型
+             */
             save: (key: string, value: Global.baseType) => {
                 engine.setItem(key, this.encode(value));
             },
 
-            saveObj: () => {},
-
+            /**
+             * 获取基本数据类型
+             */
             get: (key: string) => engine.getItem(key) as Global.langType | undefined,
+
+            saveObj: () => {},
         };
     }
 }

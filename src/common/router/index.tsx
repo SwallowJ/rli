@@ -7,7 +7,7 @@
 
 import React from "react";
 import routers from "@/@temp/router";
-import NotFoundPage from "@/pages/Common/404";
+import NotFoundPage from "@/common/view/404";
 import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
 
 interface registerProps {

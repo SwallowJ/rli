@@ -131,7 +131,7 @@ export const loadRouter = () => {
 
         writeStream.write(`import React from "react";\n`);
         writeStream.write(`import loadable from "@loadable/component";\n`);
-        writeStream.write(`import Loading from "@/pages/Common/loading";\n\n`);
+        writeStream.write(`import Loading from "@/common/view/loading";\n\n`);
         writeStream.write(`const options = {\n\tfallback: <Loading />,\n};\n\n`);
         writeStream.write(`const routers: Aplication.router[] = [\n`);
 

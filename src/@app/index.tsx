@@ -12,7 +12,7 @@ import store from "@/common/reducer";
 import { Provider } from "react-redux";
 import AppRouter from "../common/router";
 import load_Wasm from "@/common/core/wasm";
-import GlobalPage from "@/pages/Common/global";
+import GlobalPage from "@/common/view/global";
 
 load_Wasm();
 
