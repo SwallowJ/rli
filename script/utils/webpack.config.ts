@@ -179,6 +179,7 @@ class WebPackConfig {
 
             plugins: [
                 new HtmlWebpackPlugin({
+                    title: config.appName,
                     inject: true,
                     template: paths.appHtml,
                     ...(this.isEnvPro
