@@ -15,6 +15,7 @@ process.on("unhandledRejection", (err) => {
 });
 
 import fs from "fs";
+import path from "path";
 import webpack from "webpack";
 import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
@@ -75,11 +76,47 @@ async function build() {
     loadModel();
 
     const stats = await compile();
+    copyPublicFolder();
     const endTime = new Date();
     const runTime = endTime.getTime() - startTime.getTime();
     FormatUtils.analysis(runTime, stats);
-    console.log();
 }
+
+/**
+ * 拷贝%PUBLIC%目录下的文件到打包目录
+ */
+const copyPublicFolder = () => {
+    const __exclude = ["favicon.ico", "index.html"];
+    const __srcDir = paths.appPublic;
+    const __destDir = paths.appBuild;
+
+    fs.existsSync(__destDir) || fs.mkdirSync(__destDir);
+    fs.readdirSync(__srcDir).forEach((f) => {
+        __exclude.includes(f) || copy(path.resolve(__srcDir, f), path.resolve(__destDir, f));
+    });
+};
+
+const copy = (src: string, dest: string) => {
+    if (!fs.existsSync(src)) {
+        return;
+    }
+
+    /**
+     * 如果是文件则直接拷贝
+     */
+    if (fs.statSync(src).isFile()) {
+        fs.copyFileSync(src, dest);
+        return;
+    }
+
+    /**
+     * 递归拷贝目录
+     */
+    fs.existsSync(dest) || fs.mkdirSync(dest);
+    fs.readdirSync(src).forEach((f) => {
+        copy(path.resolve(src, f), path.resolve(dest, f));
+    });
+};
 
 try {
     build();
