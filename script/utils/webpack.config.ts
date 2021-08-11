@@ -53,7 +53,7 @@ class WebPackConfig {
 
                 publicPath: paths.publicPath,
 
-                assetModuleFilename: "images/[hash][ext][query]",
+                assetModuleFilename: "static/asset/[hash][ext][query]",
             },
 
             /**
@@ -110,7 +110,7 @@ class WebPackConfig {
                         oneOf: [
                             {
                                 test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-                                type: "asset/inline",
+                                type: "asset/resource",
                             },
 
                             /**
