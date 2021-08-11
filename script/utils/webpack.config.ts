@@ -15,6 +15,7 @@ import paths, { moduleFileExtensions } from "./paths";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import EsbuildPlugin from "esbuild-webpack-plugin";
 
 const postcssNormalize = require("postcss-normalize");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -73,7 +74,8 @@ class WebPackConfig {
                         },
                     }),
 
-                    new TerserPlugin(),
+                    // new TerserPlugin(),
+                    new EsbuildPlugin(),
                 ],
 
                 splitChunks: {
