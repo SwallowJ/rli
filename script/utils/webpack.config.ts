@@ -13,12 +13,10 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 // import { WebpackManifestPlugin } from "webpack-manifest-plugin";
 import paths, { moduleFileExtensions } from "./paths";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import EsbuildPlugin from "esbuild-webpack-plugin";
+import { ESBuildMinifyPlugin } from "esbuild-loader";
 
 const postcssNormalize = require("postcss-normalize");
-const TerserPlugin = require("terser-webpack-plugin");
 
 class WebPackConfig {
     private static isEnvPro: boolean;
@@ -62,21 +60,7 @@ class WebPackConfig {
              */
             optimization: {
                 minimize: this.isEnvPro,
-                minimizer: [
-                    new CssMinimizerPlugin({
-                        minimizerOptions: {
-                            preset: [
-                                "default",
-                                {
-                                    discardComments: { removeAll: true },
-                                },
-                            ],
-                        },
-                    }),
-
-                    // new TerserPlugin(),
-                    new EsbuildPlugin(),
-                ],
+                minimizer: [new ESBuildMinifyPlugin({ target: "es2015", css: true })],
 
                 splitChunks: {
                     cacheGroups: {
@@ -120,6 +104,15 @@ class WebPackConfig {
                              */
                             {
                                 test: /\.(js|mjs|jsx|ts|tsx)$/,
+                                /**
+                                 * TODO
+                                 * ui组件按需加载
+                                 */
+                                // loader: "esbuild-loader",
+                                // options: {
+                                //     loader: "tsx",
+                                //     target: "es2015",
+                                // },
                                 loader: require.resolve("babel-loader"),
                                 options: {
                                     cacheDirectory: true,
