@@ -26,8 +26,6 @@ interface EffectsCommandMap<S> {
     /**
      * 异步函数调用
      */
-    // call(fn: <T = any>(params?: any) => Promise, args?: any): T;
-
     call<T = any>(p: Promise<T>): void;
 }
 
