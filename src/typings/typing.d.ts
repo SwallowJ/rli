@@ -17,4 +17,13 @@ declare namespace Global {
      * 基本数据类型
      */
     type baseType = string | number | boolean;
+
+    /**
+     * 通用请求返回类型
+     */
+    interface resultType<T = any> {
+        code: 0 | 1;
+        data?: T;
+        message?: string;
+    }
 }

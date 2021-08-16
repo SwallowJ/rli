@@ -25,8 +25,8 @@ export const effectMiddleware: Middleware = ({ getState }) => (next) => (action:
          * @param fn 异步函数
          * @param args 参数
          */
-        const call = (fn: <T>(params?: any) => Promise<T>, args?: any) => {
-            fn(args).then((v) => {
+        const call = <T>(p: Promise<T>) => {
+            p.then((v) => {
                 return gen.next(v);
             });
         };

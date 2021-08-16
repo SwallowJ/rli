@@ -4,8 +4,12 @@ export interface ReducersMapObject<S = any> {
     [key: string]: Reducer<S>;
 }
 
+type Gen<T = any> = Generator<void, void, T>;
+
+export type GenType<T = any> = Gen<Global.resultType<T>>;
+
 interface effectCode<S = any> {
-    [key: string]: (action: AnyAction, effects: EffectsCommandMap<S>) => Generator;
+    [key: string]: (action: AnyAction, effects: EffectsCommandMap<S>) => Gen;
 }
 
 interface EffectsCommandMap<S> {
@@ -22,7 +26,9 @@ interface EffectsCommandMap<S> {
     /**
      * 异步函数调用
      */
-    call(fn: <T = any>(params?: any) => Promise, args?: any): T;
+    // call(fn: <T = any>(params?: any) => Promise, args?: any): T;
+
+    call<T = any>(p: Promise<T>): void;
 }
 
 export interface modelType<S = any> {
