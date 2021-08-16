@@ -1,14 +1,22 @@
 import React from "react";
+import { Dispatch } from "redux";
 import styles from "./style.less";
+import { connect } from "react-redux";
+import { LoginForm } from "./component";
 import picImg from "@/assert/pic@2x.png";
-import { Form, Input, Button } from "antd";
 import logoImg from "@/assert/logo@2x.png";
 import footer from "@/assert/footer@2x.png";
-import { LoginForm } from "./component";
+import actions from "./actions";
 
-const login: React.FC = () => {
-    const submit = (value: LOGIN.loginParams) => {
-        console.log(value);
+interface loginProps {
+    dispatch: Dispatch;
+}
+
+const login: React.FC<loginProps> = ({ dispatch }) => {
+    const login = (value: LOGIN.loginParams) => {
+        const res = dispatch(actions.login(value));
+
+        console.log(res);
     };
 
     return (
@@ -24,7 +32,7 @@ const login: React.FC = () => {
 
                     <div className={styles.loginWrap}>
                         <label className={styles.loginLabel}>{"用户登录"}</label>
-                        <LoginForm onFinish={submit} />
+                        <LoginForm onFinish={login} />
                     </div>
                 </div>
 
@@ -37,4 +45,4 @@ const login: React.FC = () => {
     );
 };
 
-export default login;
+export default connect()(login);

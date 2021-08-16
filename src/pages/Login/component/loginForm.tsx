@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./style.less";
 import { Form, Input, Button } from "antd";
 
 interface loginFormProps {
@@ -17,7 +18,7 @@ export const LoginForm: React.FC<loginFormProps> = ({ onFinish }) => {
             </Form.Item>
 
             <Form.Item>
-                <Button type={"primary"} htmlType={"submit"}>
+                <Button type={"primary"} htmlType={"submit"} className={styles.loginBtn}>
                     {"登录"}
                 </Button>
             </Form.Item>

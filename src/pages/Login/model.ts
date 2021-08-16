@@ -1,5 +1,6 @@
+import loginService from "./service";
 import { namespace } from "./actions";
-import { modelType } from "@/typings/model";
+import { modelType, GenType } from "@/typings/model";
 
 export interface StateType {}
 
@@ -8,7 +9,13 @@ const LoginModel: modelType<StateType> = {
 
     state: {},
 
-    effects: {},
+    effects: {
+        *login({ params }, { call, put }): GenType<string> {
+            const response = yield call(loginService.login(params));
+
+            console.log(response);
+        },
+    },
 
     reducers: {},
 };

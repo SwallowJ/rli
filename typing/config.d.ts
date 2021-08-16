@@ -189,4 +189,12 @@ export declare namespace GlobalConfig {
         method?: methods;
         handler?: handlerFunc;
     }
+
+    interface markOptions {
+        auth?: string;
+        email?: string;
+        date?: string;
+        desc?: string;
+        timeFormat?: string;
+    }
 }
