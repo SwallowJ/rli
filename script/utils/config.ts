@@ -8,9 +8,9 @@
 import os from "os";
 import fs from "fs";
 import path from "path";
-import dayjs from "dayjs";
 import crypto from "crypto";
 import address from "address";
+import remark from "./remark";
 import { loadFile } from "./tools";
 import Logger from "@swallowj/logjs";
 import { execSync } from "child_process";
@@ -18,7 +18,7 @@ import { GlobalConfig } from "../../typing/config";
 
 const logger = Logger.New({ name: "config" });
 
-const __Reg_Model = /(namespace:)(\S|\s)*(state:)(\S|\s)*(effects:)(\S|\s)*(reducers:)(\S|\s)*(export default).*/;
+const __Reg_Model = /(namespace)(\S|\s)*(state:)(\S|\s)*(effects:)(\S|\s)*(reducers:)(\S|\s)*(export default).*/;
 
 const __Src_Path = path.resolve(process.cwd(), "src");
 const __Temp_Path = path.resolve(process.cwd(), "src/@temp");
@@ -123,12 +123,7 @@ export const loadRouter = () => {
 
         writeStream = fs.createWriteStream(path.resolve(tempPath, "router.tsx"));
 
-        writeStream.write(
-            `/**\n * Author        feihongjiang\n * Date          ${dayjs().format(
-                "YYYY-MM-DD HH:mm:ss.SSS"
-            )}\n * email         feihongjiang@caih.com\n * Description   路由配置\n */\n\n`
-        );
-
+        remark.mark(writeStream, { auth: "feihongjiang", email: "feihongjiang@caih.com", desc: "路由配置" });
         writeStream.write(`import React from "react";\n`);
         writeStream.write(`import loadable from "@loadable/component";\n`);
         writeStream.write(`import Loading from "@/common/view/loading";\n\n`);
@@ -218,10 +213,9 @@ const __scanModels = (dir: string, writeStream: fs.WriteStream, isModel: boolean
         const p = path.resolve(dir, f);
 
         if (fs.statSync(p).isFile()) {
-            if (!/.[t|j]sx?$/.test(path.extname(p))) {
+            if (!/\.[t|j]sx?$/.test(path.extname(f))) {
                 return;
             }
-
             logger.CommonLine(`扫描目录 ${path.relative(__Src_Path, p)}`);
 
             const name = f.substring(0, f.lastIndexOf("."));
@@ -252,7 +246,7 @@ export const loadModel = () => {
     let writeStream: fs.WriteStream | null = null;
     try {
         writeStream = fs.createWriteStream(path.resolve(tempPath, "models.ts"));
-
+        remark.mark(writeStream, { auth: "feihongjiang", email: "feihongjiang@caih.com", desc: "redux加载模块" });
         const __Model_Path = path.resolve(__Src_Path, "models");
         const __Page_Path = path.resolve(__Src_Path, "pages");
 
