@@ -26,4 +26,8 @@ declare namespace Global {
         data?: T;
         message?: string;
     }
+
+    interface obj {
+        [key: string]: number | string | boolean;
+    }
 }
