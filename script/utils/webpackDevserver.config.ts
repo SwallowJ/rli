@@ -7,6 +7,7 @@
 
 import paths from "./paths";
 import config from "./config";
+import { createProxy } from "./proxy";
 import { Configuration } from "webpack-dev-server";
 
 export class DevserverConfig {
@@ -87,7 +88,7 @@ export class DevserverConfig {
              * TODO
              * 代理
              */
-            // proxy:
+            proxy: createProxy(),
 
             /**
              * TODO
