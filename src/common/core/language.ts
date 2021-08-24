@@ -13,8 +13,8 @@ class LanguageManager {
     /**
      * 获取初始语言类型
      */
-    init(): Global.langType {
-        return StorageManager.local.get(this.storeName) ?? "zh-CN";
+    init(): Global.LANGUAGE.Type {
+        return StorageManager.local.get<Global.LANGUAGE.Type>(this.storeName) || "zh_CN";
     }
 }
 

@@ -4,25 +4,29 @@
  * email         feihongjiang@caih.com
  * Description   全局配置页面
  */
-
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { LangStateType } from "@/models/language";
 import React, { ReactNode, useEffect } from "react";
 
-interface globalProps {
+interface globalProps extends LangStateType {
     children: ReactNode;
-    lang?: Global.langType;
+    dispatch: Dispatch;
 }
 
-const global: React.FC<globalProps> = ({ children, lang }) => {
+const global: React.FC<globalProps> = ({ children, lang, dispatch, common }) => {
     /**
-     * 加载语言包
+     * 加载语言包(json文件)
      */
+    const loadLanguagePackage = (name: string) => {
+        dispatch({ type: "language/getPack", name, lang });
+    };
+
     useEffect(() => {
-        console.log(lang);
+        loadLanguagePackage("common");
     }, [lang]);
 
     return <>{children}</>;
 };
 
-export default connect(({ language: { lang } }: { language: LangStateType }) => ({ lang }))(global);
+export default connect(({ language: { lang, common } }: { language: LangStateType }) => ({ lang, common }))(global);

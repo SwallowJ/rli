@@ -4,9 +4,7 @@ export interface ReducersMapObject<S = any> {
     [key: string]: Reducer<S>;
 }
 
-type Gen<T = any> = Generator<void, void, T>;
-
-export type GenType<T = any> = Gen<Global.resultType<T>>;
+export type Gen<T = any> = Generator<void, void, T>;
 
 interface effectCode<S = any> {
     [key: string]: (action: AnyAction, effects: EffectsCommandMap<S>) => Gen;
@@ -22,6 +20,8 @@ interface EffectsCommandMap<S> {
      * 调用reducer
      */
     put(action: AnyAction): void;
+
+    change(params: T): void;
 
     /**
      * 异步函数调用

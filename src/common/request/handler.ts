@@ -13,8 +13,6 @@ export enum HTTPCode {
 
 const parseError = (err: any) => {
     try {
-        console.log(callType(err));
-
         if (typeof err === "string") {
             parseError(JSON.parse(err));
         } else if (callType(err) === "[object Object]") {
@@ -28,6 +26,10 @@ const parseError = (err: any) => {
 export const successHandler: REQUEST.responsehandler = async (reponse) => {
     try {
         const result: Global.resultData = await reponse.json();
+
+        if (callType(result) === "[object Object]" && !result.hasOwnProperty("code")) {
+            return result;
+        }
 
         if (result.code == 0) {
             return result.data;

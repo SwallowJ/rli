@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { RequestManagement } from "./request";
 import { successHandler, errorHandler } from "./handler";
 
@@ -13,6 +14,11 @@ const initOptions: REQUEST.options = {
 };
 
 export class ReqService extends RequestManagement {
+    /**
+     * 消息反馈
+     */
+    message = message;
+
     constructor(options: REQUEST.options = {}) {
         super({ ...initOptions, ...options });
     }

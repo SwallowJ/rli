@@ -46,6 +46,10 @@ export const effectMiddleware: Middleware = ({ getState }) => (next) => (action:
                 });
         };
 
+        const change = (params: any) => {
+            put({ type: "changeStage", params });
+        };
+
         /**
          * 获取当前State
          */
@@ -54,7 +58,7 @@ export const effectMiddleware: Middleware = ({ getState }) => (next) => (action:
         /**
          * effect 生成器
          */
-        const gen = model.effects[type](action, { call, put, select });
+        const gen = model.effects[type](action, { call, put, select, change });
         gen.next();
     } else {
         console.error(`No such action: ${action.type}`);

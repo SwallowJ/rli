@@ -1,8 +1,10 @@
-import { modelType } from "@/typings/model";
+import { modelType, Gen } from "@/typings/model";
 import LanguageManager from "@/common/core/language";
+import { commonService } from "@/service/commonService";
 
 export interface LangStateType {
-    lang?: Global.langType;
+    lang?: Global.LANGUAGE.Type;
+    common?: Global.LANGUAGE.code;
 }
 
 const LanguageModel: modelType<LangStateType> = {
@@ -10,9 +12,22 @@ const LanguageModel: modelType<LangStateType> = {
 
     state: {
         lang: LanguageManager.init(),
+        common: {},
     },
 
-    effects: {},
+    effects: {
+        *getPack({ name }, { call, put, select, change }): Gen<Global.LANGUAGE.langType> {
+            const { lang = "" } = select();
+            const response = yield call(commonService.getlanguagePackage(lang, name));
+
+            if (!response) {
+                commonService.message.error(`语言包 ${lang}/${name}.json 不存在`);
+                return;
+            }
+
+            yield change({ [name]: response });
+        },
+    },
 
     reducers: {},
 };

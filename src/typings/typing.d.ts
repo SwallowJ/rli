@@ -9,11 +9,6 @@ declare namespace Global {
     }
 
     /**
-     * 语言类型
-     */
-    type langType = "zh-CN" | "en-US";
-
-    /**
      * 基本数据类型
      */
     type baseType = string | number | boolean;
@@ -31,5 +26,21 @@ declare namespace Global {
 
     interface obj {
         [key: string]: number | string | boolean;
+    }
+
+    namespace LANGUAGE {
+        /**
+         * 语言类型
+         */
+        type Type = "zh_CN" | "en_US";
+
+        /**
+         * 语言类型
+         */
+        interface code {
+            [key: string]: string;
+        }
+
+        type langType = code | undefined | null;
     }
 }

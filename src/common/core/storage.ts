@@ -7,8 +7,6 @@
 
 type handleFunc<T = Global.baseType, R = void> = (key: string, value: T) => R;
 
-type getFunc<T> = (key: string) => T;
-
 interface storeType {
     /**
      * 存储string类型
@@ -20,7 +18,7 @@ interface storeType {
      */
     saveObj: handleFunc<Object>;
 
-    get: getFunc<Global.langType | undefined>;
+    get: <T extends string = string>(key: string) => T;
 }
 
 class StoreManager {
@@ -56,7 +54,7 @@ class StoreManager {
             /**
              * 获取基本数据类型
              */
-            get: (key: string) => engine.getItem(key) as Global.langType | undefined,
+            get: <T extends string = string>(key: string): T => engine.getItem(key) as T,
 
             saveObj: () => {},
         };
