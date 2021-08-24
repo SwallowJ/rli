@@ -9,7 +9,7 @@ interface loginFormProps {
 export const LoginForm: React.FC<loginFormProps> = ({ onFinish }) => {
     return (
         <Form onFinish={onFinish}>
-            <Form.Item name={"userName"} rules={[{ required: true, message: "请输入用户名" }]}>
+            <Form.Item name={"username"} rules={[{ required: true, message: "请输入用户名" }]}>
                 <Input />
             </Form.Item>
 

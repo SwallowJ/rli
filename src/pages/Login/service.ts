@@ -2,25 +2,22 @@ import { ReqService } from "@/common/request/service";
 
 class LoginService extends ReqService {
     constructor() {
-        super("/api/v1/user");
+        super({ prefix: "/api/v1/user" });
     }
 
     /**
      * 登录
      */
-    login(data: LOGIN.loginParams) {
-        return new Promise<Global.resultType<string>>((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    code: 1,
-                    data: "hahha",
-                });
-            }, 3000);
+    async login(data: LOGIN.loginParams) {
+        return this.post<Global.resultType<string>>("/login", { data }).then((res) => {
+            console.log("result: ", res);
         });
     }
 
-    test(data: LOGIN.loginParams) {
-        this.post("/login", { data });
+    error(data: LOGIN.loginParams) {
+        this.post("/error", { data, headers: { "Content-type": "application/json;charset=UTF-8" } }).then((res) => {
+            console.log("error:", res);
+        });
     }
 }
 

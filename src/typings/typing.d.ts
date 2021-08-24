@@ -21,11 +21,13 @@ declare namespace Global {
     /**
      * 通用请求返回类型
      */
-    interface resultType<T = any> {
+    interface resultData<T = any> {
         code: 0 | 1;
         data?: T;
         message?: string;
     }
+
+    type resultType<T = any> = resultData<T> | undefined;
 
     interface obj {
         [key: string]: number | string | boolean;

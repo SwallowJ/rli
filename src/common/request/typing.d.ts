@@ -2,11 +2,17 @@ declare namespace REQUEST {
     type MethodType = "get" | "post" | "delete" | "put" | "patch" | "head" | "options" | "rpc" | string;
 
     interface options extends RequestInit {
+        /**
+         * 请求前缀
+         */
         prefix?: string;
+
+        /**
+         * 超时时间
+         */
         timeout?: number;
-        preHandler?: preHandler[];
-        errorHandler?: errorHandler[];
-        successHandler?: successHandler[];
+        errorHandler?: responsehandler;
+        successHandler?: responsehandler;
     }
 
     interface reqInit extends RequestInit {
@@ -24,10 +30,12 @@ declare namespace REQUEST {
 
     type Client = (req: ReqType) => Promise<Response>;
 
-    type handler<T = any, R = any> = (params: T) => R;
+    type responsehandler<T = any> = (res: Response, req: ReqType) => Promise<T>;
+
     type handlerType = "successHandler" | "errorHandler";
 
-    type successHandler = handler;
-
-    type errorHandler = handler;
+    interface reqOptions {
+        handFunc?: responsehandler;
+        errorFunc?: responsehandler;
+    }
 }

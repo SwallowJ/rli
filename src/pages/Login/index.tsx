@@ -7,9 +7,8 @@ import picImg from "@/assert/pic@2x.png";
 import logoImg from "@/assert/logo@2x.png";
 import footer from "@/assert/footer@2x.png";
 import actions from "./actions";
-import service from "@/common/request/service";
 import loginService from "@/pages/Login/service";
-import { Button } from "antd";
+import { Radio, RadioChangeEvent } from "antd";
 
 interface loginProps {
     dispatch: Dispatch;
@@ -17,11 +16,11 @@ interface loginProps {
 
 const login: React.FC<loginProps> = ({ dispatch }) => {
     const login = (value: LOGIN.loginParams) => {
-        // service.request("post", "/api/v1/user/login", { data: value });
+        loginService.login(value);
     };
 
-    const click = () => {
-        loginService.test({ username: "admin", password: "123456" });
+    const changeRadio = (e: RadioChangeEvent) => {
+        // e.target.value
     };
 
     return (
@@ -38,11 +37,10 @@ const login: React.FC<loginProps> = ({ dispatch }) => {
                     <div className={styles.loginWrap}>
                         <label className={styles.loginLabel}>{"用户登录"}</label>
                         <LoginForm onFinish={login} />
-                        <Button type={"primary"} onClick={click}>
-                            {"click me"}
-                        </Button>
                     </div>
                 </div>
+
+                <Radio.Group onChange={changeRadio}></Radio.Group>
 
                 <div className={styles.footer}>
                     <img src={footer} alt="" />

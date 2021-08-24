@@ -1,39 +1,36 @@
 import { RequestManagement } from "./request";
+import { successHandler, errorHandler } from "./handler";
 
 /**
  * 初始配置
  */
 const initOptions: REQUEST.options = {
-    credentials: "include",
+    timeout: 20000,
     keepalive: true,
+    credentials: "include",
+    errorHandler: errorHandler,
+    successHandler: successHandler,
 };
 
 export class ReqService extends RequestManagement {
-    prefix: string;
-
-    constructor(prefix?: string) {
-        super({ ...initOptions });
-        this.prefix = prefix || "";
+    constructor(options: REQUEST.options = {}) {
+        super({ ...initOptions, ...options });
     }
 
-    private exec(method: REQUEST.MethodType, url: string, init?: REQUEST.reqInit) {
-        return this.request(method, `${this.prefix}${url}`, init);
+    protected get<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+        return this.request<T>("GET", url, init, options);
     }
 
-    protected get(url: string, init?: REQUEST.reqInit) {
-        return this.exec("GET", url, init);
+    protected post<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+        return this.request<T>("POST", url, init, options);
     }
 
-    protected post(url: string, init?: REQUEST.reqInit) {
-        return this.exec("POST", url, init);
+    protected put<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+        return this.request<T>("PUT", url, init, options);
     }
 
-    protected put(url: string, init?: REQUEST.reqInit) {
-        return this.exec("PUT", url, init);
-    }
-
-    protected delete(url: string, init?: REQUEST.reqInit) {
-        return this.exec("DELETE", url, init);
+    protected delete<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+        return this.request<T>("DELETE", url, init, options);
     }
 }
 

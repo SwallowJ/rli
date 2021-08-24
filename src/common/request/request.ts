@@ -4,6 +4,7 @@
  * email      feihongjiang@caih.com
  * Desc       fetch请求封装
  */
+import { HTTPCode } from "./handler";
 import { callType } from "@/utils/functools";
 
 export class RequestManagement {
@@ -12,9 +13,9 @@ export class RequestManagement {
     /**
      * 请求结束中间件
      */
-    private successHandler: REQUEST.successHandler[];
+    private successHandler: REQUEST.responsehandler;
 
-    private errorHandler: REQUEST.errorHandler[];
+    private errorHandler: REQUEST.responsehandler;
 
     /**
      * 客户端
@@ -22,8 +23,9 @@ export class RequestManagement {
     private client: REQUEST.Client;
 
     constructor(options: REQUEST.options = {}) {
-        this.successHandler = options.successHandler || [];
-        this.errorHandler = options.errorHandler || [];
+        const defaultHandler: REQUEST.responsehandler = (res) => res.text();
+        this.errorHandler = options.errorHandler || defaultHandler;
+        this.successHandler = options.successHandler || defaultHandler;
 
         const opt = Object.assign({}, options);
         delete opt.successHandler;
@@ -36,13 +38,28 @@ export class RequestManagement {
     /**
      * 发起请求(fetch)
      */
-    protected async request(method: REQUEST.MethodType, url: string, init: REQUEST.reqInit = {}) {
+    protected async request<T = any>(
+        method: REQUEST.MethodType,
+        url: string,
+        init: REQUEST.reqInit = {},
+        options?: REQUEST.reqOptions
+    ): Promise<T> {
         const req = this.resolveOptions(method, url, init);
-        const response = await this.client(req);
-        console.log(response);
 
-        const headers = response.headers.entries();
-        console.log("headers: ", headers);
+        let response: Response;
+        if (this.options.timeout) {
+            response = await Promise.race([this.client(req), this.timeOutFunc()]);
+        } else {
+            response = await this.client(req);
+        }
+
+        let handFunc: REQUEST.responsehandler;
+        if (response.ok) {
+            handFunc = options?.handFunc || this.successHandler;
+        } else {
+            handFunc = options?.errorFunc || this.errorHandler;
+        }
+        return handFunc(response, req);
     }
 
     /**
@@ -102,11 +119,18 @@ export class RequestManagement {
         return (req: REQUEST.ReqType) => fetch(req.url, req);
     }
 
-    /**
-     * 加载中间件
-     */
-    protected use(name: REQUEST.handlerType, handler: REQUEST.handler) {
-        this[name] = [...this[name], handler];
+    private timeOutFunc() {
+        const timeout = this.options.timeout;
+        return new Promise<Response>((resolve) => {
+            setTimeout(() => {
+                resolve(
+                    new Response('{"code":-1,"message":"请求超时"}', {
+                        status: HTTPCode.Unauthorized,
+                        statusText: "Request Timeout",
+                    })
+                );
+            }, timeout);
+        });
     }
 }
 
