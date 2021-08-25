@@ -47,7 +47,7 @@ export const effectMiddleware: Middleware = ({ getState }) => (next) => (action:
         };
 
         const change = (params: any) => {
-            put({ type: "changeStage", params });
+            put({ type: "changeState", params });
         };
 
         /**

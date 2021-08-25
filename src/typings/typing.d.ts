@@ -42,5 +42,12 @@ declare namespace Global {
         }
 
         type langType = code | undefined | null;
+
+        /**
+         * 语言包映射函数
+         */
+        type langFunc = (key: string) => React.ReactText;
+
+        type langTempFunc = (key: string, obj?: Global.obj) => React.ReactText;
     }
 }

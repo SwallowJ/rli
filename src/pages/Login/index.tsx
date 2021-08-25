@@ -8,13 +8,16 @@ import logoImg from "@/assert/logo@2x.png";
 import footer from "@/assert/footer@2x.png";
 import actions from "./actions";
 import loginService from "@/pages/Login/service";
-import { Radio, RadioChangeEvent } from "antd";
+import { Button, Radio, RadioChangeEvent } from "antd";
+import langservice from "@/common/core/language";
 
 interface loginProps {
     dispatch: Dispatch;
 }
 
 const login: React.FC<loginProps> = ({ dispatch }) => {
+    const [tas] = langservice.useLanguage("common");
+
     const login = (value: LOGIN.loginParams) => {
         loginService.login(value);
     };
@@ -23,19 +26,23 @@ const login: React.FC<loginProps> = ({ dispatch }) => {
         // e.target.value
     };
 
+    const changeLang = (lang: string) => {
+        dispatch({ type: "language/changeState", params: { lang } });
+    };
+
     return (
         <div className={styles.Login}>
             <div className={styles.wrap}>
                 <div className={styles.head}>
                     <img src={logoImg} />
-                    <label className={styles.title}>{"XC项目管理系统"}</label>
+                    <label className={styles.title}>{tas("app.title")}</label>
                 </div>
 
                 <div className={styles.content}>
                     <img src={picImg} className={styles.pic} />
 
                     <div className={styles.loginWrap}>
-                        <label className={styles.loginLabel}>{"用户登录"}</label>
+                        <label className={styles.loginLabel}>{tas("login")}</label>
                         <LoginForm onFinish={login} />
                     </div>
                 </div>
@@ -44,7 +51,7 @@ const login: React.FC<loginProps> = ({ dispatch }) => {
 
                 <div className={styles.footer}>
                     <img src={footer} alt="" />
-                    <span>{"技术支持：中国—东盟信息港股份有限公司"}</span>
+                    <span>{tas("app.footer")}</span>
                 </div>
             </div>
         </div>

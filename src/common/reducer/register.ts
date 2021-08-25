@@ -11,7 +11,7 @@ import { ReducersMapObject } from "@/typings/model";
 const __models = Object.values(models).map((model) => model.default);
 
 const commonReducer: ReducersMapObject = {
-    changeStage(state, { params }) {
+    changeState(state, { params }) {
         return { ...state, ...params };
     },
 };

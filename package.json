@@ -69,6 +69,7 @@
         "http-server": "^0.12.3"
     },
     "scripts": {
+        "dev": "ts-node script/start",
         "start": "ts-node script/start",
         "build": "ts-node script/build",
         "server": "http-server ./build",
