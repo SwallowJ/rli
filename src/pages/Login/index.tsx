@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
@@ -8,7 +8,7 @@ import logoImg from "@/assert/logo@2x.png";
 import footer from "@/assert/footer@2x.png";
 import actions from "./actions";
 import loginService from "@/pages/Login/service";
-import { Button, Radio, RadioChangeEvent } from "antd";
+import { RadioChangeEvent } from "antd";
 import langservice from "@/common/core/language";
 
 interface loginProps {
@@ -22,13 +22,10 @@ const login: React.FC<loginProps> = ({ dispatch }) => {
         loginService.login(value);
     };
 
-    const changeRadio = (e: RadioChangeEvent) => {
-        // e.target.value
-    };
-
-    const changeLang = (lang: string) => {
-        dispatch({ type: "language/changeState", params: { lang } });
-    };
+    useEffect(() => {
+        const memory = new WebAssembly.Memory({ initial: 10, maximum: 100 });
+        new Uint16Array(memory.buffer)[0] = 42;
+    }, []);
 
     return (
         <div className={styles.Login}>
@@ -46,8 +43,6 @@ const login: React.FC<loginProps> = ({ dispatch }) => {
                         <LoginForm onFinish={login} />
                     </div>
                 </div>
-
-                <Radio.Group onChange={changeRadio}></Radio.Group>
 
                 <div className={styles.footer}>
                     <img src={footer} alt="" />

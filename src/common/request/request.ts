@@ -38,7 +38,7 @@ export class RequestManagement {
     /**
      * 发起请求(fetch)
      */
-    protected async request<T = any>(
+    async request<T = any>(
         method: REQUEST.MethodType,
         url: string,
         init: REQUEST.reqInit = {},

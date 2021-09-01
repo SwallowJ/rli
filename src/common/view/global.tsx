@@ -6,6 +6,8 @@
  */
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { useWasm } from "@/common/wasm";
+import Loading from "@/common/view/loading";
 import { LangStateType } from "@/models/language";
 import React, { ReactNode, useEffect } from "react";
 
@@ -15,6 +17,8 @@ interface globalProps extends LangStateType {
 }
 
 const global: React.FC<globalProps> = ({ children, lang, dispatch, common }) => {
+    const [loadingWasm] = useWasm();
+
     /**
      * 加载语言包(json文件)
      */
@@ -26,7 +30,7 @@ const global: React.FC<globalProps> = ({ children, lang, dispatch, common }) => 
         loadLanguagePackage("common");
     }, [lang]);
 
-    return <>{children}</>;
+    return <>{loadingWasm ? <Loading /> : children}</>;
 };
 
 export default connect(({ language: { lang, common } }: { language: LangStateType }) => ({ lang, common }))(global);

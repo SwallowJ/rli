@@ -11,12 +11,6 @@ declare namespace NodeJS {
 
 type cryptoFunc = (text: string, key?: string) => [string, string];
 
-class Go {
-    constructor();
-    importObject?: WebAssembly.Imports;
-    run(instance: WebAssembly.Instance);
-}
-
 interface Window {
     /**
      * AES加密
