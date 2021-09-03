@@ -78,7 +78,7 @@ const resolveConfig = (function () {
 })();
 
 /**
- * 零时文件目
+ * 临时文件目
  */
 const tempPath = (function () {
     if (fs.existsSync(__Temp_Path)) {

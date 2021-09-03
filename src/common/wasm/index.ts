@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import go from "./init";
 
 const load = async (name: string) => {
-    return fetch(`wasm/${name}.wasm`)
+    return fetch(`/wasm/${name}.wasm`)
         .then((response) => WebAssembly.instantiateStreaming(response, go.importObject))
         .then(({ instance }) => {
             go.run(instance);
+        })
+        .catch((err) => {
+            console.error(err);
         });
 };
 

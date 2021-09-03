@@ -1,7 +1,11 @@
 import React from "react";
 import { BaseLayout } from "./Layout";
 
-const Layout: React.FC = (props) => {
+interface layoutProps {
+    routers?: Aplication.routers;
+}
+
+const Layout: React.FC<layoutProps> = (props) => {
     return <BaseLayout {...props} />;
 };
 

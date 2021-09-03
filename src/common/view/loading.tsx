@@ -6,9 +6,16 @@
  */
 
 import React from "react";
+import styles from "./style.less";
 
 const loading: React.FC = (props) => {
-    return <div>{"Page is loading"}</div>;
+    return (
+        <div className={styles.Loading}>
+            <div className={styles.wrap}>
+                <span>{"加载中..."}</span>
+            </div>
+        </div>
+    );
 };
 
 export default loading;

@@ -1,11 +1,16 @@
 import React from "react";
 import { BaseHead } from "@/layout/Header";
 
-export const BaseLayout: React.FC = (props) => {
+interface layoutProps {
+    routers?: Aplication.routers;
+}
+
+export const BaseLayout: React.FC<layoutProps> = ({ routers = [], children }) => {
+    console.log(routers);
     return (
         <div>
             <BaseHead />
-            {props.children}
+            {children}
         </div>
     );
 };

@@ -3,7 +3,7 @@ node_modules
 yarn.lock
 
 # log
-log
+/log
 yarn-error.log
 
 # production
@@ -21,3 +21,7 @@ config/*.local.[j | t]s
 
 # temp
 */@temp
+
+#wasm
+/webAssembly/log
+/webAssembly/go.sum
