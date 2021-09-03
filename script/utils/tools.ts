@@ -1,6 +1,6 @@
 import path from "path";
-import express, { Router } from "express";
 import Logger from "@swallowj/logjs";
+import express, { Router } from "express";
 import { GlobalConfig } from "../../typing/config";
 
 const logger = Logger.New({ name: "config" });
@@ -24,6 +24,8 @@ export const loadFile = <T = any>({ filename, init }: GlobalConfig.loadFileProps
             }
         }, init);
 };
+
+export const ProxyConfig = (args: GlobalConfig.proxyConfig) => args;
 
 export class MockApi {
     private __source: GlobalConfig.mockApiType[];

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ProxyConfigMap } from "webpack-dev-server";
 
 export declare namespace GlobalConfig {
     type NODE_ENV = "development" | "production";
@@ -196,5 +197,9 @@ export declare namespace GlobalConfig {
         date?: string;
         desc?: string;
         timeFormat?: string;
+    }
+
+    interface proxyConfig {
+        [key: string]: ProxyConfigMap;
     }
 }

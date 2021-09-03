@@ -5,22 +5,37 @@
  * Description   代理配置
  */
 
-import { ProxyConfigMap } from "webpack-dev-server";
+import path from "path";
+import Logger from "@swallowj/logjs";
+import { GlobalConfig } from "../../typing/config";
 
-const proxyMap = new Map<string | number, ProxyConfigMap>([
-    [
-        //本地虚拟机服务器
-        "virtual",
-        {
-            "/api/v1": {
-                target: "http://172.17.144.2:6001",
-                changeOrigin: true,
-            },
-        },
-    ],
-]);
+const logger = Logger.New({ name: "proxy" });
 
 export const createProxy = () => {
-    const { PROXY = "" } = process.env;
-    return proxyMap.get(PROXY) || {};
+    try {
+        const { PROXY = "", NODE_ENV } = process.env;
+
+        const filename = "proxy";
+        const config = [`${filename}.${NODE_ENV}.local`, `${filename}.${NODE_ENV}`, `${filename}.local`, filename]
+            .map((f) => path.resolve(process.cwd(), "./config", f))
+            .find((f) => {
+                try {
+                    return Boolean(require(f).default);
+                } catch (err) {
+                    return false;
+                }
+            });
+
+        if (!config) {
+            logger.Warn("未找到配置文件");
+            return;
+        }
+
+        const proxyMap = require(config).default as GlobalConfig.proxyConfig;
+
+        return proxyMap[PROXY];
+    } catch (err) {
+        logger.Error(err);
+        return;
+    }
 };
