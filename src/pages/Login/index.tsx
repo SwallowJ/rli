@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
 import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
 import { LoginForm } from "./component";
-import picImg from "@/assert/pic@2x.png";
-import logoImg from "@/assert/logo@2x.png";
-import footer from "@/assert/footer@2x.png";
-import actions from "./actions";
+import React, { useEffect } from "react";
+import picImg from "@/assert/login/pic@2x.png";
+import logoImg from "@/assert/login/logo@2x.png";
+import footer from "@/assert/login/footer@2x.png";
 import loginService from "@/pages/Login/service";
-import { RadioChangeEvent } from "antd";
 import langservice from "@/common/core/language";
 
 interface loginProps {

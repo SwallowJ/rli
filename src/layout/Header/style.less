@@ -1,4 +1,46 @@
 .BaseHead {
-    height: 60px;
     background-color: #32353c;
+
+    .content {
+        margin: auto;
+        height: 60px;
+        display: flex;
+        width: 1200px;
+        align-items: center;
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 44px;
+                width: 114px;
+            }
+
+            .divider {
+                width: 1px;
+                height: 34px;
+                margin: 0 12px;
+                background-color: #ffffff;
+            }
+
+            .title {
+                font-size: 22px;
+                color: #ffffff;
+            }
+        }
+
+        .menu {
+            flex: 1;
+            height: 100%;
+            padding: 0 40px;
+        }
+
+        .authInfo {
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
 }

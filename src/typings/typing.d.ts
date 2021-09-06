@@ -28,6 +28,38 @@ declare namespace Global {
         [key: string]: number | string | boolean;
     }
 
+    namespace AUTH {
+        /**
+         * 用户信息
+         */
+        interface entity {
+            /**
+             * 角色ID
+             */
+            roleId: number;
+
+            /**
+             * 角色名
+             */
+            roleName: string;
+
+            roleDesc?: number;
+
+            /**
+             * 用户ID
+             */
+            userId: number;
+
+            /**
+             * 用户名
+             */
+            userName: string;
+
+            userEmail?: string;
+            userPhone?: string;
+        }
+    }
+
     namespace LANGUAGE {
         /**
          * 语言类型

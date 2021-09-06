@@ -5,12 +5,12 @@
  * Description   语言包管理工具
  */
 import StorageManager from "./storage";
-import { useSelector, useStore } from "react-redux";
-import { LangStateType, namespace } from "@/models/language";
+import { useSelector } from "react-redux";
 import { ReactText, useCallback } from "react";
+import { LangStateType, namespace } from "@/models/language";
 
 class LanguageManager {
-    private storeName = "LANGUAGE_TYPE";
+    private storeName = "LANGUAGE";
 
     /**
      * 获取初始语言类型
