@@ -46,6 +46,16 @@ export class RequestManagement {
     ): Promise<T> {
         const req = this.resolveOptions(method, url, init);
 
+        const { handFunc, errorFunc, cache, engine, key, group = "global" } = options || {};
+        if (cache && engine) {
+            const stroageKey = key || this.parseStroageKey(req);
+            const result = engine.getObj<any>(stroageKey);
+
+            if (result) {
+                return result;
+            }
+        }
+
         let response: Response;
         if (this.options.timeout) {
             response = await Promise.race([this.client(req), this.timeOutFunc()]);
@@ -53,13 +63,19 @@ export class RequestManagement {
             response = await this.client(req);
         }
 
-        let handFunc: REQUEST.responsehandler;
+        let RS: REQUEST.responsehandler;
         if (response.ok) {
-            handFunc = options?.handFunc || this.successHandler;
+            RS = handFunc || this.successHandler;
         } else {
-            handFunc = options?.errorFunc || this.errorHandler;
+            RS = errorFunc || this.errorHandler;
         }
-        return handFunc(response, req);
+        return RS(response, req).then((result) => {
+            if (cache && engine) {
+                const stroageKey = key || this.parseStroageKey(req);
+                engine.saveObj(stroageKey, result);
+            }
+            return result;
+        });
     }
 
     /**
@@ -131,6 +147,10 @@ export class RequestManagement {
                 );
             }, timeout);
         });
+    }
+
+    private parseStroageKey(req: REQUEST.ReqType) {
+        return `${req.method}-${req.url}`;
     }
 }
 

@@ -8,6 +8,7 @@
 import React from "react";
 import routers from "@/@temp/router";
 import NotFoundPage from "@/common/view/404";
+import GlobalPage from "@/common/view/global";
 import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
 
 interface registerProps {

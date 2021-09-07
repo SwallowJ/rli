@@ -13,7 +13,12 @@ const AuthModel: modelType<AuthStateType> = {
 
     state: {},
 
-    effects: {},
+    effects: {
+        *getAuthInfo(_, { call }) {
+            const response = yield call(commonService.getAuthInfo());
+            console.log("get Auth info", response);
+        },
+    },
 
     reducers: {},
 };

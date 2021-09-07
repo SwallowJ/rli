@@ -8,8 +8,10 @@ export default ProxyConfig({
     },
     dev_25: {
         "/api/xc": defautlConfig("http://10.19.6.25:8080"),
+        "/xc": defautlConfig("http://10.19.6.25:8080"),
     },
     dev_wufeng: {
         "/api/xc": defautlConfig("http://10.8.13.204:8081"),
+        "/xc": defautlConfig("http://10.19.6.25:8080"),
     },
 });

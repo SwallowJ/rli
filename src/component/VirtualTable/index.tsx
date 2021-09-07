@@ -32,7 +32,6 @@ const VirtualTable: React.FC<tableProps<any>> = (props) => {
             timeRef.current = setTimeout(() => {
                 timeRef.current && clearTimeout(timeRef.current);
                 timeRef.current = undefined;
-                console.log("clear", timeRef.current);
             }, 500);
         }
 

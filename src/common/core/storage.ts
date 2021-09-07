@@ -5,22 +5,6 @@
  * Description   local
  */
 
-type handleFunc<T = Global.baseType, R = void> = (key: string, value: T) => R;
-
-interface storeType {
-    /**
-     * 存储string类型
-     */
-    save: handleFunc;
-
-    /**
-     * 存储对象类型
-     */
-    saveObj: handleFunc<Object>;
-
-    get: <T extends string = string>(key: string) => T;
-}
-
 class StoreManager {
     private __Key = "Af12Wll1M8H";
     protected localStorage = window.localStorage;
@@ -42,21 +26,40 @@ class StoreManager {
         return String(value);
     }
 
-    actions(engine: Storage): storeType {
+    encodeObj(value: Object) {
+        return JSON.stringify(value);
+    }
+
+    decodeObj<T = Object>(value: string | null): T | null {
+        return value ? JSON.parse(value) : value;
+    }
+
+    actions(engine: Storage): CORE.storeType {
         return {
             /**
              *存储基本数据类型
              */
-            save: (key: string, value: Global.baseType) => {
+            save: (key, value) => {
                 engine.setItem(key, this.encode(value));
             },
 
             /**
              * 获取基本数据类型
              */
-            get: <T extends string = string>(key: string): T => engine.getItem(key) as T,
+            get<T extends string>(key: string): T | null {
+                return engine.getItem(key) as T;
+            },
 
-            saveObj: () => {},
+            saveObj: (key, value) => {
+                engine.setItem(key, this.encodeObj(value));
+            },
+
+            getObj: <T = any>(key: string): T | null => {
+                return this.decodeObj(engine.getItem(key));
+            },
+            remove(key) {
+                engine.removeItem(key);
+            },
         };
     }
 }

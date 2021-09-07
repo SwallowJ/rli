@@ -5,9 +5,10 @@
  * Desc       用户安全管理
  */
 
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import storage from "@/common/core/storage";
 import { AuthStateType, namespace } from "@/models/auth";
 
 interface wrapperProps {
@@ -22,12 +23,21 @@ export class SecuretyManager {
     verify(Component: React.FC<any>) {
         const wrapper: React.FC<wrapperProps> = (props) => {
             useEffect(() => {
-                console.log("===");
+                props.dispatch({ type: `${namespace}/getAuthInfo` });
             }, []);
             return <Component {...props} />;
         };
 
         return connect(({ [namespace]: { auth } }: { [namespace]: AuthStateType }) => ({ auth }))(wrapper);
+    }
+
+    /**
+     * 未登录或登录已超时
+     */
+    unauthorized() {
+        storage.local.remove("isLogin");
+        storage.local.save("URL", location.href);
+        location.href = "/login";
     }
 }
 

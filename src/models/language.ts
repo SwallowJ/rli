@@ -18,7 +18,7 @@ const LanguageModel: modelType<LangStateType> = {
     },
 
     effects: {
-        *getPack({ name }, { call, put, select, change }): Gen<Global.LANGUAGE.langType> {
+        *getPack({ name }, { call, select, change }): Gen<Global.LANGUAGE.langType> {
             const { lang = "" } = select();
             const response = yield call(commonService.getlanguagePackage(lang, name));
 

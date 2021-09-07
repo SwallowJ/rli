@@ -10,7 +10,7 @@ interface headProps {
 }
 
 const head: React.FC<headProps> = ({ routers }) => {
-    console.log(routers);
+    // console.log(routers);
     return (
         <div className={styles.BaseHead}>
             <div className={styles.content}>

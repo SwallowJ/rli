@@ -24,7 +24,6 @@ class ErrorBoundary extends React.Component<any, errorProps> {
 
     render() {
         const { error, errorInfo } = this.state;
-        console.log("========", errorInfo);
 
         if (errorInfo) {
             return (

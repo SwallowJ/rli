@@ -1,10 +1,7 @@
+import storage from "@/common/core/storage";
 import { ReqService } from "@/common/request/service";
 
 class LoginService extends ReqService {
-    constructor() {
-        super({ prefix: "/api/v1/user" });
-    }
-
     /**
      * 登录
      */
@@ -14,10 +11,22 @@ class LoginService extends ReqService {
         });
     }
 
-    error(data: LOGIN.loginParams) {
-        this.post("/error", { data, headers: { "Content-type": "application/json;charset=UTF-8" } }).then((res) => {
-            console.log("error:", res);
-        });
+    /**
+     * 获取证书
+     */
+    getlicense() {
+        return this.get<LOGIN.licenseType>(
+            `/xc/license`,
+            {},
+            { cache: true, key: "license", engine: storage.session }
+        ).then(() => null);
+    }
+
+    /**
+     * 获取机器码
+     */
+    getMachineInfo() {
+        return this.get<LOGIN.machinceType>("/xc/license/machineInfo");
     }
 }
 

@@ -34,7 +34,7 @@ class LanguageManager {
         /**
          * 语言包映射函数
          */
-        const translate = useCallback((key: string) => pack?.[key] || de || name, [pack]);
+        const translate = useCallback((key: string) => pack?.[key] || de || key, [pack]);
 
         /**
          * 语言包映射函数-带模板解析
