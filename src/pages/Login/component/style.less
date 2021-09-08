@@ -1,3 +1,5 @@
+@import url("../../../assert/less/scrollbar.less");
+
 .loginBtn {
     width: 100%;
     border-radius: 4px;
@@ -16,6 +18,10 @@
         display: flex;
         margin-top: 30px;
         justify-content: space-between;
+
+        label {
+            color: #000000a6;
+        }
     }
 
     .machineInfo {
@@ -24,8 +30,17 @@
         padding: 4px 8px;
         overflow-y: auto;
         border-radius: 4px;
+        margin-bottom: 34px;
         word-break: break-all;
         background-color: #f2f2f2;
         border: 1px solid #c3c3c3;
+
+        .Skyblue();
+    }
+
+    .licenseUpload {
+        label {
+            color: #000000a6;
+        }
     }
 }

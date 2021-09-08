@@ -1,12 +1,12 @@
 import { modelType, Gen } from "@/typings/model";
+import commonService from "@/service/commonService";
 import LanguageManager from "@/common/core/language";
-import { commonService } from "@/service/commonService";
 
 export const namespace = "language";
 
 export interface LangStateType {
     lang?: Global.LANGUAGE.Type;
-    common?: Global.LANGUAGE.code;
+    login?: Global.LANGUAGE.code;
 }
 
 const LanguageModel: modelType<LangStateType> = {
@@ -14,7 +14,7 @@ const LanguageModel: modelType<LangStateType> = {
 
     state: {
         lang: LanguageManager.init(),
-        common: {},
+        login: {},
     },
 
     effects: {

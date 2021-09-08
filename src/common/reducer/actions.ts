@@ -10,7 +10,7 @@ export class Actions {
     /**
      * 修改状态action
      */
-    protected changeState<T>(parmas: T): AnyAction {
+    changeState<T>(parmas: T): AnyAction {
         return { type: `${this.namespace}/changeState`, parmas };
     }
 

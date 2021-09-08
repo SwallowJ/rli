@@ -1,6 +1,5 @@
-import { modelType, Gen } from "@/typings/model";
-import LanguageManager from "@/common/core/language";
-import { commonService } from "@/service/commonService";
+import { modelType } from "@/typings/model";
+import commonService from "@/service/commonService";
 
 export const namespace = "AUTH";
 
@@ -14,9 +13,12 @@ const AuthModel: modelType<AuthStateType> = {
     state: {},
 
     effects: {
-        *getAuthInfo(_, { call }) {
-            const response = yield call(commonService.getAuthInfo());
-            console.log("get Auth info", response);
+        *getAuthInfo({ callback }, { call, change }) {
+            const auth = yield call(commonService.getAuthInfo());
+            if (auth) {
+                callback && callback();
+                change({ auth });
+            }
         },
     },
 

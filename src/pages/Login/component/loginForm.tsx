@@ -1,29 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./style.less";
-import { Form, Input, Button } from "antd";
+import { Button } from "@/component/Button";
+import { Form, Input, Checkbox } from "antd";
 import langservice from "@/common/core/language";
 
 interface loginFormProps {
-    onFinish: (value: LOGIN.loginParams) => void;
+    onFinish?: (value: LOGIN.loginParams, remember?: boolean) => void;
 }
 
 export const LoginForm: React.FC<loginFormProps> = ({ onFinish }) => {
-    const [tas] = langservice.useLanguage("common");
+    const [tas] = langservice.useLanguage("login");
+
+    const [remember, setRemeber] = useState(false);
+
+    const submit = (value: LOGIN.loginParams) => {
+        onFinish && onFinish(value, remember);
+    };
+
+    const changeRemeber = () => {
+        setRemeber(!remember);
+    };
+
     return (
         <>
-            <label className={styles.title}>{tas("login")}</label>
-            <Form onFinish={onFinish}>
-                <Form.Item name={"username"} rules={[{ required: true, message: "请输入用户名" }]}>
+            <label className={styles.title}>{tas("title")}</label>
+            <Form onFinish={submit}>
+                <Form.Item name={"username"} rules={[{ required: true, message: tas("username.required") }]}>
                     <Input />
                 </Form.Item>
 
-                <Form.Item name={"password"} rules={[{ required: true, message: "请输入密码" }]}>
+                <Form.Item name={"password"} rules={[{ required: true, message: tas("password.required") }]}>
                     <Input type={"password"} />
                 </Form.Item>
 
                 <Form.Item>
+                    <Checkbox checked={remember} onChange={changeRemeber}>
+                        {tas("remember")}
+                    </Checkbox>
+                </Form.Item>
+
+                <Form.Item>
                     <Button type={"primary"} htmlType={"submit"} className={styles.loginBtn}>
-                        {"登录"}
+                        {tas("submit.btn")}
                     </Button>
                 </Form.Item>
             </Form>

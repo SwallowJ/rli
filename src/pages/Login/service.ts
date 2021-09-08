@@ -5,21 +5,22 @@ class LoginService extends ReqService {
     /**
      * 登录
      */
-    async login(data: LOGIN.loginParams) {
-        return this.post<Global.resultType<string>>("/login", { data }).then((res) => {
-            console.log("result: ", res);
-        });
+    login(params: LOGIN.loginParams) {
+        return this.post<Global.resultType<string>>("/xc/login/password/encode", { params });
+    }
+
+    /**
+     * 获取token, 对密码加密
+     */
+    getToken() {
+        return this.get("/xc/login/requestId");
     }
 
     /**
      * 获取证书
      */
     getlicense() {
-        return this.get<LOGIN.licenseType>(
-            `/xc/license`,
-            {},
-            { cache: true, key: "license", engine: storage.session }
-        ).then(() => null);
+        return this.get<LOGIN.licenseType>(`/xc/license`, {}, { cache: true, key: "license", engine: storage.session });
     }
 
     /**

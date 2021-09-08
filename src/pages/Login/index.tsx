@@ -1,27 +1,28 @@
+import { Spin } from "antd";
 import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
+import action, { namespace } from "./actions";
+import { useHistory } from "react-router-dom";
 import picImg from "@/assert/login/pic@2x.png";
+import langservice from "@/common/core/language";
+import { LoginForm, License } from "./component";
 import logoImg from "@/assert/login/logo@2x.png";
 import footer from "@/assert/login/footer@2x.png";
-import langservice from "@/common/core/language";
-import action, { namespace } from "./actions";
-import { LoginForm, License } from "./component";
-import { Spin } from "antd";
 
 interface loginProps extends LOGIN.StateType {
+    history?: any;
     dispatch: Dispatch;
+    auth?: Global.AUTH.entity;
 }
 
-const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo }) => {
-    const [tas] = langservice.useLanguage("common");
+const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo, isLogin, history }) => {
+    const [tas] = langservice.useLanguage("login");
 
-    const login = (value: LOGIN.loginParams) => {
-        dispatch(action.login(value));
+    const login = (value: LOGIN.loginParams, remember?: boolean) => {
+        dispatch(action.login(value, remember));
     };
-
-    // console.log(license);
 
     /**
      * 证书校验
@@ -34,12 +35,25 @@ const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo }
         getLicense();
     }, []);
 
+    useEffect(() => {
+        if (isLogin) {
+            dispatch(action.changeState({ loading: true }));
+            dispatch({
+                type: "AUTH/getAuthInfo",
+                callback: () => {
+                    dispatch(action.changeState({ loading: false }));
+                    history.push("/XC/home");
+                },
+            });
+        }
+    }, [isLogin]);
+
     return (
         <div className={styles.Login}>
             <div className={styles.wrap}>
                 <div className={styles.head}>
                     <img src={logoImg} />
-                    <label className={styles.title}>{tas("app.title")}</label>
+                    <label className={styles.title}>{tas("appName")}</label>
                 </div>
 
                 <div className={styles.content}>
@@ -53,15 +67,18 @@ const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo }
 
                 <div className={styles.footer}>
                     <img src={footer} alt="" />
-                    <span>{tas("app.footer")}</span>
+                    <span>{tas("appFooter")}</span>
                 </div>
             </div>
         </div>
     );
 };
 
-export default connect(({ [namespace]: { license, loading, machineInfo } }: { [namespace]: LOGIN.StateType }) => ({
-    license,
-    loading,
-    machineInfo,
-}))(login);
+export default connect(
+    ({ [namespace]: { license, loading, machineInfo, isLogin } }: { [namespace]: LOGIN.StateType }) => ({
+        license,
+        loading,
+        isLogin,
+        machineInfo,
+    })
+)(login);

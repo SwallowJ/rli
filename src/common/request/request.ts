@@ -70,10 +70,12 @@ export class RequestManagement {
             RS = errorFunc || this.errorHandler;
         }
         return RS(response, req).then((result) => {
-            if (cache && engine) {
-                const stroageKey = key || this.parseStroageKey(req);
-                engine.saveObj(stroageKey, result);
-            }
+            setTimeout(() => {
+                if (cache && engine) {
+                    const stroageKey = key || this.parseStroageKey(req);
+                    engine.saveObj(stroageKey, result);
+                }
+            }, 0);
             return result;
         });
     }

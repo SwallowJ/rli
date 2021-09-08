@@ -34,16 +34,14 @@ class LanguageManager {
         /**
          * 语言包映射函数
          */
-        const translate = useCallback((key: string) => pack?.[key] || de || key, [pack]);
+        const translate = useCallback((key: string) => String(pack?.[key] || de || key), [pack]);
 
         /**
          * 语言包映射函数-带模板解析
          * 模板标记 ${word}
          */
         const translateTemplate = useCallback(
-            (key: string, obj: Global.obj = {}) => {
-                return this.template(String(pack?.[key] || de || name), obj);
-            },
+            (key: string, obj: Global.obj = {}) => this.template(String(pack?.[key] || de || name), obj),
             [pack]
         );
 

@@ -1,0 +1,19 @@
+{
+    "appName": "XC Project management system",
+
+    "title": "LOGIN",
+
+    "username.required": "Please input your username",
+    "password.required": "Please input your password",
+    "remember": "Remember me",
+    "submit.btn": "Submit",
+
+    "license.title": "license authorization",
+    "license.alert": "Tip: Send the machine code to the service technician and upload the license file provided to activate it.",
+    "license.machine": "Machine code",
+    "license.upload.title": "Upload the license file:",
+    "license.copy": "copy",
+    "license.upload.btn": "Click upload",
+
+    "appFooter": "Technical support: China-ASEAN Information Harbor Co. Ltd."
+}

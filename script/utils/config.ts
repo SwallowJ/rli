@@ -29,6 +29,8 @@ const __checkEnv = () => {
     if (!NODE_ENV) {
         throw new Error("缺少环境变量 NODE_ENV");
     }
+
+    return NODE_ENV;
 };
 
 const __gitInfo = () => {
@@ -45,7 +47,7 @@ const __gitInfo = () => {
 
 const resolveConfig = (function () {
     try {
-        __checkEnv();
+        const NODE_ENV = __checkEnv();
         logger.Info("开始加载配置");
 
         const packageJson = require(path.resolve(process.cwd(), "package.json"));
@@ -67,6 +69,10 @@ const resolveConfig = (function () {
         };
 
         const res = loadFile({ filename: "config", init });
+
+        if (NODE_ENV === "development") {
+            res.appName = `${res.appName}(开发环境)`;
+        }
 
         logger.lineOver();
         logger.Success("配置加载完成");

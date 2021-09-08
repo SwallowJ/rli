@@ -11,6 +11,11 @@ declare namespace LOGIN {
         machineInfo?: machinceType;
 
         loading?: boolean;
+
+        /**
+         * 登录成功标识
+         */
+        isLogin?: boolean;
     }
 
     type licenseType = license | null;
@@ -35,5 +40,6 @@ declare namespace LOGIN {
     interface loginParams {
         username: string;
         password: string;
+        _csrf?: string;
     }
 }

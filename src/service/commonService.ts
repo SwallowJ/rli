@@ -1,3 +1,4 @@
+import storage from "@/common/core/storage";
 import { ReqService } from "@/common/request/service";
 
 class CommonService extends ReqService {
@@ -5,7 +6,11 @@ class CommonService extends ReqService {
      * 获取语言包
      */
     async getlanguagePackage(lang: string, name: string) {
-        return this.get<Global.LANGUAGE.langType>(`/language/${lang}/${name}.json`);
+        return this.get<Global.LANGUAGE.langType>(
+            `/language/${lang}/${name}.json`,
+            {},
+            { cache: true, key: `language_${lang}_${name}`, engine: storage.session }
+        );
     }
 
     /**
@@ -16,4 +21,4 @@ class CommonService extends ReqService {
     }
 }
 
-export const commonService = new CommonService();
+export default new CommonService();

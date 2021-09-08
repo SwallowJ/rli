@@ -3,8 +3,8 @@ import { Actions } from "@/common/reducer/actions";
 export const namespace = "LOGIN";
 
 export class LoginActions extends Actions {
-    login(params: LOGIN.loginParams) {
-        return this.callAction("login", { params });
+    login(payload: LOGIN.loginParams, remember?: boolean) {
+        return this.callAction("login", { payload, remember });
     }
 
     getlicense() {

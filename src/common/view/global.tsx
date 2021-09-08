@@ -16,7 +16,7 @@ interface globalProps extends LangStateType {
     dispatch: Dispatch;
 }
 
-const global: React.FC<globalProps> = ({ children, lang, dispatch, common }) => {
+const global: React.FC<globalProps> = ({ children, lang, dispatch }) => {
     const [loadingWasm] = useWasm();
 
     /**
@@ -27,10 +27,10 @@ const global: React.FC<globalProps> = ({ children, lang, dispatch, common }) => 
     };
 
     useEffect(() => {
-        loadLanguagePackage("common");
+        loadLanguagePackage("login");
     }, [lang]);
 
     return <>{loadingWasm ? <Loading /> : children}</>;
 };
 
-export default connect(({ language: { lang, common } }: { language: LangStateType }) => ({ lang, common }))(global);
+export default connect(({ language: { lang } }: { language: LangStateType }) => ({ lang }))(global);

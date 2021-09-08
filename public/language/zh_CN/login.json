@@ -1,0 +1,19 @@
+{
+    "appName": "XC项目管理系统",
+
+    "title": "用户登录",
+
+    "username.required": "请输入用户名",
+    "password.required": "请输入密码",
+    "remember": "记住我",
+    "submit.btn": "登录",
+
+    "license.title": "license 授权",
+    "license.alert": "提示：将机器码发给技术服务人员，并将其提供的license文件上传即可激活。",
+    "license.machine": "机器码",
+    "license.copy": "复制",
+    "license.upload.title": "上传license文件：",
+    "license.upload.btn": "点击上传",
+
+    "appFooter": "技术支持：中国—东盟信息港股份有限公司"
+}

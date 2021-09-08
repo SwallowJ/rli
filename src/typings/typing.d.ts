@@ -78,8 +78,8 @@ declare namespace Global {
         /**
          * 语言包映射函数
          */
-        type langFunc = (key: string) => React.ReactText;
+        type langFunc = (key: string) => string;
 
-        type langTempFunc = (key: string, obj?: Global.obj) => React.ReactText;
+        type langTempFunc = (key: string, obj?: Global.obj) => string;
     }
 }
