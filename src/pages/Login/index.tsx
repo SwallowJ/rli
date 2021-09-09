@@ -4,7 +4,7 @@ import styles from "./style.less";
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import action, { namespace } from "./actions";
-import { useHistory } from "react-router-dom";
+import securety from "@/common/core/securety";
 import picImg from "@/assert/login/pic@2x.png";
 import langservice from "@/common/core/language";
 import { LoginForm, License } from "./component";
@@ -17,7 +17,7 @@ interface loginProps extends LOGIN.StateType {
     auth?: Global.AUTH.entity;
 }
 
-const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo, isLogin, history }) => {
+const login: React.FC<loginProps> = ({ dispatch, license, machineInfo, isLogin, history }) => {
     const [tas] = langservice.useLanguage("login");
 
     const login = (value: LOGIN.loginParams, remember?: boolean) => {
@@ -37,12 +37,10 @@ const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo, 
 
     useEffect(() => {
         if (isLogin) {
-            dispatch(action.changeState({ loading: true }));
             dispatch({
                 type: "AUTH/getAuthInfo",
                 callback: () => {
-                    dispatch(action.changeState({ loading: false }));
-                    history.push("/XC/home");
+                    history.push(securety.getUrl());
                 },
             });
         }
@@ -58,11 +56,10 @@ const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo, 
 
                 <div className={styles.content}>
                     <img src={picImg} className={styles.pic} />
-                    <Spin spinning={loading}>
-                        <div className={styles.loginWrap}>
-                            {license ? <LoginForm onFinish={login} /> : <License machineInfo={machineInfo} />}
-                        </div>
-                    </Spin>
+
+                    <div className={styles.loginWrap}>
+                        {license ? <LoginForm onFinish={login} /> : <License machineInfo={machineInfo} />}
+                    </div>
                 </div>
 
                 <div className={styles.footer}>
@@ -74,11 +71,8 @@ const login: React.FC<loginProps> = ({ dispatch, license, loading, machineInfo, 
     );
 };
 
-export default connect(
-    ({ [namespace]: { license, loading, machineInfo, isLogin } }: { [namespace]: LOGIN.StateType }) => ({
-        license,
-        loading,
-        isLogin,
-        machineInfo,
-    })
-)(login);
+export default connect(({ [namespace]: { license, machineInfo, isLogin } }: { [namespace]: LOGIN.StateType }) => ({
+    license,
+    isLogin,
+    machineInfo,
+}))(login);

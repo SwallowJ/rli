@@ -51,12 +51,27 @@ declare namespace Global {
             userId: number;
 
             /**
+             * 用户昵称
+             */
+            userDisplayName?: string;
+
+            /**
+             * 用户单位名称
+             */
+            userCorporationName?: string;
+
+            /**
              * 用户名
              */
             userName: string;
 
             userEmail?: string;
             userPhone?: string;
+
+            /**
+             * 权限列表
+             */
+            basePermCategory?: string[];
         }
     }
 

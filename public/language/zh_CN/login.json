@@ -14,6 +14,8 @@
     "license.copy": "复制",
     "license.upload.title": "上传license文件：",
     "license.upload.btn": "点击上传",
+    "placeholder.username": "请输入用户名",
+    "placeholder.password": "请输入密码",
 
     "appFooter": "技术支持：中国—东盟信息港股份有限公司"
 }

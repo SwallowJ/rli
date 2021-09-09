@@ -15,5 +15,8 @@
     "license.copy": "copy",
     "license.upload.btn": "Click upload",
 
+    "placeholder.username": "please enter user name",
+    "placeholder.password": "please enter the password",
+
     "appFooter": "Technical support: China-ASEAN Information Harbor Co. Ltd."
 }

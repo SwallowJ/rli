@@ -1,3 +1,4 @@
+import loading from "@/component/Loading";
 import { modelType } from "@/typings/model";
 import commonService from "@/service/commonService";
 
@@ -14,11 +15,13 @@ const AuthModel: modelType<AuthStateType> = {
 
     effects: {
         *getAuthInfo({ callback }, { call, change }) {
+            loading.run();
             const auth = yield call(commonService.getAuthInfo());
             if (auth) {
                 callback && callback();
                 change({ auth });
             }
+            loading.stop();
         },
     },
 

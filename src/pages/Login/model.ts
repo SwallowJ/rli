@@ -1,6 +1,7 @@
 import { message } from "antd";
 import loginService from "./service";
 import { namespace } from "./actions";
+import loading from "@/component/Loading";
 import { modelType } from "@/typings/model";
 import securety from "@/common/core/securety";
 
@@ -8,7 +9,6 @@ const LoginModel: modelType<LOGIN.StateType> = {
     namespace,
 
     state: {
-        loading: false,
         license: null,
         machineInfo: null,
         isLogin: securety.getLoginFlag(),
@@ -16,7 +16,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
 
     effects: {
         *login({ payload, remember }, { call, change }) {
-            yield change({ loading: true });
+            loading.run();
             const token = yield call(loginService.getToken());
 
             if (!token) {
@@ -36,19 +36,25 @@ const LoginModel: modelType<LOGIN.StateType> = {
             const response = yield call(loginService.login(params));
             if (response) {
                 message.success("登录成功");
-                securety.loginSuccess({ ...payload, _csrf }, remember);
+                securety.login({ ...payload, _csrf }, remember);
                 yield change({ isLogin: true });
             }
+            loading.stop();
+        },
 
-            yield change({ loading: false });
+        *logout(_, { call }) {
+            const response = yield call(loginService.logout());
+
+            if (response) {
+                securety.unauthorized();
+            }
         },
 
         /**
          * 获取license
          */
         *license(_, { call, change }) {
-            yield change({ loading: true });
-
+            loading.run();
             const license: LOGIN.licenseType = yield call(loginService.getlicense());
 
             yield change({ license });
@@ -56,8 +62,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
                 const machineInfo: LOGIN.machinceType = yield call(loginService.getMachineInfo());
                 yield change({ machineInfo });
             }
-
-            yield change({ loading: false });
+            loading.stop();
         },
     },
 

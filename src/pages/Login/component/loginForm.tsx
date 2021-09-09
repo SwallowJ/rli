@@ -1,16 +1,18 @@
-import React, { useState } from "react";
 import styles from "./style.less";
 import { Button } from "@/component/Button";
 import { Form, Input, Checkbox } from "antd";
+import securety from "@/common/core/securety";
 import langservice from "@/common/core/language";
+import React, { useEffect, useState } from "react";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
-interface loginFormProps {
+interface loginFormProps extends LOGIN.StateType {
     onFinish?: (value: LOGIN.loginParams, remember?: boolean) => void;
 }
 
 export const LoginForm: React.FC<loginFormProps> = ({ onFinish }) => {
     const [tas] = langservice.useLanguage("login");
-
+    const [form] = Form.useForm();
     const [remember, setRemeber] = useState(false);
 
     const submit = (value: LOGIN.loginParams) => {
@@ -21,16 +23,33 @@ export const LoginForm: React.FC<loginFormProps> = ({ onFinish }) => {
         setRemeber(!remember);
     };
 
+    useEffect(() => {
+        if (securety.isRemember()) {
+            setRemeber(true);
+        }
+
+        const userInfo = securety.getRememberInfo();
+        userInfo && form.setFieldsValue(userInfo);
+    }, []);
+
     return (
         <>
             <label className={styles.title}>{tas("title")}</label>
-            <Form onFinish={submit}>
+            <Form onFinish={submit} form={form}>
                 <Form.Item name={"username"} rules={[{ required: true, message: tas("username.required") }]}>
-                    <Input />
+                    <Input
+                        prefix={<UserOutlined style={{ color: "#00000073" }} />}
+                        allowClear={true}
+                        placeholder={tas("placeholder.username")}
+                    />
                 </Form.Item>
 
                 <Form.Item name={"password"} rules={[{ required: true, message: tas("password.required") }]}>
-                    <Input type={"password"} />
+                    <Input.Password
+                        type={"password"}
+                        prefix={<LockOutlined style={{ color: "#00000073" }} />}
+                        placeholder={tas("placeholder.password")}
+                    />
                 </Form.Item>
 
                 <Form.Item>

@@ -10,6 +10,13 @@ class LoginService extends ReqService {
     }
 
     /**
+     * 登出
+     */
+    logout() {
+        return this.get("/api/xc/logout/password");
+    }
+
+    /**
      * 获取token, 对密码加密
      */
     getToken() {

@@ -10,6 +10,10 @@ export class LoginActions extends Actions {
     getlicense() {
         return this.callAction("license");
     }
+
+    logout(callback?: Function) {
+        return this.callAction("logout", { callback });
+    }
 }
 
 export default new LoginActions(namespace);

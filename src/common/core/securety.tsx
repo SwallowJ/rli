@@ -22,6 +22,8 @@ export class SecuretyManager {
     private loginFlag = "isLogin";
     private loginPath = "/login";
     private userInfo = "userInfo";
+    private url = "URL";
+    private homePath = "/XC/home";
 
     /**
      * 用户登录权限校验(获取用户信息)
@@ -42,14 +44,15 @@ export class SecuretyManager {
      */
     unauthorized() {
         storage.local.remove(this.loginFlag);
-        storage.local.save("URL", location.href);
+        storage.local.remove(this.csrfToken);
+        storage.local.save(this.url, location.pathname);
         location.href = this.loginPath;
     }
 
     /**
      * 登录成功
      */
-    loginSuccess(params: LOGIN.loginParams, remember?: boolean) {
+    login(params: LOGIN.loginParams, remember?: boolean) {
         const csrfToken = params._csrf;
         storage.local.save(this.csrfToken, csrfToken!);
         storage.local.save(this.loginFlag, true);
@@ -64,12 +67,45 @@ export class SecuretyManager {
                 }
 
                 storage.local.save(this.userInfo, value);
+            } else {
+                storage.local.remove(this.userInfo);
             }
         }, 0);
     }
 
     getLoginFlag() {
         return storage.local.get(this.loginFlag) === "true";
+    }
+
+    getUrl() {
+        return storage.local.get(this.url) ?? this.homePath;
+    }
+
+    isRemember() {
+        return Boolean(storage.local.get(this.userInfo));
+    }
+
+    /**
+     * 获取记住的用户信息
+     */
+    getRememberInfo() {
+        const value = storage.local.get(this.userInfo);
+
+        if (!value) {
+            return null;
+        }
+
+        const [info, err] = WASM_CRYPTO_deAES(value);
+
+        if (err) {
+            message.error(err);
+            return null;
+        }
+        try {
+            return JSON.parse(info);
+        } catch (_) {
+            return null;
+        }
     }
 }
 

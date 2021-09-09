@@ -38,4 +38,6 @@ declare namespace Aplication {
     }
 
     type routers = router[];
+
+    type permissionType = boolean | string[] | undefined;
 }

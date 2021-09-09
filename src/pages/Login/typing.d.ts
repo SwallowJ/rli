@@ -10,8 +10,6 @@ declare namespace LOGIN {
          */
         machineInfo?: machinceType;
 
-        loading?: boolean;
-
         /**
          * 登录成功标识
          */

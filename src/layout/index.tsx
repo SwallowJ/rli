@@ -8,8 +8,9 @@
 import React from "react";
 import { BaseLayout } from "./Layout";
 import security from "@/common/core/securety";
+import { RouteChildrenProps } from "react-router-dom";
 
-interface layoutProps {
+interface layoutProps extends RouteChildrenProps {
     routers?: Aplication.routers;
 }
 

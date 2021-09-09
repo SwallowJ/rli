@@ -8,4 +8,51 @@
         overflow: auto;
         background-color: #f9fafb;
     }
+
+    .menu {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        padding: 0 40px;
+        border-width: 0px;
+        align-items: center;
+        background-color: inherit;
+
+        color: #ffffff;
+        font-size: 18px;
+        line-height: 57px;
+
+        .selected {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .menuLink {
+            color: #ffffff;
+            font-size: 18px;
+
+            &:hover {
+                color: #ffffff;
+            }
+        }
+
+        li {
+            margin: 0 !important;
+            padding: 0 24px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+
+            &:hover {
+                color: #ffffff;
+                font-weight: bold;
+            }
+
+            div {
+                &:hover {
+                    color: #ffffff;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }

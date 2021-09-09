@@ -8,7 +8,7 @@
 import React from "react";
 import styles from "./style.less";
 
-const loading: React.FC = (props) => {
+const loading: React.FC = () => {
     return (
         <div className={styles.Loading}>
             <div className={styles.wrap}>
