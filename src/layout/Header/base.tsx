@@ -61,13 +61,22 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
                         if (r.routers?.length) {
                             return (
                                 <Menu.SubMenu key={r.path} title={r.name} className={className}>
-                                    {r.routers.map((sub) => (
-                                        <Menu.Item key={sub.path} className={styles.subItem}>
-                                            <Link to={sub.path} className={styles.subMenuLink}>
-                                                {sub.name}
-                                            </Link>
-                                        </Menu.Item>
-                                    ))}
+                                    {r.routers.map((sub) => {
+                                        if (r.path === "/XC/setting" && sub.key === "fileupload") {
+                                            return (
+                                                <Menu.Item key={sub.path} className={styles.subItem}>
+                                                    {sub.name}
+                                                </Menu.Item>
+                                            );
+                                        }
+                                        return (
+                                            <Menu.Item key={sub.path} className={styles.subItem}>
+                                                <Link to={sub.path} className={styles.subMenuLink}>
+                                                    {sub.name}
+                                                </Link>
+                                            </Menu.Item>
+                                        );
+                                    })}
                                 </Menu.SubMenu>
                             );
                         }

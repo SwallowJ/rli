@@ -112,6 +112,13 @@ export default RouterApi([
                         component: "@/pages/Setting/operationReview",
                         data: { permission: ["XC_APP_APPLY"] },
                     },
+                    {
+                        path: "/fileUpload",
+                        name: "文件上传",
+                        key: "fileupload",
+                        component: "@/common/view/404",
+                        data: { permission: ["XC_APP_TRANSIT"] },
+                    },
                 ],
             },
         ],
