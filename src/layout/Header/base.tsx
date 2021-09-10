@@ -9,6 +9,7 @@ import avatar from "@/assert/header/user@2x.png";
 import logoImg from "@/assert/header/logo_white@2x.png";
 import { namespace, AuthStateType } from "@/models/auth";
 import React, { useEffect, useMemo, useState } from "react";
+import { ChangePassword } from "@/layout/component/changePassword";
 
 interface headProps extends AuthStateType {
     dispatch: Dispatch;
@@ -18,6 +19,13 @@ interface headProps extends AuthStateType {
 const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, location }) => {
     const { pathname } = location;
 
+    const [selectedKey, setSelectKey] = useState("");
+
+    const path = useMemo(() => menus?.map((x) => x.path).find((x) => x === pathname || pathname.startsWith(x)) || "", [
+        pathname,
+        menus,
+    ]);
+
     /**
      * 登出
      */
@@ -25,12 +33,10 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
         dispatch(action.logout());
     };
 
-    const [selectedKey, setSelectKey] = useState("");
-
-    const path = useMemo(() => menus?.map((x) => x.path).find((x) => x === pathname || pathname.startsWith(x)) || "", [
-        pathname,
-        menus,
-    ]);
+    /**
+     * 修改密码
+     */
+    const changPassword = () => {};
 
     useEffect(() => {
         setSelectKey(pathname);
@@ -89,7 +95,9 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
                     overlay={
                         <Menu>
                             <Menu.Item onClick={logout}>{"登出"}</Menu.Item>
-                            <Menu.Item>{"修改密码"}</Menu.Item>
+                            <Menu.Item onClick={changPassword}>
+                                <ChangePassword>{"修改密码"}</ChangePassword>
+                            </Menu.Item>
                         </Menu>
                     }
                 >

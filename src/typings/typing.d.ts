@@ -73,6 +73,12 @@ declare namespace Global {
              */
             basePermCategory?: string[];
         }
+
+        interface changePwdType {
+            newPassword: string;
+            currentPassword: string;
+            confirmPassword?: string;
+        }
     }
 
     namespace LANGUAGE {

@@ -5,7 +5,7 @@ class CommonService extends ReqService {
     /**
      * 获取语言包
      */
-    async getlanguagePackage(lang: string, name: string) {
+    getlanguagePackage(lang: string, name: string) {
         return this.get<Global.LANGUAGE.langType>(
             `/language/${lang}/${name}.json`,
             {},
@@ -16,8 +16,15 @@ class CommonService extends ReqService {
     /**
      * 获取用户信息
      */
-    async getAuthInfo() {
-        return this.get(`/api/xc/self`);
+    getAuthInfo() {
+        return this.get<Global.AUTH.entity>(`/api/xc/self`);
+    }
+
+    /**
+     * 修改密码
+     */
+    changePassword(data: Global.AUTH.changePwdType) {
+        return this.post("/api/xc/self/password", { data });
     }
 }
 

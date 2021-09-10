@@ -114,6 +114,10 @@ export class SecurityManager {
     getHomePage() {
         return storage.session.get(this.homePage) || "/";
     }
+
+    getCsrfToken() {
+        return storage.local.get(this.csrfToken) || "";
+    }
 }
 
 export default new SecurityManager();

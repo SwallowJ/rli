@@ -1,3 +1,4 @@
+import { message } from "antd";
 import routers from "@/@temp/router";
 import loading from "@/component/Loading";
 import { parseMenu } from "@/utils/utils";
@@ -51,6 +52,17 @@ const AuthModel: modelType<AuthStateType> = {
             change({ auth, menus, paths, homePage });
 
             callback && callback(homePage);
+            loading.stop();
+        },
+
+        *changePassword({ payload, callback }, { call }) {
+            loading.run();
+            const response = yield call(commonService.changePassword(payload));
+
+            if (response) {
+                message.success("修改密码成功");
+                callback && callback();
+            }
             loading.stop();
         },
     },

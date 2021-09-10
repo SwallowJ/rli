@@ -1,4 +1,5 @@
 import { message } from "antd";
+import security from "@/common/core/security";
 import { RequestManagement } from "./request";
 import { successHandler, errorHandler } from "./handler";
 
@@ -11,6 +12,7 @@ const initOptions: REQUEST.options = {
     credentials: "include",
     errorHandler: errorHandler,
     successHandler: successHandler,
+    headers: { "Content-Type": "application/json; charset=UTF-8", "X-CSRF-TOKEN": security.getCsrfToken() },
 };
 
 export class ReqService extends RequestManagement {
