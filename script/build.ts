@@ -20,9 +20,10 @@ import webpack from "webpack";
 import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
 import { loadEnvironment } from "./utils";
+import { loadModel } from "./utils/config";
+import { loadRouter } from "./utils/router";
 import { FormatUtils } from "./utils/format";
 import WebPackConfig from "./utils/webpack.config";
-import { loadRouter, loadModel } from "./utils/config";
 
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "build" });

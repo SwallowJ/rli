@@ -4,7 +4,7 @@ import styles from "./style.less";
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import action, { namespace } from "./actions";
-import securety from "@/common/core/securety";
+import security from "@/common/core/security";
 import picImg from "@/assert/login/pic@2x.png";
 import langservice from "@/common/core/language";
 import { LoginForm, License } from "./component";
@@ -39,8 +39,8 @@ const login: React.FC<loginProps> = ({ dispatch, license, machineInfo, isLogin, 
         if (isLogin) {
             dispatch({
                 type: "AUTH/getAuthInfo",
-                callback: () => {
-                    history.push(securety.getUrl());
+                callback: (homePage: string) => {
+                    history.push(homePage);
                 },
             });
         }

@@ -17,13 +17,12 @@ interface wrapperProps {
     auth?: Global.AUTH.entity;
 }
 
-export class SecuretyManager {
+export class SecurityManager {
     private csrfToken = "csrfToken";
     private loginFlag = "isLogin";
     private loginPath = "/login";
     private userInfo = "userInfo";
-    private url = "URL";
-    private homePath = "/XC/home";
+    private homePage = "homePage";
 
     /**
      * 用户登录权限校验(获取用户信息)
@@ -45,7 +44,8 @@ export class SecuretyManager {
     unauthorized() {
         storage.local.remove(this.loginFlag);
         storage.local.remove(this.csrfToken);
-        storage.local.save(this.url, location.pathname);
+
+        storage.session.remove(this.homePage);
         location.href = this.loginPath;
     }
 
@@ -77,10 +77,6 @@ export class SecuretyManager {
         return storage.local.get(this.loginFlag) === "true";
     }
 
-    getUrl() {
-        return storage.local.get(this.url) ?? this.homePath;
-    }
-
     isRemember() {
         return Boolean(storage.local.get(this.userInfo));
     }
@@ -107,6 +103,17 @@ export class SecuretyManager {
             return null;
         }
     }
+
+    /**
+     * 暂存首页地址
+     */
+    saveHomepage(path: string) {
+        storage.session.save(this.homePage, path);
+    }
+
+    getHomePage() {
+        return storage.session.get(this.homePage) || "/";
+    }
 }
 
-export default new SecuretyManager();
+export default new SecurityManager();

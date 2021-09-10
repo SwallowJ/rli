@@ -8,6 +8,7 @@ export default RouterApi([
     {
         path: "/XC",
         component: "@/layout",
+        key: "menu",
         routers: [
             {
                 path: "/home",
@@ -114,9 +115,5 @@ export default RouterApi([
                 ],
             },
         ],
-    },
-    {
-        path: "/",
-        redirect: "/XC/home",
     },
 ]);

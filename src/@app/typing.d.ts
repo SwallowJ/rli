@@ -35,6 +35,8 @@ declare namespace Aplication {
          * 额外的数据
          */
         data?: Object;
+
+        key?: string;
     }
 
     type routers = router[];

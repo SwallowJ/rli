@@ -15,9 +15,10 @@ process.on("unhandledRejection", (err) => {
 });
 
 import Logger from "@swallowj/logjs";
+import { loadModel } from "./utils/config";
+import { loadRouter } from "./utils/router";
 import WebpackDevServer from "webpack-dev-server";
 import WebPackConfig from "./utils/webpack.config";
-import { loadRouter, loadModel } from "./utils/config";
 import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./utils";
 
 Logger.setGlobalLevel(0);

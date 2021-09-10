@@ -7,12 +7,10 @@
 
 import React from "react";
 import { BaseLayout } from "./Layout";
-import security from "@/common/core/securety";
+import security from "@/common/core/security";
 import { RouteChildrenProps } from "react-router-dom";
 
-interface layoutProps extends RouteChildrenProps {
-    routers?: Aplication.routers;
-}
+interface layoutProps extends RouteChildrenProps {}
 
 const Layout: React.FC<layoutProps> = (props) => {
     return <BaseLayout {...props} />;

@@ -1,3 +1,5 @@
+@font-color: #ffffff;
+
 .BaseHead {
     background-color: #32353c;
 
@@ -47,6 +49,65 @@
                 font-size: 14px;
                 color: #ffffff;
             }
+        }
+
+        .menu {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            padding: 0 40px;
+            border-width: 0px;
+            align-items: center;
+            background-color: inherit;
+
+            font-size: 18px;
+            line-height: 57px;
+            color: @font-color;
+
+            .selected {
+                font-weight: bold;
+                color: @font-color;
+            }
+
+            .menuItem {
+                margin: 0;
+                padding: 0 24px;
+
+                &:hover {
+                    font-weight: bold;
+                    color: @font-color;
+                }
+
+                div {
+                    color: @font-color;
+
+                    &:hover {
+                        font-weight: bold;
+                        color: @font-color;
+                    }
+                }
+            }
+
+            .menuLink {
+                color: @font-color;
+
+                &:hover {
+                    color: @font-color;
+                }
+            }
+        }
+    }
+}
+
+.subItem {
+    &:hover {
+        color: #000000d9;
+        background-color: #0000000a;
+    }
+
+    a {
+        &:hover {
+            color: #000000d9;
         }
     }
 }

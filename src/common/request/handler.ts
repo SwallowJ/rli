@@ -1,6 +1,6 @@
 import { message } from "antd";
 import { callType } from "@/utils/functools";
-import securety from "@/common/core/securety";
+import security from "@/common/core/security";
 
 export enum HTTPCode {
     OK = 200,
@@ -53,7 +53,7 @@ export const errorHandler: REQUEST.responsehandler = async (res, req) => {
 
         case HTTPCode.Unauthorized:
             message.error(`未登录或登录已超时，请重新登录`);
-            securety.unauthorized();
+            security.unauthorized();
             return;
 
         default:

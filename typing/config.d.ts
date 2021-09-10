@@ -119,6 +119,8 @@ export declare namespace GlobalConfig {
          * 额外的数据
          */
         data?: dataType;
+
+        key?: string;
     }
 
     interface loadFileProps<T = {}> {

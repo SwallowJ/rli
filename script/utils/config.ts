@@ -23,7 +23,7 @@ const __Reg_Model = /(namespace)(\S|\s)*(state:)(\S|\s)*(effects:)(\S|\s)*(reduc
 const __Src_Path = path.resolve(process.cwd(), "src");
 const __Temp_Path = path.resolve(process.cwd(), "src/@temp");
 
-const __checkEnv = () => {
+export const __checkEnv = () => {
     const { NODE_ENV } = process.env;
 
     if (!NODE_ENV) {
@@ -83,135 +83,12 @@ const resolveConfig = (function () {
     }
 })();
 
-/**
- * 临时文件目
- */
-const tempPath = (function () {
-    if (fs.existsSync(__Temp_Path)) {
-        if (fs.statSync(__Temp_Path).isFile()) {
-            fs.unlinkSync(__Temp_Path);
-            fs.mkdirSync(__Temp_Path);
-        }
-    } else {
-        fs.mkdirSync(__Temp_Path);
-    }
-    return __Temp_Path;
-})();
+export const createWriteStream = (dir: string, filename: string) => {
+    fs.existsSync(dir) || fs.mkdirSync(dir);
+    const filepath = path.resolve(dir, filename);
 
-const resolvePath = (...args: string[]) => args.reduce((a, p) => (p.startsWith(a) ? p : a + p), "");
-
-/**
- *路由加载
- */
-export const loadRouter = () => {
-    let writeStream: fs.WriteStream | null = null;
-    try {
-        __checkEnv();
-        const { NODE_ENV } = process.env;
-        const filename = "router";
-
-        const config = [`${filename}.${NODE_ENV}.local`, `${filename}.${NODE_ENV}`, `${filename}.local`, filename]
-            .map((f) => path.resolve(process.cwd(), "./config", f))
-            .find((f) => {
-                try {
-                    return Boolean(require(f).default);
-                } catch (err) {
-                    return false;
-                }
-            });
-
-        if (!config) {
-            logger.Warn("未找到配置文件");
-            return;
-        }
-
-        const routers = require(config).default as GlobalConfig.RouterApi[];
-
-        writeStream = fs.createWriteStream(path.resolve(tempPath, "router.tsx"));
-
-        remark.mark(writeStream, { auth: "feihongjiang", email: "feihongjiang@caih.com", desc: "路由配置" });
-        writeStream.write(`import React from "react";\n`);
-        writeStream.write(`import loadable from "@loadable/component";\n`);
-        writeStream.write(`import Loading from "@/common/view/loading";\n\n`);
-        writeStream.write(`const options = {\n\tfallback: <Loading />,\n};\n\n`);
-        writeStream.write(`const routers: Aplication.router[] = [\n`);
-
-        const parseData = (data: GlobalConfig.dataType, t: number) => {
-            const t1 = new Array(t).fill("\t").join("");
-            const t2 = new Array(t + 1).fill("\t").join("");
-
-            switch (Object.prototype.toString.call(data)) {
-                case "[object String]":
-                    writeStream?.write(`"${data}",`);
-                    return;
-                case "[object Object]":
-                    writeStream?.write(`{\n`);
-                    Object.entries(data).forEach(([key, value]) => {
-                        writeStream?.write(`${t2}${key}: `);
-                        parseData(value, t + 2);
-                    });
-                    writeStream?.write(`\n${t1}},`);
-                    return;
-                case "[object Array]":
-                    writeStream?.write(`[`);
-                    (data as Array<GlobalConfig.dataType>).forEach((d) => {
-                        parseData(d, t + 2);
-                    });
-                    writeStream?.write(`],`);
-                    return;
-
-                default:
-                    writeStream?.write(`${data},`);
-                    return;
-            }
-        };
-
-        const parseRouter = (routers: GlobalConfig.RouterApi[], t = 1, rootPath = "/") => {
-            const t1 = new Array(t).fill("\t").join("");
-            const t2 = new Array(t + 1).fill("\t").join("");
-
-            routers.forEach((router) => {
-                const currentPath = resolvePath(rootPath, router.path);
-                writeStream?.write(`${t1}{\n`);
-
-                Object.entries(router).forEach(([key, value]) => {
-                    switch (key) {
-                        case "routers":
-                            writeStream?.write(`${t2}${key}: [\n`);
-                            parseRouter(value, t + 2, currentPath);
-                            writeStream?.write(`${t2}],\n`);
-                            return;
-
-                        case "component":
-                            writeStream?.write(`${t2}${key}: loadable(() => import("${value}"), options),\n`);
-                            return;
-                        case "data":
-                            writeStream?.write(`${t2}${key}: `);
-                            parseData(value, t + 1);
-                            writeStream?.write("\n");
-                            return;
-                        case "path":
-                            writeStream?.write(`${t2}${key}: "${currentPath}",\n`);
-                            return;
-                        default:
-                            writeStream?.write(`${t2}${key}: "${value}",\n`);
-                            return;
-                    }
-                });
-
-                writeStream?.write(`${t1}},\n`);
-            });
-        };
-
-        parseRouter(routers);
-
-        writeStream.write(`];\n\nexport default routers;\n`);
-    } catch (err) {
-        logger.Error(err);
-        process.exit(1);
-    } finally {
-        writeStream?.close();
-    }
+    fs.existsSync(filepath) && fs.unlinkSync(filepath);
+    return fs.createWriteStream(filepath);
 };
 
 const __scanModels = (dir: string, writeStream: fs.WriteStream, isModel: boolean) => {
@@ -251,7 +128,7 @@ const __scanModels = (dir: string, writeStream: fs.WriteStream, isModel: boolean
 export const loadModel = () => {
     let writeStream: fs.WriteStream | null = null;
     try {
-        writeStream = fs.createWriteStream(path.resolve(tempPath, "models.ts"));
+        writeStream = createWriteStream(__Temp_Path, "models.ts");
         remark.mark(writeStream, { auth: "feihongjiang", email: "feihongjiang@caih.com", desc: "redux加载模块" });
         const __Model_Path = path.resolve(__Src_Path, "models");
         const __Page_Path = path.resolve(__Src_Path, "pages");

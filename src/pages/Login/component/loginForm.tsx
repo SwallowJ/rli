@@ -1,7 +1,7 @@
 import styles from "./style.less";
 import { Button } from "@/component/Button";
 import { Form, Input, Checkbox } from "antd";
-import securety from "@/common/core/securety";
+import security from "@/common/core/security";
 import langservice from "@/common/core/language";
 import React, { useEffect, useState } from "react";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
@@ -24,11 +24,11 @@ export const LoginForm: React.FC<loginFormProps> = ({ onFinish }) => {
     };
 
     useEffect(() => {
-        if (securety.isRemember()) {
+        if (security.isRemember()) {
             setRemeber(true);
         }
 
-        const userInfo = securety.getRememberInfo();
+        const userInfo = security.getRememberInfo();
         userInfo && form.setFieldsValue(userInfo);
     }, []);
 

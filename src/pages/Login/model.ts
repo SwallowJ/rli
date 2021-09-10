@@ -3,7 +3,7 @@ import loginService from "./service";
 import { namespace } from "./actions";
 import loading from "@/component/Loading";
 import { modelType } from "@/typings/model";
-import securety from "@/common/core/securety";
+import security from "@/common/core/security";
 
 const LoginModel: modelType<LOGIN.StateType> = {
     namespace,
@@ -11,7 +11,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
     state: {
         license: null,
         machineInfo: null,
-        isLogin: securety.getLoginFlag(),
+        isLogin: security.getLoginFlag(),
     },
 
     effects: {
@@ -36,7 +36,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
             const response = yield call(loginService.login(params));
             if (response) {
                 message.success("登录成功");
-                securety.login({ ...payload, _csrf }, remember);
+                security.login({ ...payload, _csrf }, remember);
                 yield change({ isLogin: true });
             }
             loading.stop();
@@ -46,7 +46,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
             const response = yield call(loginService.logout());
 
             if (response) {
-                securety.unauthorized();
+                security.unauthorized();
             }
         },
 
