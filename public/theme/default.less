@@ -17,6 +17,7 @@
 
 .xc-menu-light {
     color: @font-color-light !important;
+    background-color: inherit !important;
 
     .ant-menu-submenu-open {
         border-color: @primary-color !important;
@@ -33,7 +34,6 @@
     color: inherit !important;
 
     &:hover {
-        font-weight: bold;
         border-color: @primary-color !important;
     }
 
@@ -41,7 +41,6 @@
         color: inherit;
 
         &:hover {
-            font-weight: bold;
             color: inherit !important;
         }
     }
@@ -69,7 +68,6 @@
     color: inherit !important;
 
     &:hover {
-        font-weight: bold;
         border-color: @primary-color !important;
     }
 }
@@ -88,12 +86,13 @@
 
 /*######################################## 布局样式 ################################*/
 @head-size: 60px;
-@head-color: #32353c;
+@head-bg: #32353c;
+@content-bg: #f9fafb;
 
 .xc-layout-header {
     height: @head-size;
     color: @font-color-light;
-    background-color: @head-color;
+    background-color: @head-bg;
 }
 
 .xc-layout-header-logo {
@@ -110,6 +109,15 @@
         position: absolute;
         background-color: @font-color-light;
     }
+}
+
+.xc-layout-conten {
+    background-color: @content-bg;
+}
+
+/*######################################## 下拉菜单 ################################*/
+.xc-dropdown {
+    background-color: @defalut-color;
 }
 
 /*######################################## 按钮样式 ################################*/

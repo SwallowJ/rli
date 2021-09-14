@@ -1,0 +1,25 @@
+{
+    "app.title": "XC PROJECT SYS",
+    "avatar.logout": "logout",
+    "avatar.changePassword": "change password",
+
+    "menu.home": "Home",
+    "menu.workbench": "Workbench",
+    "menu.report": "Report",
+    "menu.project": "Project",
+    "menu.assert": "Assert",
+    "menu.setting": "Setting",
+
+    "menu.user": "USER Management",
+    "menu.role": "ROLE Management",
+    "menu.log": "LOG Management",
+    "menu.system": "SYS Management",
+    "menu.opration": "Operation Review",
+    "menu.fileUpload": "File Upload",
+
+    "menu.device": "Device Management",
+    "menu.deliver": "Deliver Management",
+    "menu.sign": "signFor Management",
+    "menu.contract": "Contract Management",
+    "menu.ledger": "Ledger Management"
+}

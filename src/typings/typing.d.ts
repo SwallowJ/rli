@@ -24,8 +24,8 @@ declare namespace Global {
 
     type resultType<T = any> = resultData<T> | undefined;
 
-    interface obj {
-        [key: string]: number | string | boolean;
+    interface obj<T = number | string | boolean> {
+        [key: string]: T;
     }
 
     namespace AUTH {
@@ -99,8 +99,8 @@ declare namespace Global {
         /**
          * 语言包映射函数
          */
-        type langFunc = (key: string) => string;
+        type langFunc = (key?: string) => string;
 
-        type langTempFunc = (key: string, obj?: Global.obj) => string;
+        type langTempFunc = (key?: string, obj?: Global.obj) => string;
     }
 }

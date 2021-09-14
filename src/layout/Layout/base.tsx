@@ -23,7 +23,9 @@ const baseLayout: React.FC<layoutProps> = ({ children, location, menus = [], pat
         <div className={styles.BaseLayout}>
             <BaseHead location={location} />
             <ErrorBoundary>
-                <div className={styles.content}>{paths.includes(path) ? children : <NotFoundPage />}</div>
+                <div className={`xc-layout-conten ${styles.content}`}>
+                    {paths.includes(path) ? children : <NotFoundPage />}
+                </div>
             </ErrorBoundary>
         </div>
     );

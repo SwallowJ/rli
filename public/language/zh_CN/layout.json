@@ -1,0 +1,24 @@
+{
+    "app.title": "XC项目管理系统",
+    "avatar.logout": "登出",
+    "avatar.changePassword": "修改密码",
+
+    "menu.home": "首页",
+    "menu.workbench": "工作台",
+    "menu.report": "报表",
+    "menu.project": "项目管理",
+    "menu.assert": "资产管理",
+    "menu.setting": "设置",
+    "menu.user": "用户管理",
+    "menu.role": "角色管理",
+    "menu.log": "日志管理",
+    "menu.system": "系统设置",
+    "menu.opration": "操作审核",
+    "menu.fileUpload": "文件上传",
+
+    "menu.device": "设备管理",
+    "menu.deliver": "发货管理",
+    "menu.sign": "签收管理",
+    "menu.contract": "合同管理",
+    "menu.ledger": "台账管理"
+}

@@ -23,5 +23,23 @@ declare namespace CORE {
         remove(key: string): void;
 
         get<T extends string = string>(key: string): T | null;
+
+        keys(): Generator<string, any, string>;
+    }
+
+    interface themeType {
+        /**
+         * 主题名
+         */
+        name: string;
+        /**
+         * 主题值
+         */
+        value: Global.obj<string>;
+
+        /**
+         * 主题描述
+         */
+        desc?: string;
     }
 }

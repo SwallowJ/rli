@@ -1,10 +1,8 @@
-import { Spin } from "antd";
 import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import action, { namespace } from "./actions";
-import security from "@/common/core/security";
 import picImg from "@/assert/login/pic@2x.png";
 import langservice from "@/common/core/language";
 import { LoginForm, License } from "./component";

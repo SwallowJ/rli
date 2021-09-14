@@ -7,6 +7,7 @@ export const namespace = "language";
 export interface LangStateType {
     lang?: Global.LANGUAGE.Type;
     login?: Global.LANGUAGE.code;
+    layout?: Global.LANGUAGE.code;
 }
 
 const LanguageModel: modelType<LangStateType> = {
@@ -15,6 +16,7 @@ const LanguageModel: modelType<LangStateType> = {
     state: {
         lang: LanguageManager.init(),
         login: {},
+        layout: {},
     },
 
     effects: {

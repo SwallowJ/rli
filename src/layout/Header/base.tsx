@@ -2,11 +2,11 @@ import * as H from "history";
 import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
-import { Dropdown, Menu as Me } from "antd";
-import { Menu } from "@/component";
 import { Link } from "react-router-dom";
 import action from "@/pages/Login/actions";
+import { Menu, Dropdown } from "@/component";
 import avatar from "@/assert/header/user@2x.png";
+import langservice from "@/common/core/language";
 import logoImg from "@/assert/header/logo_white@2x.png";
 import { namespace, AuthStateType } from "@/models/auth";
 import React, { useEffect, useMemo, useState } from "react";
@@ -21,6 +21,7 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
     const { pathname } = location;
 
     const [selectedKey, setSelectKey] = useState("");
+    const [lyTrans] = langservice.useLanguage("layout");
 
     const path = useMemo(() => menus?.map((x) => x.path).find((x) => x === pathname || pathname.startsWith(x)) || "", [
         pathname,
@@ -48,7 +49,7 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
             <div className={styles.content}>
                 <Link to={homePage} className={styles.logo}>
                     <img src={logoImg} />
-                    <span className={"xc-layout-header-logo"}>{"XC项目管理系统"}</span>
+                    <span className={"xc-layout-header-logo"}>{lyTrans("app.title")}</span>
                 </Link>
 
                 <Menu mode={"horizontal"} className={styles.menu} selectedKeys={[selectedKey]} theme={"light"}>
@@ -61,21 +62,21 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
                             return (
                                 <Menu.TitleItem key={r.path} className={className}>
                                     <Link to={r.path} className={styles.menuLink}>
-                                        {r.name}
+                                        {lyTrans(r.name)}
                                     </Link>
                                 </Menu.TitleItem>
                             );
                         }
                         if (r.routers?.length) {
                             return (
-                                <Menu.SubMenu key={r.path} title={r.name} className={className}>
+                                <Menu.SubMenu key={r.path} title={lyTrans(r.name)} className={className}>
                                     {r.routers.map((sub) => {
                                         if (r.path === "/XC/setting" && sub.key === "fileupload") {
-                                            return <Menu.Item key={sub.path}>{sub.name}</Menu.Item>;
+                                            return <Menu.Item key={sub.path}>{lyTrans(sub.name)}</Menu.Item>;
                                         }
                                         return (
                                             <Menu.Item key={sub.path}>
-                                                <Link to={sub.path}>{sub.name}</Link>
+                                                <Link to={sub.path}>{lyTrans(sub.name)}</Link>
                                             </Menu.Item>
                                         );
                                     })}
@@ -90,9 +91,9 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
                 <Dropdown
                     overlay={
                         <Menu>
-                            <Menu.Item onClick={logout}>{"登出"}</Menu.Item>
+                            <Menu.Item onClick={logout}>{lyTrans("avatar.logout")}</Menu.Item>
                             <Menu.Item onClick={changPassword}>
-                                <ChangePassword>{"修改密码"}</ChangePassword>
+                                <ChangePassword>{lyTrans("avatar.changePassword")}</ChangePassword>
                             </Menu.Item>
                         </Menu>
                     }

@@ -15,6 +15,10 @@
                 height: 44px;
                 width: 114px;
             }
+
+            span {
+                white-space: nowrap;
+            }
         }
 
         .authInfo {
@@ -38,21 +42,28 @@
             flex: 1;
             height: 100%;
             display: flex;
-            padding: 0 40px;
+            margin: 0 40px;
             font-size: 18px;
             border-width: 0px;
             line-height: 57px;
+
             align-items: center;
-            background-color: inherit;
+
+            overflow-y: hidden;
+            overflow-x: auto;
 
             .selected {
-                font-weight: bold;
                 border-bottom: 2px solid;
+                text-shadow: -0.1ex 0, 0.1ex 0;
             }
 
             .menuItem {
                 margin: 0;
                 padding: 0 24px;
+
+                &:hover {
+                    text-shadow: -0.1ex 0, 0.1ex 0;
+                }
             }
 
             .menuLink {

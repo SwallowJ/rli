@@ -31,7 +31,11 @@ class StoreManager {
     }
 
     decodeObj<T = Object>(value: string | null): T | null {
-        return value ? JSON.parse(value) : value;
+        try {
+            return value ? JSON.parse(value) : value;
+        } catch (err) {
+            return null;
+        }
     }
 
     actions(engine: Storage): CORE.storeType {
@@ -57,8 +61,18 @@ class StoreManager {
             getObj: <T = any>(key: string): T | null => {
                 return this.decodeObj(engine.getItem(key));
             },
+
             remove(key) {
                 engine.removeItem(key);
+            },
+
+            *keys() {
+                for (let i = 0; i < engine.length; i++) {
+                    const key = engine.key(i);
+                    if (key) {
+                        yield key;
+                    }
+                }
             },
         };
     }

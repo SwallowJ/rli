@@ -9,7 +9,7 @@ class CommonService extends ReqService {
         return this.get<Global.LANGUAGE.langType>(
             `/language/${lang}/${name}.json`,
             {},
-            { cache: true, key: `language_${lang}_${name}`, engine: storage.session }
+            { cache: false, key: `language_${lang}_${name}`, engine: storage.session }
         );
     }
 
