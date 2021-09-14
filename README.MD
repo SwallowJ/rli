@@ -42,3 +42,7 @@ $npm run build
 -   待补充
 
 ## [查看配置](config/README.MD#config)
+
+## 主题
+
+初始模板 [/theme/default.less](public/theme/default.less), 然后加载主题(json), 动态替换模板中的样式

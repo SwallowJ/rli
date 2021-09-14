@@ -1,0 +1,120 @@
+/*######################################## 基础颜色 ################################*/
+
+@primary-color: #1890ff;
+@defalut-color: #ffffff;
+
+@active-dark-color: #9c81810a;
+@active-dark-light: #e6f7ff;
+
+/*######################################## 文字样式 ################################*/
+@font-size-title: 22px;
+@font-size-subTitle: 18px;
+
+@font-color-light: #ffffff;
+@font-color-dark: #353535;
+
+/*######################################## Menu ###################################*/
+
+.xc-menu-light {
+    color: @font-color-light !important;
+
+    .ant-menu-submenu-open {
+        border-color: @primary-color !important;
+    }
+}
+
+.xc-menu-dark {
+    .xc-menu-light ();
+
+    color: @font-color-dark !important;
+}
+
+.xc-menu-sub {
+    color: inherit !important;
+
+    &:hover {
+        font-weight: bold;
+        border-color: @primary-color !important;
+    }
+
+    div {
+        color: inherit;
+
+        &:hover {
+            font-weight: bold;
+            color: inherit !important;
+        }
+    }
+}
+
+.xc-menu-item {
+    color: inherit !important;
+
+    &:hover {
+        color: inherit;
+        background-color: @active-dark-color;
+    }
+
+    a {
+        color: inherit !important;
+
+        &:hover {
+            color: inherit !important;
+            border-color: @primary-color !important;
+        }
+    }
+}
+
+.xc-menu-item-title {
+    color: inherit !important;
+
+    &:hover {
+        font-weight: bold;
+        border-color: @primary-color !important;
+    }
+}
+
+.xc-menu-selected {
+    border-color: @primary-color !important;
+}
+
+.ant-menu-sub {
+    background-color: @defalut-color !important;
+
+    .ant-menu-item-selected {
+        background-color: @active-dark-light !important;
+    }
+}
+
+/*######################################## 布局样式 ################################*/
+@head-size: 60px;
+@head-color: #32353c;
+
+.xc-layout-header {
+    height: @head-size;
+    color: @font-color-light;
+    background-color: @head-color;
+}
+
+.xc-layout-header-logo {
+    margin-left: 25px;
+    position: relative;
+    color: @font-color-light;
+    font-size: @font-size-title;
+
+    &::before {
+        content: "";
+        width: 1px;
+        left: -13px;
+        height: 34px;
+        position: absolute;
+        background-color: @font-color-light;
+    }
+}
+
+/*######################################## 按钮样式 ################################*/
+.caih-btn {
+    border-radius: 4px !important;
+    border-color: @primary-color !important;
+    background-color: @primary-color !important;
+}

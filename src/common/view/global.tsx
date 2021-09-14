@@ -4,11 +4,14 @@
  * email         feihongjiang@caih.com
  * Description   全局配置页面
  */
+import less from "less";
 import { Dispatch } from "redux";
+import { ConfigProvider } from "antd";
 import { connect } from "react-redux";
 import { useWasm } from "@/common/wasm";
 import Loading from "@/common/view/loading";
 import { LangStateType } from "@/models/language";
+import { loadTheme } from "@/common/core/theme";
 import React, { ReactNode, useEffect } from "react";
 
 interface globalProps extends LangStateType {
@@ -26,11 +29,20 @@ const global: React.FC<globalProps> = ({ children, lang, dispatch }) => {
         dispatch({ type: "language/getPack", name, lang });
     };
 
+    const loadLess = () => {
+        less.modifyVars({});
+    };
+
     useEffect(() => {
         loadLanguagePackage("login");
     }, [lang]);
 
-    return <>{loadingWasm ? <Loading /> : children}</>;
+    useEffect(() => {
+        console.log(localStorage.length);
+        // loadLess();
+    }, []);
+
+    return <ConfigProvider>{loadingWasm ? <Loading /> : children}</ConfigProvider>;
 };
 
 export default connect(({ language: { lang } }: { language: LangStateType }) => ({ lang }))(global);

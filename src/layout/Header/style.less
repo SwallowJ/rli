@@ -1,11 +1,7 @@
-@font-color: #ffffff;
-
 .BaseHead {
-    background-color: #32353c;
-
     .content {
         margin: auto;
-        height: 60px;
+        height: 100%;
         display: flex;
         width: 1200px;
         align-items: center;
@@ -19,18 +15,6 @@
                 height: 44px;
                 width: 114px;
             }
-
-            .divider {
-                width: 1px;
-                height: 34px;
-                margin: 0 12px;
-                background-color: #ffffff;
-            }
-
-            .title {
-                font-size: 22px;
-                color: #ffffff;
-            }
         }
 
         .authInfo {
@@ -42,12 +26,11 @@
 
             span {
                 font-size: 14px;
-                color: #ffffff;
             }
 
             a {
+                color: inherit;
                 font-size: 14px;
-                color: #ffffff;
             }
         }
 
@@ -56,58 +39,29 @@
             height: 100%;
             display: flex;
             padding: 0 40px;
+            font-size: 18px;
             border-width: 0px;
+            line-height: 57px;
             align-items: center;
             background-color: inherit;
 
-            font-size: 18px;
-            line-height: 57px;
-            color: @font-color;
-
             .selected {
                 font-weight: bold;
-                color: @font-color;
+                border-bottom: 2px solid;
             }
 
             .menuItem {
                 margin: 0;
                 padding: 0 24px;
-
-                &:hover {
-                    font-weight: bold;
-                    color: @font-color;
-                }
-
-                div {
-                    color: @font-color;
-
-                    &:hover {
-                        font-weight: bold;
-                        color: @font-color;
-                    }
-                }
             }
 
             .menuLink {
-                color: @font-color;
+                color: inherit;
 
                 &:hover {
-                    color: @font-color;
+                    color: inherit;
                 }
             }
-        }
-    }
-}
-
-.subItem {
-    &:hover {
-        color: #000000d9;
-        background-color: #0000000a;
-    }
-
-    a {
-        &:hover {
-            color: #000000d9;
         }
     }
 }

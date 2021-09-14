@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
 import go from "./init";
+import { useEffect, useState } from "react";
+import { req } from "@/common/request/request";
 
 const load = async (name: string) => {
-    return fetch(`/wasm/${name}.wasm`)
-        .then((response) => WebAssembly.instantiateStreaming(response, go.importObject))
+    return req
+        .request("GET", `/wasm/${name}.wasm`, {}, { handFunc: (r) => r.arrayBuffer() })
+        .then((response) => WebAssembly.instantiate(response, go.importObject))
         .then(({ instance }) => {
             go.run(instance);
         })

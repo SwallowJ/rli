@@ -1,10 +1,11 @@
 import React from "react";
+import Container from "@/component/Container";
 
 const home: React.FC = () => {
     return (
-        <div>
+        <Container>
             <h1>{"用户管理"}</h1>
-        </div>
+        </Container>
     );
 };
 
