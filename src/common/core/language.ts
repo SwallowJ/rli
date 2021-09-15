@@ -6,11 +6,20 @@
  */
 import StorageManager from "./storage";
 import { useSelector } from "react-redux";
-import { ReactText, useCallback } from "react";
+import { ReactText, useCallback, useMemo } from "react";
+import zh_CN from "antd/lib/locale/zh_CN";
+import en_US from "antd/lib/locale/en_US";
+import moment from "moment";
+import loadable from "@loadable/component";
 import { LangStateType, namespace } from "@/models/language";
 
 class LanguageManager {
     private storeName = "language";
+
+    private langMap = new Map([
+        ["zh_CN", zh_CN],
+        ["en_US", en_US],
+    ]);
 
     /**
      * 获取初始语言类型
@@ -69,6 +78,11 @@ class LanguageManager {
         }
 
         return result.join("");
+    }
+
+    uselocal(lang?: Global.LANGUAGE.Type) {
+        const local = useMemo(() => this.langMap.get(lang ?? ""), [lang]);
+        return [local];
     }
 }
 

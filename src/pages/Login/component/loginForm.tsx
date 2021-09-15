@@ -1,5 +1,5 @@
 import styles from "./style.less";
-import { Button } from "@/component/Button";
+import { Button } from "@/component";
 import { Form, Input, Checkbox } from "antd";
 import security from "@/common/core/security";
 import langservice from "@/common/core/language";

@@ -1,6 +1,8 @@
 import React from "react";
-import { Button as Btn, ButtonProps } from "antd";
+import { Button, ButtonProps } from "antd";
 
-export const Button: React.FC<ButtonProps> = (props) => {
-    return <Btn {...props} className={`caih-btn ${props.className || ""}`} />;
+const button: React.FC<ButtonProps> = (props) => {
+    return <Button {...props} className={`xc-btn-${props.type || "default"} ${props.className || ""}`} />;
 };
+
+export default button;

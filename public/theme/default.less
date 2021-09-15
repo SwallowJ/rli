@@ -4,7 +4,9 @@
 @defalut-color: #ffffff;
 
 @active-dark-color: #9c81810a;
-@active-dark-light: #e6f7ff;
+@active-light-color: #e6f7ff;
+
+@default-border-color: #d9d9d9;
 
 /*######################################## 文字样式 ################################*/
 @font-size-title: 22px;
@@ -80,7 +82,7 @@
     background-color: @defalut-color !important;
 
     .ant-menu-item-selected {
-        background-color: @active-dark-light !important;
+        background-color: @active-light-color !important;
     }
 }
 
@@ -121,8 +123,70 @@
 }
 
 /*######################################## 按钮样式 ################################*/
-.caih-btn {
+.xc-btn {
     border-radius: 4px !important;
+
+    &:hover {
+        color: @primary-color !important;
+        border-color: @primary-color !important;
+    }
+}
+
+.xc-btn-primary {
+    .xc-btn();
+    color: @font-color-light !important;
     border-color: @primary-color !important;
     background-color: @primary-color !important;
+
+    &:hover {
+        color: @font-color-light !important;
+        border-color: @primary-color !important;
+    }
+}
+
+.xc-btn-default {
+    .xc-btn();
+    color: @font-color-dark!important;
+    background-color: @defalut-color !important;
+}
+
+.xc-btn-dashed {
+    .xc-btn();
+    color: @font-color-dark!important;
+    background-color: @defalut-color !important;
+    border-color: @default-border-color !important;
+}
+
+.xc-btn-ghost {
+    .xc-btn();
+    color: @font-color-dark !important;
+    border-color: @default-border-color !important;
+}
+
+.xc-btn-link {
+    color: @primary-color !important;
+}
+
+.xc-btn-text {
+    .xc-btn();
+
+    &:hover {
+        color: @font-color-dark !important;
+        border-color: transparent !important;
+        background-color: @active-light-color !important;
+    }
+}
+
+/*######################################## table样式 ################################*/
+
+@tb-head-bg: #f1f1f1;
+@tb-head-color: #808080;
+
+.ant-table-thead {
+    th {
+        font-weight: 700 !important;
+        padding: 9px 16px !important;
+        color: @tb-head-color !important;
+        background-color: @tb-head-bg !important;
+    }
 }

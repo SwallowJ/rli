@@ -76,6 +76,7 @@
         "start": "ts-node script/start",
         "build": "ts-node script/build",
         "server": "http-server ./build",
-        "build-wasm": "cd webAssembly && go run main.go"
+        "build-wasm": "cd webAssembly && go run main.go",
+        "tp": "ts-node script/template"
     }
 }

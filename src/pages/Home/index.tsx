@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./style.less";
-// import less from "less";
-import { Button } from "@/component/Button";
+import { Button } from "@/component";
 import Container from "@/component/Container";
 
-const home: React.FC = (props) => {
+const home: React.FC = () => {
     const click = () => {
         console.log("this is home page");
     };

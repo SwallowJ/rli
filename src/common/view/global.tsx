@@ -12,6 +12,7 @@ import { useWasm } from "@/common/wasm";
 import Loading from "@/common/view/loading";
 import { LangStateType } from "@/models/language";
 import React, { ReactNode, useEffect } from "react";
+import langservice from "@/common/core/language";
 
 interface globalProps extends LangStateType {
     children: ReactNode;
@@ -20,6 +21,8 @@ interface globalProps extends LangStateType {
 
 const global: React.FC<globalProps> = ({ children, lang, dispatch }) => {
     const [loadingWasm] = useWasm();
+
+    const [local] = langservice.uselocal(lang);
 
     /**
      * 加载语言包(json文件)
@@ -37,7 +40,7 @@ const global: React.FC<globalProps> = ({ children, lang, dispatch }) => {
         theme.load();
     }, []);
 
-    return <ConfigProvider>{loadingWasm ? <Loading /> : children}</ConfigProvider>;
+    return <ConfigProvider locale={local}>{loadingWasm ? <Loading /> : children}</ConfigProvider>;
 };
 
 export default connect(({ language: { lang } }: { language: LangStateType }) => ({ lang }))(global);

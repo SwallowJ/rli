@@ -65,8 +65,8 @@ declare namespace Global {
              */
             userName: string;
 
-            userEmail?: string;
-            userPhone?: string;
+            email?: string;
+            phone?: string;
 
             /**
              * 权限列表

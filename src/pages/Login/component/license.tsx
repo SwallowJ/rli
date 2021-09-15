@@ -1,7 +1,7 @@
 import styles from "./style.less";
+import { Button } from "@/component";
 import React, { useRef } from "react";
 import { Alert, message } from "antd";
-import { Button } from "@/component/Button";
 import fileService from "@/service/fileService";
 import langservice from "@/common/core/language";
 import { FileSelect } from "@/component/FileSelect";
