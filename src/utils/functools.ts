@@ -3,7 +3,7 @@
  * @param fn 要执行的函数
  * @param wait 延迟时间 default=300ms
  */
-export const debounce = (fn: any, wait = 200) => {
+export function debounce<T extends Function>(fn: T, wait = 200) {
     let timer: NodeJS.Timeout;
     return (...args: any) => {
         if (timer) {
@@ -13,7 +13,7 @@ export const debounce = (fn: any, wait = 200) => {
             fn(...args);
         }, wait);
     };
-};
+}
 
 /**
  * 获取对象类型

@@ -6,7 +6,7 @@ class LoginService extends ReqService {
      * 登录
      */
     login(params: LOGIN.loginParams) {
-        return this.post<Global.resultType<string>>("/xc/login/password/encode", { params });
+        return this.post<string>("/xc/login/password/encode", { params });
     }
 
     /**

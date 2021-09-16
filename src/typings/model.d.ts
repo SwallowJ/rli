@@ -52,3 +52,5 @@ export interface modelType<S = any> {
      */
     reducers: ReducersMapObject<S>;
 }
+
+export type resultType<T> = T | undefined;

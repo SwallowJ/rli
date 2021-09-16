@@ -183,10 +183,56 @@
 @tb-head-color: #808080;
 
 .ant-table-thead {
+    background-color: @tb-head-bg !important;
     th {
         font-weight: 700 !important;
         padding: 9px 16px !important;
         color: @tb-head-color !important;
         background-color: @tb-head-bg !important;
     }
+}
+
+.ant-table-tbody {
+    td {
+        padding: 9px 16px !important;
+        color: @tb-head-color !important;
+    }
+}
+
+.ant-table-cell-scrollbar {
+    box-shadow: 0 1px 0 1px @tb-head-bg !important;
+}
+
+.xc-virtual-table {
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 1px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: skyblue;
+        background-image: -webkit-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            transparent 75%,
+            transparent
+        );
+    }
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background-color: #ededed;
+        // border-radius: 10px;
+    }
+}
+
+.xc-virtual-table-cell {
+    padding: 9px 16px;
+    color: @tb-head-color;
+    border-bottom: 1px solid #e8e8e8;
 }

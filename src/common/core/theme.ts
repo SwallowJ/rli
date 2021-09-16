@@ -21,7 +21,6 @@ class ThemeManagement {
         }
 
         const theme = storage.local.getObj<CORE.themeType>(key);
-        console.log(theme, key);
 
         if (theme) {
             this.replace(theme.value);

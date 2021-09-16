@@ -123,4 +123,8 @@ export default RouterApi([
             },
         ],
     },
+    {
+        path: "/",
+        redirect: "/login",
+    },
 ]);

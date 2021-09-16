@@ -22,8 +22,6 @@ declare namespace Global {
         message?: string;
     }
 
-    type resultType<T = any> = resultData<T> | undefined;
-
     interface obj<T = number | string | boolean> {
         [key: string]: T;
     }
