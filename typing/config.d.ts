@@ -71,6 +71,11 @@ export declare namespace GlobalConfig {
         webpackVer?: string;
         repository?: string;
         nodeVer?: string;
+
+        /**
+         * 路由前缀
+         */
+        prefix?: string;
     }
 
     type dataType = ObjectCode | number | string | boolean | Array<dataType>;

@@ -101,4 +101,36 @@ declare namespace Global {
 
         type langTempFunc = (key?: string, obj?: Global.obj) => string;
     }
+
+    interface config {
+        /**
+         * git版本号
+         */
+        gitVer?: string;
+
+        /**
+         * git分支
+         */
+        branch?: string;
+
+        /**
+         * react版本号
+         */
+        react?: string;
+
+        /**
+         * webpack版本号
+         */
+        webpack?: string;
+
+        /**
+         * url前缀
+         */
+        prefix?: string;
+
+        /**
+         * 屏幕高度
+         */
+        screenHeight: number;
+    }
 }

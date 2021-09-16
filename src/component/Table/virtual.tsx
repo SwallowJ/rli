@@ -1,11 +1,15 @@
 import { Table, TableProps } from "antd";
 import ResizeObserver from "rc-resize-observer";
 import { VariableSizeGrid as Grid } from "react-window";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { CustomizeScrollBody } from "rc-table/lib/interface";
 
+const __size = { small: 36, middle: 41, large: 46 };
+
+const __layout = { center: "center", left: "flex-start", right: "flex-end" };
+
 export function Virtual<RecordType extends object = any>(props: TableProps<RecordType>) {
-    const { columns = [], scroll } = props;
+    const { columns = [], scroll, size = "middle" } = props;
     const [tableWidth, setTableWidth] = useState(0);
     const widthColumnCount = columns.filter(({ width }) => !width).length;
     const mergedColumns = columns.map((column) => {
@@ -40,10 +44,14 @@ export function Virtual<RecordType extends object = any>(props: TableProps<Recor
 
     useEffect(() => resetVirtualGrid, [tableWidth]);
 
+    const tableSize = useMemo(() => {
+        return __size[size] || 41;
+    }, [size]);
+
     const renderVirtualList: CustomizeScrollBody<RecordType> = (rawData, { scrollbarSize, ref, onScroll }) => {
         //@ts-ignore
         ref.current = connectObject;
-        const totalHeight = rawData.length * 41;
+        const totalHeight = rawData.length * tableSize;
 
         return (
             <Grid
@@ -59,14 +67,17 @@ export function Virtual<RecordType extends object = any>(props: TableProps<Recor
                 height={Number(scroll?.y) || 400}
                 rowCount={rawData.length}
                 width={tableWidth}
-                rowHeight={() => 41}
+                rowHeight={() => tableSize}
                 onScroll={({ scrollLeft }) => {
                     onScroll({ scrollLeft });
                 }}
             >
                 {({ columnIndex, rowIndex, style }) => (
-                    <div style={style} className={"xc-virtual-table-cell"}>
-                        {rawData[rowIndex][mergedColumns[columnIndex]["dataIndex"]]}{" "}
+                    <div
+                        className={"xc-virtual-table-cell"}
+                        style={{ ...style, justifyContent: __layout[columns[columnIndex].align ?? "left"] }}
+                    >
+                        {rawData[rowIndex][mergedColumns[columnIndex]["dataIndex"]]}
                     </div>
                 )}
             </Grid>

@@ -8,6 +8,7 @@
 import os from "os";
 import fs from "fs";
 import path from "path";
+import env from "./env";
 import crypto from "crypto";
 import address from "address";
 import remark from "./remark";
@@ -23,14 +24,60 @@ const __Reg_Model = /(namespace)(\S|\s)*(state:)(\S|\s)*(effects:)(\S|\s)*(reduc
 const __Src_Path = path.resolve(process.cwd(), "src");
 const __Temp_Path = path.resolve(process.cwd(), "src/@temp");
 
+interface code {
+    [key: string]: string | number | undefined;
+}
+
 export const __checkEnv = () => {
-    const { NODE_ENV } = process.env;
+    const { NODE_ENV, PORT } = process.env;
 
     if (!NODE_ENV) {
         throw new Error("缺少环境变量 NODE_ENV");
     }
 
-    return NODE_ENV;
+    return process.env;
+};
+
+export const createWriteStream = (dir: string, filename: string) => {
+    fs.existsSync(dir) || fs.mkdirSync(dir);
+    const filepath = path.resolve(dir, filename);
+
+    fs.existsSync(filepath) && fs.unlinkSync(filepath);
+    return fs.createWriteStream(filepath);
+};
+
+const injectConfig = (c: GlobalConfig.ConfigApi) => {
+    let writeStream: fs.WriteStream | null = null;
+
+    try {
+        writeStream = createWriteStream(__Temp_Path, "config.ts");
+        remark.mark(writeStream, { auth: "feihongjiang", email: "feihongjiang@caih.com", desc: "参数配置" });
+
+        const obj: code = {};
+
+        obj.gitVer = c.gitVer;
+        obj.branch = c.branch;
+        obj.react = c.reactVer;
+        obj.webpack = c.webpackVer;
+        obj.prefix = c.prefix;
+        obj.screenHeight = 700;
+
+        writeStream.write("const config: Global.config = {\n");
+        Object.entries(obj).map(([k, v]) => {
+            let value = v;
+            if (typeof v === "string") {
+                value = `"${v}"`;
+            }
+            writeStream!.write(`\t${k}: ${value},\n`);
+        });
+
+        writeStream.write(`};\n\nexport default config;\n`);
+    } catch (err) {
+        logger.Error(err);
+        process.exit(1);
+    } finally {
+        writeStream?.close();
+    }
 };
 
 const __gitInfo = () => {
@@ -47,7 +94,8 @@ const __gitInfo = () => {
 
 const resolveConfig = (function () {
     try {
-        const NODE_ENV = __checkEnv();
+        const { NODE_ENV } = __checkEnv();
+
         logger.Info("开始加载配置");
 
         const packageJson = require(path.resolve(process.cwd(), "package.json"));
@@ -66,6 +114,8 @@ const resolveConfig = (function () {
             nodeVer: execSync("node -v").toString().trim(),
             hostname: os.hostname(),
             platform: os.platform(),
+            port: Number(env["PORT"]),
+            prefix: env["PREFIX"],
         };
 
         const res = loadFile({ filename: "config", init });
@@ -73,7 +123,7 @@ const resolveConfig = (function () {
         if (NODE_ENV === "development") {
             res.appName = `${res.appName}(开发环境)`;
         }
-
+        injectConfig(res);
         logger.lineOver();
         logger.Success("配置加载完成");
         return res;
@@ -82,14 +132,6 @@ const resolveConfig = (function () {
         process.exit(1);
     }
 })();
-
-export const createWriteStream = (dir: string, filename: string) => {
-    fs.existsSync(dir) || fs.mkdirSync(dir);
-    const filepath = path.resolve(dir, filename);
-
-    fs.existsSync(filepath) && fs.unlinkSync(filepath);
-    return fs.createWriteStream(filepath);
-};
 
 const __scanModels = (dir: string, writeStream: fs.WriteStream, isModel: boolean) => {
     fs.readdirSync(dir).forEach((f) => {

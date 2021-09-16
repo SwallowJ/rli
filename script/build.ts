@@ -19,7 +19,6 @@ import path from "path";
 import webpack from "webpack";
 import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
-import { loadEnvironment } from "./utils";
 import { loadModel } from "./utils/config";
 import { loadRouter } from "./utils/router";
 import { FormatUtils } from "./utils/format";
@@ -72,7 +71,6 @@ async function build() {
     Logger.clear();
     logger.Info("开始打包项目");
 
-    loadEnvironment();
     loadRouter();
     loadModel();
 

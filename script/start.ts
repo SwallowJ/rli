@@ -19,7 +19,7 @@ import { loadModel } from "./utils/config";
 import { loadRouter } from "./utils/router";
 import WebpackDevServer from "webpack-dev-server";
 import WebPackConfig from "./utils/webpack.config";
-import { HostUtils, loadEnvironment, createCompiler, DevserverConfig } from "./utils";
+import { HostUtils, createCompiler, DevserverConfig } from "./utils";
 
 Logger.setGlobalLevel(0);
 const logger = Logger.New({ name: "start" });
@@ -68,7 +68,6 @@ async function start() {
 }
 
 try {
-    loadEnvironment();
     loadRouter();
     loadModel();
     start();

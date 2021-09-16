@@ -1,5 +1,6 @@
 import styles from "./style.less";
 import { TableColumnType } from "antd";
+import Config from "@/common/core/config";
 import Container from "@/component/Container";
 import React, { useEffect, useRef } from "react";
 import { Button, Table, Input } from "@/component";
@@ -39,11 +40,11 @@ const role: React.FC<roleProps> = ({ rolelist }) => {
 
             <Container.Content>
                 <Virtual
-                    columns={columns.current}
-                    dataSource={rolelist}
                     rowKey={"roleId"}
                     pagination={false}
-                    scroll={{ y: 400, x: "100vh" }}
+                    dataSource={rolelist}
+                    columns={columns.current}
+                    scroll={{ y: (Config.screenHeight || 0) - 358 }}
                 />
             </Container.Content>
         </Container>

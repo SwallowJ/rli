@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./style.less";
 
 function Container(props: Global.component) {
-    const { children, className, style } = props;
+    const { children, className = "", style } = props;
     return (
         <div className={`${styles.Container} ${className}`} style={style}>
             {children}
@@ -10,7 +10,7 @@ function Container(props: Global.component) {
     );
 }
 
-const Head: React.FC<Global.component> = ({ children, className, style }) => {
+const Head: React.FC<Global.component> = ({ children, className = "", style }) => {
     return (
         <div className={`${styles.Head} ${className}`} style={style}>
             {children}
@@ -18,7 +18,7 @@ const Head: React.FC<Global.component> = ({ children, className, style }) => {
     );
 };
 
-const Content: React.FC<Global.component> = ({ children, className, style }) => {
+const Content: React.FC<Global.component> = ({ children, className = "", style }) => {
     return (
         <div className={`${styles.Content} ${className}`} style={style}>
             {children}

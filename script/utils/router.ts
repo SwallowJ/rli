@@ -4,7 +4,7 @@ import paths from "./paths";
 import remark from "./remark";
 import Logger from "@swallowj/logjs";
 import { GlobalConfig } from "typing/config";
-import { __checkEnv, createWriteStream } from "./config";
+import resolveConfig, { __checkEnv, createWriteStream } from "./config";
 
 const logger = Logger.New({ name: "config" });
 
@@ -81,7 +81,8 @@ export const loadRouter = () => {
             const t2 = new Array(t + 1).fill("\t").join("");
 
             routers.forEach((router) => {
-                const currentPath = resolvePath(rootPath, router.path);
+                let currentPath = resolvePath(rootPath, router.path);
+
                 writeStream?.write(`${t1}{\n`);
 
                 Object.entries(router).forEach(([key, value]) => {
@@ -101,7 +102,13 @@ export const loadRouter = () => {
                             writeStream?.write("\n");
                             return;
                         case "path":
-                            writeStream?.write(`${t2}${key}: "${currentPath}",\n`);
+                            writeStream?.write(
+                                `${t2}${key}: "${
+                                    currentPath === "/login"
+                                        ? currentPath
+                                        : `${resolveConfig.prefix ?? ""}${currentPath}`
+                                }",\n`
+                            );
                             return;
                         default:
                             writeStream?.write(`${t2}${key}: "${value}",\n`);
