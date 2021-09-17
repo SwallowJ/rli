@@ -22,20 +22,20 @@ const LoginModel: modelType<LOGIN.StateType> = {
                 return;
             }
 
-            const _csrf: string = token.csrfToken;
-            const [encodePassword, err] = WASM_CRYPTO_enAES(payload.password, _csrf);
+            const requestId: string = token.csrfToken;
+            const [encodePassword, err] = WASM_CRYPTO_enAES(payload.password, requestId);
 
             if (err) {
                 loginService.message.error(err);
                 return;
             }
 
-            const params = { ...payload, _csrf, password: encodeURIComponent(encodePassword) };
+            const params = { ...payload, requestId, password: encodeURIComponent(encodePassword) };
 
-            const response = yield call(loginService.login(params));
-            if (response) {
+            const _token = yield call(loginService.login(params));
+            if (_token) {
                 loginService.message.success("登录成功");
-                security.login({ ...payload, _csrf }, remember);
+                security.login({ ...payload, requestId, _token }, remember);
                 yield change({ isLogin: true });
             }
             loading.stop();

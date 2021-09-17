@@ -1,3 +1,4 @@
+import security from "@/common/core/security";
 import storage from "@/common/core/storage";
 import { ReqService } from "@/common/request/service";
 
@@ -6,7 +7,7 @@ class LoginService extends ReqService {
      * 登录
      */
     login(params: LOGIN.loginParams) {
-        return this.post<string>("/xc/login/password/encode", { params });
+        return this.post<string>("/xc/login", { params, headers: { [security.csrfToken]: params.requestId ?? "" } });
     }
 
     /**

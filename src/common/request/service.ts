@@ -12,7 +12,7 @@ const initOptions: REQUEST.options = {
     credentials: "include",
     errorHandler: errorHandler,
     successHandler: successHandler,
-    headers: { "Content-Type": "application/json; charset=UTF-8", "X-CSRF-TOKEN": security.getCsrfToken() },
+    headers: { "Content-Type": "application/json; charset=UTF-8" },
 };
 
 export class ReqService extends RequestManagement {
@@ -25,20 +25,37 @@ export class ReqService extends RequestManagement {
         super({ ...initOptions, ...options });
     }
 
+    private extends<T>(
+        method: REQUEST.MethodType,
+        url: string,
+        init: REQUEST.reqInit = {},
+        options?: REQUEST.reqOptions
+    ) {
+        return this.request<T>(
+            method,
+            url,
+            {
+                ...init,
+                headers: { TOKEN: security.getToken(), "X-CSRF-TOKEN": security.getCsrfToken(), ...init.headers },
+            },
+            options
+        );
+    }
+
     protected get<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
-        return this.request<T>("GET", url, init, options);
+        return this.extends<T>("GET", url, init, options);
     }
 
     protected post<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
-        return this.request<T>("POST", url, init, options);
+        return this.extends<T>("POST", url, init, options);
     }
 
     protected put<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
-        return this.request<T>("PUT", url, init, options);
+        return this.extends<T>("PUT", url, init, options);
     }
 
     protected delete<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
-        return this.request<T>("DELETE", url, init, options);
+        return this.extends<T>("DELETE", url, init, options);
     }
 }
 

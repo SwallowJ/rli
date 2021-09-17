@@ -46,7 +46,7 @@ export class RequestManagement {
     ): Promise<T> {
         const req = this.resolveOptions(method, url, init);
 
-        const { handFunc, errorFunc, cache, engine, key, group = "global" } = options || {};
+        const { handFunc, errorFunc, cache, engine, key } = options || {};
         if (cache && engine) {
             const stroageKey = key || this.parseStroageKey(req);
             const result = engine.getObj<any>(stroageKey);

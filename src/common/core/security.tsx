@@ -18,7 +18,8 @@ interface wrapperProps {
 }
 
 export class SecurityManager {
-    private csrfToken = "csrfToken";
+    private token = "TOKEN";
+    csrfToken = "X-CSRF-TOKEN";
     private loginFlag = "isLogin";
     private loginPath = "/login";
     private userInfo = "userInfo";
@@ -42,8 +43,9 @@ export class SecurityManager {
      * 未登录或登录已超时
      */
     unauthorized() {
-        storage.local.remove(this.loginFlag);
+        storage.local.remove(this.token);
         storage.local.remove(this.csrfToken);
+        storage.local.remove(this.loginFlag);
 
         storage.session.remove(this.homePage);
         location.href = this.loginPath;
@@ -53,13 +55,13 @@ export class SecurityManager {
      * 登录成功
      */
     login(params: LOGIN.loginParams, remember?: boolean) {
-        const csrfToken = params._csrf;
-        storage.local.save(this.csrfToken, csrfToken!);
         storage.local.save(this.loginFlag, true);
+        storage.local.save(this.csrfToken, params.requestId ?? "");
+        storage.local.save(this.token, `Bearer ${params._token ?? ""}`);
 
         setTimeout(() => {
             if (remember) {
-                delete params._csrf;
+                delete params.requestId;
                 const [value, err] = WASM_CRYPTO_enAES(JSON.stringify(params));
                 if (err) {
                     message.error(err);
@@ -117,6 +119,10 @@ export class SecurityManager {
 
     getCsrfToken() {
         return storage.local.get(this.csrfToken) || "";
+    }
+
+    getToken() {
+        return storage.local.get(this.token) || "";
     }
 }
 

@@ -38,6 +38,7 @@ declare namespace LOGIN {
     interface loginParams {
         username: string;
         password: string;
-        _csrf?: string;
+        _token?: string;
+        requestId?: string;
     }
 }
