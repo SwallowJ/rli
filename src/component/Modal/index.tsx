@@ -1,8 +1,8 @@
 import React from "react";
-import { Modal as Md, ModalProps } from "antd";
+import { Modal, ModalProps } from "antd";
 
-interface modalProps extends ModalProps {}
-
-export const Modal: React.FC<modalProps> = (props) => {
-    return <Md {...props} />;
+export const modal: React.FC<ModalProps> = (props) => {
+    return <Modal destroyOnClose={true} {...props} />;
 };
+
+export default modal;

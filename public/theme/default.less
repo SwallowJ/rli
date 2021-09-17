@@ -38,9 +38,8 @@
     }
 
     &::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
         background-color: #ededed;
-        // border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     }
 }
 
@@ -206,7 +205,7 @@
     }
 }
 
-/*######################################## table样式 ################################*/
+/*######################################## Table样式 ################################*/
 
 @tb-head-bg: #f1f1f1;
 @tb-head-color: #808080;
@@ -242,4 +241,25 @@
     align-items: center;
     color: @tb-head-color;
     border-bottom: 1px solid #e8e8e8;
+}
+
+/*######################################## Tree样式 ################################*/
+
+.ant-tree-list-scrollbar {
+    background-color: #ededed !important;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2) !important;
+
+    .ant-tree-list-scrollbar-thumb {
+        background-color: skyblue !important;
+        background-image: -webkit-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            transparent 75%,
+            transparent
+        ) !important;
+    }
 }

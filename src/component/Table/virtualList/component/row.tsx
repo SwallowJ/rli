@@ -18,7 +18,7 @@ const row: React.FC<rowProps<any>> = ({ columns, style, className = "", data, in
             className={`${styles.Row} ${index & 1 ? styles.singal : styles.double} ${className}`}
         >
             {columns.map((column) => (
-                <Cell column={column} key={column.dataIndex}>
+                <Cell column={column} key={column.dataIndex as string}>
                     {column.render ? column.render(data[column.dataIndex], data) : data[column.dataIndex]}
                 </Cell>
             ))}

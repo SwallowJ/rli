@@ -1,11 +1,10 @@
 import { Table, TableProps } from "antd";
 import ResizeObserver from "rc-resize-observer";
 import { VariableSizeGrid as Grid } from "react-window";
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import { CustomizeScrollBody } from "rc-table/lib/interface";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const __size = { small: 36, middle: 41, large: 46 };
-
 const __layout = { center: "center", left: "flex-start", right: "flex-end" };
 
 export function Virtual<RecordType extends object = any>(props: TableProps<RecordType>) {
@@ -72,14 +71,20 @@ export function Virtual<RecordType extends object = any>(props: TableProps<Recor
                     onScroll({ scrollLeft });
                 }}
             >
-                {({ columnIndex, rowIndex, style }) => (
-                    <div
-                        className={"xc-virtual-table-cell"}
-                        style={{ ...style, justifyContent: __layout[columns[columnIndex].align ?? "left"] }}
-                    >
-                        {rawData[rowIndex][mergedColumns[columnIndex]["dataIndex"]]}
-                    </div>
-                )}
+                {({ columnIndex, rowIndex, style }) => {
+                    const record = rawData[rowIndex];
+                    const render = mergedColumns[columnIndex]["render"];
+                    const value = record[mergedColumns[columnIndex]["dataIndex"]];
+
+                    return (
+                        <div
+                            className={"xc-virtual-table-cell"}
+                            style={{ ...style, justifyContent: __layout[columns[columnIndex].align ?? "left"] }}
+                        >
+                            {render ? render(value, record, columnIndex) : value}
+                        </div>
+                    );
+                }}
             </Grid>
         );
     };

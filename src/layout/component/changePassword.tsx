@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Form, Input } from "antd";
+import { Modal } from "@/component";
 import { connect } from "react-redux";
-import { Modal } from "@/component/Modal";
 import action from "@/pages/Login/actions";
 import { PasswordForm } from "@/component/Scenes";
 import React, { useState, MouseEvent } from "react";

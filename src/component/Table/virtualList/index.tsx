@@ -6,7 +6,7 @@ import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import React, { useCallback, useMemo, useRef } from "react";
 
-const VirtualTable: React.FC<tableProps<any>> = (props) => {
+export const VirtualList: React.FC<tableProps<any>> = (props) => {
     const {
         total,
         rowClass,
@@ -42,7 +42,7 @@ const VirtualTable: React.FC<tableProps<any>> = (props) => {
         <div className={`${styles.VirtualTable} ${className}`} style={{ height: `${height}px`, ...style }}>
             <div className={`${styles.Head} ${headClass}`} style={{ height: `${headHeight || rowHeight}px` }}>
                 {columns.map((column) => (
-                    <Cell column={column} key={column.dataIndex}>
+                    <Cell column={column} key={column.dataIndex as string}>
                         {column.title}
                     </Cell>
                 ))}
@@ -83,5 +83,3 @@ const VirtualTable: React.FC<tableProps<any>> = (props) => {
         </div>
     );
 };
-
-export default VirtualTable;

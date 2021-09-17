@@ -4,8 +4,16 @@ declare namespace ROLE {
          * 角色列表
          */
         rolelist?: entity[];
+
+        /**
+         * 权限列表
+         */
+        perms?: permType[];
     }
 
+    /**
+     * 用户拥有的权限
+     */
     interface permissions {
         hidden: boolean;
         permission: string;
@@ -29,9 +37,38 @@ declare namespace ROLE {
         updatedDate?: string;
     }
 
+    /**
+     * 权限项
+     */
+    interface permCode {
+        permissonCode: string;
+        permissonName: string;
+    }
+
+    /**
+     * 权限类型
+     */
+    interface permType {
+        categoryCode: string;
+        categoryName: string;
+        forProject: boolean;
+        permissonList: permCode[];
+        permissonCode?: string;
+        permissonName?: string;
+    }
+
     namespace PARAMS {
         interface list {
             searchKey?: string;
+        }
+
+        interface create {
+            newRole: {
+                roleName: string;
+                roleType: string;
+                roleDesc: string;
+            };
+            permissions: string[];
         }
     }
 }
