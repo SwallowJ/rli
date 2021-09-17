@@ -124,6 +124,14 @@ export class SecurityManager {
     getToken() {
         return storage.local.get(this.token) || "";
     }
+
+    /**
+     * 更新TOKEN
+     */
+    updateToken(res: Response) {
+        const token = res.headers.get(this.token);
+        token && storage.local.save(this.token, token);
+    }
 }
 
 export default new SecurityManager();

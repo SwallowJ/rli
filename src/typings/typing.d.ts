@@ -132,5 +132,7 @@ declare namespace Global {
          * 屏幕高度
          */
         screenHeight: number;
+        
+        NODE_ENV: "development" | "production" | "test";
     }
 }

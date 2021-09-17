@@ -1,3 +1,4 @@
+import Config from "@/common/core/config";
 import storage from "@/common/core/storage";
 import { ReqService } from "@/common/request/service";
 
@@ -9,7 +10,7 @@ class CommonService extends ReqService {
         return this.get<Global.LANGUAGE.langType>(
             `/language/${lang}/${name}.json`,
             {},
-            { cache: false, key: `language_${lang}_${name}`, engine: storage.session }
+            { cache: Config.NODE_ENV === "production", key: `language_${lang}_${name}`, engine: storage.session }
         );
     }
 

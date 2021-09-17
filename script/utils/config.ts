@@ -50,10 +50,19 @@ const injectConfig = (c: GlobalConfig.ConfigApi) => {
     let writeStream: fs.WriteStream | null = null;
 
     try {
+        const { NODE_ENV } = process.env;
         writeStream = createWriteStream(__Temp_Path, "config.ts");
         remark.mark(writeStream, { auth: "feihongjiang", email: "feihongjiang@caih.com", desc: "参数配置" });
 
-        const obj: code = {};
+        const obj: code = {
+            gitVer: c.gitVer,
+            branch: c.branch,
+            react: c.reactVer,
+            prefix: c.prefix,
+            screenHeight: 700,
+            NODE_ENV: NODE_ENV,
+            webpack: c.webpackVer,
+        };
 
         obj.gitVer = c.gitVer;
         obj.branch = c.branch;
@@ -61,6 +70,7 @@ const injectConfig = (c: GlobalConfig.ConfigApi) => {
         obj.webpack = c.webpackVer;
         obj.prefix = c.prefix;
         obj.screenHeight = 700;
+        obj.NODE_ENV = NODE_ENV;
 
         writeStream.write("const config: Global.config = {\n");
         Object.entries(obj).map(([k, v]) => {

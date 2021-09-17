@@ -26,6 +26,7 @@ const parseError = (err: any) => {
 
 export const successHandler: REQUEST.responsehandler = async (reponse) => {
     try {
+        security.updateToken(reponse);
         const result: Global.resultData = await reponse.json();
 
         if (callType(result) === "[object Object]" && !result.hasOwnProperty("code")) {
