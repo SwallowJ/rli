@@ -14,6 +14,10 @@ export class LoginActions extends Actions {
     logout(callback?: Function) {
         return this.callAction("logout", { callback });
     }
+
+    getAuthInfo(callback?: Function) {
+        return this.callAction("getAuthInfo", { callback }, "AUTH");
+    }
 }
 
 export default new LoginActions(namespace);

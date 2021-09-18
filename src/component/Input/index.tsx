@@ -13,11 +13,17 @@ const Search: React.FC<serchProps> = (props) => {
     const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         if (!props.allowClear || value) {
-            props.onSearch && props.onSearch(e.target.value, e);
+            props.onSearch?.(e.target.value, e);
         }
     };
 
-    return <Input.Search {...props} onChange={props.onChange ? props.onChange : debounce(changeValue, 500)} />;
+    return (
+        <Input.Search
+            allowClear={false}
+            {...props}
+            onChange={props.onChange ? props.onChange : debounce(changeValue, 500)}
+        />
+    );
 };
 
 input.Search = Search;

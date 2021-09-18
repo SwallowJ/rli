@@ -1,3 +1,4 @@
+import { Empty } from "@/component";
 import { Table, TableProps } from "antd";
 import ResizeObserver from "rc-resize-observer";
 import { VariableSizeGrid as Grid } from "react-window";
@@ -7,8 +8,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 const __size = { small: 36, middle: 41, large: 46 };
 const __layout = { center: "center", left: "flex-start", right: "flex-end" };
 
-export function Virtual<RecordType extends object = any>(props: TableProps<RecordType>) {
-    const { columns = [], scroll, size = "middle" } = props;
+interface tableProps<T> extends TableProps<T> {
+    cellHeight?: number;
+}
+
+export function Virtual<RecordType extends object = any>(props: tableProps<RecordType>) {
+    const { columns = [], scroll, size = "middle", cellHeight, dataSource } = props;
     const [tableWidth, setTableWidth] = useState(0);
     const widthColumnCount = columns.filter(({ width }) => !width).length;
     const mergedColumns = columns.map((column) => {
@@ -33,6 +38,13 @@ export function Virtual<RecordType extends object = any>(props: TableProps<Recor
         return obj;
     });
 
+    const tableSize = useMemo(() => cellHeight ?? __size[size] ?? 41, [size, cellHeight]);
+
+    const bodyHeight = useMemo(() => Math.min(Number(scroll?.y) || 400, (dataSource?.length || 8) * tableSize), [
+        tableSize,
+        dataSource,
+    ]);
+
     const resetVirtualGrid = () => {
         gridRef.current?.resetAfterIndices({
             rowIndex: 0,
@@ -43,14 +55,14 @@ export function Virtual<RecordType extends object = any>(props: TableProps<Recor
 
     useEffect(() => resetVirtualGrid, [tableWidth]);
 
-    const tableSize = useMemo(() => {
-        return __size[size] || 41;
-    }, [size]);
-
     const renderVirtualList: CustomizeScrollBody<RecordType> = (rawData, { scrollbarSize, ref, onScroll }) => {
         //@ts-ignore
         ref.current = connectObject;
         const totalHeight = rawData.length * tableSize;
+
+        if (!rawData.length) {
+            return <Empty height={bodyHeight} />;
+        }
 
         return (
             <Grid
@@ -59,11 +71,11 @@ export function Virtual<RecordType extends object = any>(props: TableProps<Recor
                 columnCount={mergedColumns.length}
                 columnWidth={(index) => {
                     const { width } = mergedColumns[index];
-                    return totalHeight > Number(scroll?.y || 400) && index === mergedColumns.length - 1
+                    return totalHeight > bodyHeight && index === mergedColumns.length - 1
                         ? Number(width) - scrollbarSize - 1
                         : Number(width);
                 }}
-                height={Number(scroll?.y) || 400}
+                height={bodyHeight || 400}
                 rowCount={rawData.length}
                 width={tableWidth}
                 rowHeight={() => tableSize}

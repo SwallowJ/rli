@@ -34,7 +34,7 @@ export const successHandler: REQUEST.responsehandler = async (reponse) => {
         }
 
         if (result.code == 0) {
-            return result.data;
+            return result.data || result.message || result;
         } else {
             parseError(result);
         }

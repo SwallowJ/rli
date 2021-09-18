@@ -1,5 +1,4 @@
 import * as H from "history";
-import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,11 +12,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ChangePassword } from "@/layout/component/changePassword";
 
 interface headProps extends AuthStateType {
-    dispatch: Dispatch;
     location: H.Location<any>;
 }
 
-const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, location }) => {
+const head: React.FC<headProps> = ({ auth, homePage = "/", menus, location }) => {
     const { pathname } = location;
 
     const [selectedKey, setSelectKey] = useState("");
@@ -32,7 +30,7 @@ const head: React.FC<headProps> = ({ auth, dispatch, homePage = "/", menus, loca
      * 登出
      */
     const logout = () => {
-        dispatch(action.logout());
+        action.logout();
     };
 
     /**

@@ -1,4 +1,5 @@
-import { AnyAction } from "redux";
+import store from "@/common/reducer";
+import { AnyAction, Dispatch } from "redux";
 
 export class Actions {
     namespace: string;
@@ -10,21 +11,23 @@ export class Actions {
     /**
      * 修改状态action
      */
-    changeState<T>(parmas: T): AnyAction {
-        return { type: `${this.namespace}/changeState`, parmas };
+    changeState<T = any>(params: T, namespace?: string): AnyAction {
+        return store.dispatch({ type: `${namespace ?? this.namespace}/changeState`, params });
     }
 
     /**
      * 调用effects
      */
-    protected callAction<T>(actionName: string, params?: T) {
-        return { type: `${this.namespace}/${actionName}`, ...params };
+    protected callAction<T = any>(actionName: string, params?: T, namespace?: string): AnyAction {
+        return store.dispatch({ type: `${namespace ?? this.namespace}/${actionName}`, ...params });
     }
+
+    // protected
 
     /**
      * 初始化状态
      */
-    initState(): AnyAction {
-        return { type: `${this.namespace}/init` };
+    initState(namespace?: string): AnyAction {
+        return store.dispatch({ type: `${namespace ?? this.namespace}/init` });
     }
 }

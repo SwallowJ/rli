@@ -1,8 +1,17 @@
 import React from "react";
-import { Modal, ModalProps } from "antd";
+import { Modal, ModalFuncProps, ModalProps } from "antd";
 
-export const modal: React.FC<ModalProps> = (props) => {
+interface modalProps extends ModalProps {
+    children?: React.ReactNode;
+}
+
+export function modal(props: modalProps) {
     return <Modal destroyOnClose={true} {...props} />;
+}
+
+const confirm = (props: ModalFuncProps) => {
+    Modal.confirm({ okType: "danger", ...props });
 };
 
+modal.confirm = confirm;
 export default modal;

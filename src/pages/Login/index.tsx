@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import styles from "./style.less";
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
@@ -11,22 +10,21 @@ import footer from "@/assert/login/footer@2x.png";
 
 interface loginProps extends LOGIN.StateType {
     history?: any;
-    dispatch: Dispatch;
     auth?: Global.AUTH.entity;
 }
 
-const login: React.FC<loginProps> = ({ dispatch, license, machineInfo, isLogin, history }) => {
+const login: React.FC<loginProps> = ({ license, machineInfo, isLogin, history }) => {
     const [tas] = langservice.useLanguage("login");
 
     const login = (value: LOGIN.loginParams, remember?: boolean) => {
-        dispatch(action.login(value, remember));
+        action.login(value, remember);
     };
 
     /**
      * 证书校验
      */
     const getLicense = () => {
-        dispatch(action.getlicense());
+        action.getlicense();
     };
 
     useEffect(() => {
@@ -35,11 +33,8 @@ const login: React.FC<loginProps> = ({ dispatch, license, machineInfo, isLogin, 
 
     useEffect(() => {
         if (isLogin) {
-            dispatch({
-                type: "AUTH/getAuthInfo",
-                callback: (homePage: string) => {
-                    history.push(homePage);
-                },
+            action.getAuthInfo((homePage: string) => {
+                history.push(homePage);
             });
         }
     }, [isLogin]);

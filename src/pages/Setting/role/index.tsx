@@ -2,16 +2,15 @@ import styles from "./style.less";
 import { TableColumnType } from "antd";
 import Config from "@/common/core/config";
 import Container from "@/component/Container";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { connect, useDispatch } from "react-redux";
-import { Button, Table, Input, Divider } from "@/component";
-import { CreateRole } from "./component";
+import React, { useEffect, useMemo, useRef, useState, MouseEvent } from "react";
+import { connect } from "react-redux";
+import { CreateRole, EditRole } from "./component";
+import { Button, Table, Input, Divider, Modal } from "@/component";
 import actions, { namespace } from "@/pages/Setting/role/actions";
 
 interface roleProps extends ROLE.StateType {}
 
 const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
-    const dispatch = useDispatch();
     const [searchKey, setSearchKey] = useState("");
 
     const permTree = useMemo(() => actions.parsePermTree(perms), [perms]);
@@ -22,28 +21,46 @@ const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
         {
             title: "操作",
             key: "operation",
-            render: () => (
+            render: (_, record) => (
                 <div className={styles.opration}>
-                    <a>{"编辑"}</a>
+                    <a onClick={edit.bind(null, record)}>{"编辑"}</a>
                     <Divider height={13} />
-                    <a>{"删除"}</a>
+                    <a onClick={del.bind(null, record)}>{"删除"}</a>
                 </div>
             ),
         },
     ]);
 
+    const del = (record: ROLE.entity, e: MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        Modal.confirm({
+            title: `确认要删除角色[${record.roleName}]`,
+            onOk: () => {
+                actions.deleteRole(record.roleName, list);
+            },
+        });
+    };
+
+    const edit = (editRole: ROLE.entity, e: MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        actions.changeState({ editRole });
+    };
+
     /**
      * 获取角色列表
      */
     const list = () => {
-        dispatch(actions.listRole(searchKey));
+        actions.listRole(searchKey);
     };
 
     /**
      * 获取权限列表
      */
     const list_permision = () => {
-        dispatch(actions.listPermision());
+        actions.listPermision();
     };
 
     const changeKeys = (keys: string) => {
@@ -61,12 +78,7 @@ const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
     return (
         <Container className={styles.Role}>
             <Container.Head className={styles.head}>
-                <Input.Search
-                    className={styles.search}
-                    placeholder={"角色名称"}
-                    allowClear={true}
-                    onSearch={changeKeys}
-                />
+                <Input.Search className={styles.search} placeholder={"角色名称"} onSearch={changeKeys} />
                 <CreateRole permTree={permTree} updata={list} />
             </Container.Head>
 
@@ -79,6 +91,8 @@ const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
                     scroll={{ y: (Config.screenHeight || 0) - 358 }}
                 />
             </Container.Content>
+
+            <EditRole permTree={permTree} updata={list} />
         </Container>
     );
 };

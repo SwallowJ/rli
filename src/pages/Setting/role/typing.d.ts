@@ -9,6 +9,11 @@ declare namespace ROLE {
          * 权限列表
          */
         perms?: permType[];
+
+        /**
+         * 待编辑角色
+         */
+        editRole?: entity | null;
     }
 
     /**
@@ -27,7 +32,7 @@ declare namespace ROLE {
      */
     interface entity {
         createdDate?: string;
-        permission: permissions[];
+        permissions: permissions[];
         roleHidden?: boolean;
         roleId: number | string;
         roleName: string;
@@ -35,6 +40,7 @@ declare namespace ROLE {
         roleRemovable?: boolean;
         roleType?: number;
         updatedDate?: string;
+        roleDesc: string;
     }
 
     /**
@@ -68,6 +74,20 @@ declare namespace ROLE {
                 roleType: string;
                 roleDesc: string;
             };
+            permissions: string[];
+        }
+
+        interface del {
+            roleName: string;
+        }
+
+        interface roleForm {
+            roleName: string;
+            permissions: string[];
+        }
+
+        interface updata {
+            roleName: string;
             permissions: string[];
         }
     }

@@ -16,5 +16,4 @@ const commonReducer: ReducersMapObject = {
     },
 };
 
-//@ts-ignore
 export default [...__models].map((x) => ({ ...x, reducers: { ...commonReducer, ...x.reducers } }));

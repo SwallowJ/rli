@@ -6,14 +6,13 @@
  */
 
 import { message } from "antd";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
+import actions from "@/pages/Login/actions";
 import storage from "@/common/core/storage";
 import { AuthStateType, namespace } from "@/models/auth";
 
 interface wrapperProps {
-    dispatch: Dispatch;
     auth?: Global.AUTH.entity;
 }
 
@@ -31,7 +30,7 @@ export class SecurityManager {
     verify(Component: React.FC<any>) {
         const wrapper: React.FC<wrapperProps> = (props) => {
             useEffect(() => {
-                props.auth || props.dispatch({ type: `${namespace}/getAuthInfo` });
+                props.auth || actions.getAuthInfo();
             }, []);
             return <Component {...props} />;
         };

@@ -9,6 +9,7 @@ const RoleModel: modelType<ROLE.StateType> = {
     state: {
         perms: [],
         rolelist: [],
+        editRole: null,
     },
 
     effects: {
@@ -29,7 +30,28 @@ const RoleModel: modelType<ROLE.StateType> = {
             const response = yield call(roleService.create(payload));
 
             if (response) {
-                roleService.message.success(`用户【${payload.newRole.roleName}】创建成功`);
+                roleService.message.success(`角色【${payload.newRole.roleName}】创建成功`);
+                callback?.();
+            }
+            loading.stop();
+        },
+
+        *deleteRole({ payload, callback }, { call }) {
+            loading.run();
+            const response = yield call(roleService.deleteRole(payload));
+            if (response) {
+                roleService.message.success(`角色【${payload.roleName}】已删除`);
+                callback?.();
+            }
+            loading.stop();
+        },
+
+        *updataPermissions({ payload, callback }, { call }) {
+            loading.run();
+            const response = yield call(roleService.updataPerm(payload));
+            if (response) {
+                console.log(response);
+                roleService.message.success(`角色【${payload.roleName}】已权限已更新`);
                 callback?.();
             }
             loading.stop();

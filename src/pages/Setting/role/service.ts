@@ -22,6 +22,20 @@ class RoleService extends ReqService {
     create(data: ROLE.PARAMS.create) {
         return this.post("/api/xc/roleWithPerm", { data });
     }
+
+    /**
+     * 删除角色
+     */
+    deleteRole(data: ROLE.PARAMS.del) {
+        return this.delete(`/api/xc/role/${data.roleName}`, { data });
+    }
+
+    /**
+     * 更新权限
+     */
+    updataPerm(data: ROLE.PARAMS.updata) {
+        return this.post(`/api/xc/role/${data.roleName}`, { data });
+    }
 }
 
 export default new RoleService();
