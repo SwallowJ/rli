@@ -16,6 +16,13 @@ export class UserActions extends Actions {
     list(roleName: string, usernameOrPhone: string, pageNum?: number, pageSize?: number) {
         return this.callAction("list", { payload: { roleName, usernameOrPhone, pageNum, pageSize } });
     }
+
+    /**
+     * 修改用户密码
+     */
+    changeUserPwd(username: string, password: string, callback?: Function) {
+        return this.callAction("changePassword", { payload: { username, password }, callback });
+    }
 }
 
 export default new UserActions(namespace);

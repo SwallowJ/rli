@@ -63,9 +63,12 @@ declare namespace Global {
             basePermCategory?: string[];
         }
 
-        interface changePwdType {
-            newPassword: string;
+        interface changePwdType extends passwordType {
             currentPassword: string;
+        }
+
+        interface passwordType {
+            newPassword: string;
             confirmPassword?: string;
         }
     }
@@ -93,7 +96,35 @@ declare namespace Global {
         type langTempFunc = (key?: string, obj?: Global.obj) => string;
     }
 
-    interface config {
+    interface optionType {
+        label: React.ReactNode;
+        value: React.ReactText;
+        disabled?: boolean;
+        key?: React.Key;
+    }
+
+    /**
+     * 通用请求返回类型
+     */
+    interface resultData<T = any> {
+        code: 0 | 1;
+        data?: T;
+        message?: string;
+        page?: pageType;
+    }
+
+    type Result<T = any> = resultData<T> | undefined;
+
+    /**
+     * 分页
+     */
+    interface pageType {
+        total?: number;
+        pageNum?: number;
+        pageSize?: number;
+    }
+
+    interface config extends obj<any> {
         /**
          * git版本号
          */
@@ -125,33 +156,5 @@ declare namespace Global {
         screenHeight: number;
 
         NODE_ENV: "development" | "production" | "test";
-    }
-
-    interface optionType {
-        label: React.ReactNode;
-        value: React.ReactText;
-        disabled?: boolean;
-        key?: React.Key;
-    }
-
-    /**
-     * 通用请求返回类型
-     */
-    interface resultData<T = any> {
-        code: 0 | 1;
-        data?: T;
-        message?: string;
-        page?: pageType;
-    }
-
-    type Result<T = any> = resultData<T> | undefined;
-
-    /**
-     * 分页
-     */
-    interface pageType {
-        total?: number;
-        pageNum?: number;
-        pageSize?: number;
     }
 }

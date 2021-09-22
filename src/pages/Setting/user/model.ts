@@ -14,6 +14,7 @@ const UserModel: modelType<USER.StateType> = {
     namespace,
 
     state: {
+        changePwdId: "",
         page: { pageNum: 1, pageSize: 10, total: 0 },
     },
 
@@ -22,6 +23,16 @@ const UserModel: modelType<USER.StateType> = {
             loading.run();
             const response: Global.Result<USER.entity[]> = yield call(userService.list(payload));
             response && change({ userlist: response.data, page: response.page });
+            loading.stop();
+        },
+
+        *changePassword({ payload, callback }, { call }) {
+            loading.run();
+            const response = yield call(userService.changePassword(payload));
+            if (response) {
+                callback?.();
+                userService.message.success(`用户[${payload.username}]修改密码成功`);
+            }
             loading.stop();
         },
     },
