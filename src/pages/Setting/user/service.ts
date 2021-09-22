@@ -35,6 +35,13 @@ class UserService extends ReqService {
     updata(data: USER.PARAMS.form) {
         return this.post("/api/xc/user/edit/info", { data });
     }
+
+    /**
+     * 创建用户
+     */
+    create(data: USER.PARAMS.form) {
+        return this.post("/api/xc/user/insert", { data });
+    }
 }
 
 export default new UserService();

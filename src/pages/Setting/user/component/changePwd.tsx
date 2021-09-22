@@ -23,14 +23,7 @@ const changePwd: React.FC<changeProps> = ({ changePwdId }) => {
     };
 
     return (
-        <Modal
-            okText={"修改"}
-            onOk={handleOk}
-            title={"修改密码"}
-            onCancel={onCancel}
-            cancelText={"取消"}
-            visible={Boolean(changePwdId)}
-        >
+        <Modal onOk={handleOk} title={"修改密码"} onCancel={onCancel} visible={Boolean(changePwdId)}>
             <Form {...Config.formLayout.default} form={form}>
                 <PasswordForm />
             </Form>

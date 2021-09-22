@@ -38,12 +38,14 @@ declare namespace USER {
         }
 
         interface form {
-            username: string;
-            displayName: string;
+            role: string;
             phone?: string;
             email?: string;
-            role: string;
             roles?: string[];
+            username: string;
+            provider?: string;
+            enabled?: boolean;
+            displayName: string;
             corporationId?: string;
         }
     }

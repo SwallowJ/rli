@@ -28,14 +28,7 @@ const edit: React.FC<editProps> = ({ editInfo, list }) => {
     };
 
     return (
-        <Modal
-            okText={"修改"}
-            onOk={handleOk}
-            title={"编辑用户"}
-            cancelText={"取消"}
-            onCancel={onCancel}
-            visible={Boolean(editInfo)}
-        >
+        <Modal onOk={handleOk} title={"编辑用户"} onCancel={onCancel} visible={Boolean(editInfo)}>
             <UserForm form={form} initialValues={editInfo} />
         </Modal>
     );

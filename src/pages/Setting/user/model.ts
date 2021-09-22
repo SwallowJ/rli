@@ -52,6 +52,16 @@ const UserModel: modelType<USER.StateType> = {
             }
             loading.stop();
         },
+
+        *create({ payload, callback }, { call }) {
+            loading.run();
+            const response = yield call(service.create(payload));
+            if (response) {
+                callback?.();
+                service.message.success(`用户[${payload.username}]创建成功`);
+            }
+            loading.stop();
+        },
     },
 
     reducers: {},

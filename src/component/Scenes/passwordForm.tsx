@@ -3,10 +3,12 @@ import { Rule } from "antd/lib/form";
 import React, { useMemo } from "react";
 
 interface passwordProps {
+    label?: string;
+    name?: string;
     depends?: string;
 }
 
-export const PasswordForm: React.FC<passwordProps> = ({ depends }) => {
+export const PasswordForm: React.FC<passwordProps> = ({ depends, label, name = "newPassword" }) => {
     const rules = useMemo<Rule[]>(
         () => [
             { required: true, message: "请输入密码" },
@@ -51,10 +53,10 @@ export const PasswordForm: React.FC<passwordProps> = ({ depends }) => {
     return (
         <>
             <Form.Item
-                label={"新的密码"}
+                name={name}
                 hasFeedback={true}
                 validateFirst={true}
-                name={"newPassword"}
+                label={label ?? "新的密码"}
                 dependencies={depends ? [depends] : undefined}
                 rules={[
                     ...rules,
@@ -71,16 +73,16 @@ export const PasswordForm: React.FC<passwordProps> = ({ depends }) => {
                 <Input.Password placeholder={"请输入新的密码"} />
             </Form.Item>
             <Form.Item
-                label={"密码确认"}
+                label={"确认密码"}
                 hasFeedback={true}
                 validateFirst={true}
-                dependencies={["newPassword"]}
+                dependencies={[name]}
                 name={"confirmPassword"}
                 rules={[
                     ...rules,
                     ({ getFieldValue }) => ({
                         validator(_, value) {
-                            if (!value || getFieldValue("newPassword") === value) {
+                            if (!value || getFieldValue(name) === value) {
                                 return Promise.resolve();
                             }
 

@@ -2,11 +2,11 @@ import styles from "./style.less";
 import { connect } from "react-redux";
 import Container from "@/component/Container";
 import { Select, TableColumnType } from "antd";
-import { Button, Table, Input, Divider } from "@/component";
-import actions, { namespace } from "@/pages/Setting/user/actions";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ChangePassword, EditUser } from "./component";
 import assertActions from "@/pages/Assert/actions";
+import { Table, Input, Divider } from "@/component";
+import actions, { namespace } from "@/pages/Setting/user/actions";
+import { ChangePassword, EditUser, CreateUser } from "./component";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import roleActions, { namespace as roleNamespace } from "@/pages/Setting/role/actions";
 
 interface userProps extends USER.StateType {
@@ -94,7 +94,7 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
                     />
                     <Input.Search className={styles.search} placeholder={"请输入手机号/用户名"} onSearch={changeKeys} />
                 </div>
-                <Button type={"primary"}>{"+添加用户"}</Button>
+                <CreateUser list={list} />
             </Container.Head>
 
             <Container.Content>

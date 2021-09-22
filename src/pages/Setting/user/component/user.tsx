@@ -1,7 +1,8 @@
 import { Input } from "@/component";
 import { connect } from "react-redux";
 import Config from "@/common/core/config";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
+import { PasswordForm } from "@/component/Scenes";
 import { Form, Select, FormInstance } from "antd";
 import { namespace as assertNamespace } from "@/pages/Assert/actions";
 import roleActions, { namespace as roleNamespace } from "@/pages/Setting/role/actions";
@@ -16,9 +17,7 @@ interface userFormProps {
 const userForm: React.FC<userFormProps> = ({ form, rolelist, initialValues, corporations }) => {
     const roleOptions = useMemo<Global.optionTypes>(
         () =>
-            rolelist
-                ? [{ label: "所有角色", value: "" }, ...rolelist.map((r) => ({ label: r.roleDesc, value: r.roleName }))]
-                : (roleActions.listRole(), []),
+            rolelist ? rolelist.map((r) => ({ label: r.roleDesc, value: r.roleName })) : (roleActions.listRole(), []),
         [rolelist]
     );
 
@@ -27,9 +26,7 @@ const userForm: React.FC<userFormProps> = ({ form, rolelist, initialValues, corp
         [corporations]
     );
 
-    useEffect(() => {
-        initialValues && form?.resetFields();
-    }, [initialValues]);
+    const isEdit = useMemo(() => (initialValues && form?.resetFields(), Boolean(initialValues)), [initialValues]);
 
     return (
         <Form {...Config.formLayout.default} form={form}>
@@ -39,7 +36,7 @@ const userForm: React.FC<userFormProps> = ({ form, rolelist, initialValues, corp
                 initialValue={initialValues?.userName}
                 rules={[{ required: true, message: "请输入用户名" }]}
             >
-                <Input placeholder={"请输入用户名"} disabled={Boolean(initialValues)} />
+                <Input placeholder={"请输入用户名"} disabled={isEdit} />
             </Form.Item>
 
             <Form.Item
@@ -50,6 +47,8 @@ const userForm: React.FC<userFormProps> = ({ form, rolelist, initialValues, corp
             >
                 <Input placeholder={"请输入真实姓名"} />
             </Form.Item>
+
+            {isEdit || <PasswordForm label={"密码"} name={"password"} />}
 
             <Form.Item name={"phone"} label={"手机号"} initialValue={initialValues?.userPhone}>
                 <Input placeholder={"请输入手机号"} />

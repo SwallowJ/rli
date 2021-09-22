@@ -37,6 +37,13 @@ export class UserActions extends Actions {
     updata(payload: USER.PARAMS.form, callback?: Function) {
         return this.callAction("updata", { payload, callback });
     }
+
+    /**
+     * 创建用户
+     */
+    create(payload: USER.PARAMS.form, callback?: Function) {
+        return this.callAction("create", { payload, callback });
+    }
 }
 
 export default new UserActions(namespace);
