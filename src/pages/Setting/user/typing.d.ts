@@ -11,6 +11,11 @@ declare namespace USER {
          * 待修改密码用户
          */
         changePwdId?: string;
+
+        /**
+         * 待编辑用户详情
+         */
+        editInfo?: entity;
     }
 
     interface entity extends Global.AUTH.entity {
@@ -26,6 +31,20 @@ declare namespace USER {
         interface password {
             username: string;
             password: string;
+        }
+
+        interface userId {
+            userId: number;
+        }
+
+        interface form {
+            username: string;
+            displayName: string;
+            phone?: string;
+            email?: string;
+            role: string;
+            roles?: string[];
+            corporationId?: string;
         }
     }
 }

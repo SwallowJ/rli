@@ -34,7 +34,7 @@ export const model = (writeStream: fs.WriteStream, name: string) => {
 
     remark.mark(writeStream, { auth: "jfh", email: "feihongjiang@caih.com", desc: "model 模板" });
 
-    writeStream.write(`import ${name.toLowerCase()}Service from "./service";\n`);
+    writeStream.write(`import service from "./service";\n`);
     writeStream.write(`import { namespace } from "./actions";\n`);
     writeStream.write(`import loading from "@/component/Loading";\n`);
     writeStream.write(`import { modelType } from "@/typings/model";\n\n`);

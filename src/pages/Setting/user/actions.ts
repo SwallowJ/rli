@@ -23,6 +23,20 @@ export class UserActions extends Actions {
     changeUserPwd(username: string, password: string, callback?: Function) {
         return this.callAction("changePassword", { payload: { username, password }, callback });
     }
+
+    /**
+     * 获取用户详细信息
+     */
+    editUserInfo(userId: number) {
+        return this.callAction("editUserInfo", { payload: { userId } });
+    }
+
+    /**
+     * 编辑用户信息
+     */
+    updata(payload: USER.PARAMS.form, callback?: Function) {
+        return this.callAction("updata", { payload, callback });
+    }
 }
 
 export default new UserActions(namespace);

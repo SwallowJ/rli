@@ -13,6 +13,8 @@ declare namespace Global {
      */
     type baseType = string | number | boolean;
 
+    type ID = number | string;
+
     interface obj<T = number | string | boolean> {
         [key: string]: T;
     }
@@ -48,6 +50,7 @@ declare namespace Global {
              * 用户单位名称
              */
             userCorporationName?: string;
+            userCorporationIdFk?: number;
 
             /**
              * 用户名
@@ -56,7 +59,8 @@ declare namespace Global {
 
             email?: string;
             phone?: string;
-
+            userPhone?: string;
+            userEmail?: string;
             /**
              * 权限列表
              */
@@ -102,6 +106,8 @@ declare namespace Global {
         disabled?: boolean;
         key?: React.Key;
     }
+
+    type optionTypes = optionType[] | undefined;
 
     /**
      * 通用请求返回类型

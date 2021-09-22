@@ -21,6 +21,20 @@ class UserService extends ReqService {
     changePassword(data: USER.PARAMS.password) {
         return this.post("/api/xc/user/edit/psw", { data });
     }
+
+    /**
+     * 获取用户信息
+     */
+    getUserInfo(params: USER.PARAMS.userId) {
+        return this.get<USER.entity>(`/api/xc/user/${params.userId}`, { params });
+    }
+
+    /**
+     * 更新用户信息
+     */
+    updata(data: USER.PARAMS.form) {
+        return this.post("/api/xc/user/edit/info", { data });
+    }
 }
 
 export default new UserService();

@@ -5,7 +5,8 @@ import { Select, TableColumnType } from "antd";
 import { Button, Table, Input, Divider } from "@/component";
 import actions, { namespace } from "@/pages/Setting/user/actions";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ChangePassword } from "./component";
+import { ChangePassword, EditUser } from "./component";
+import assertActions from "@/pages/Assert/actions";
 import roleActions, { namespace as roleNamespace } from "@/pages/Setting/role/actions";
 
 interface userProps extends USER.StateType {
@@ -25,11 +26,11 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
         {
             title: "操作",
             key: "operation",
-            render: (_, { username }) => (
+            render: (_, { username, userId }) => (
                 <div className={styles.opration}>
                     <a onClick={changePwd.bind(null, username)}>{"修改密码"}</a>
                     <Divider height={13} />
-                    <a>{"编辑资料"}</a>
+                    <a onClick={editUser.bind(null, userId)}>{"编辑资料"}</a>
                 </div>
             ),
         },
@@ -51,8 +52,18 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
         setSearchKey(keys);
     };
 
+    /**
+     * 修改用户密码
+     */
     const changePwd = (changePwdId: string) => {
         actions.changeState({ changePwdId });
+    };
+
+    /**
+     * 编辑用户
+     */
+    const editUser = (editId: number) => {
+        actions.editUserInfo(editId);
     };
 
     /**
@@ -65,6 +76,10 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
     useEffect(() => {
         list();
     }, [roleName, searchKey]);
+
+    useEffect(() => {
+        assertActions.listCorp();
+    }, []);
 
     return (
         <Container className={styles.User}>
@@ -93,6 +108,7 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
             </Container.Content>
 
             <ChangePassword />
+            <EditUser list={list} />
         </Container>
     );
 };

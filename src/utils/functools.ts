@@ -97,3 +97,5 @@ export const isEqual = (opionts: compareProps): boolean => {
             return deep ? JSON.stringify(obj1) === JSON.stringify(obj2) : obj1 === obj2;
     }
 };
+
+export const isNull = (target: any) => target === null || target === undefined;
