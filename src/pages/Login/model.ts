@@ -16,7 +16,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
     effects: {
         *login({ payload, remember }, { call, change }) {
             loading.run();
-            const token = yield call(loginService.getToken());
+            const token: LOGIN.tokenType = yield call(loginService.getToken());
 
             if (!token) {
                 return;
@@ -32,7 +32,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
 
             const params = { ...payload, requestId, password: encodeURIComponent(encodePassword) };
 
-            const _token = yield call(loginService.login(params));
+            const _token: string = yield call(loginService.login(params));
             if (_token) {
                 loginService.message.success("登录成功");
                 security.login({ ...payload, requestId, _token }, remember);

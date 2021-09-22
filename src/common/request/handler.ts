@@ -24,7 +24,7 @@ const parseError = (err: any) => {
     }
 };
 
-export const successHandler: REQUEST.responsehandler = async (reponse) => {
+export const successHandler: REQUEST.responsehandler = async (reponse, _, all) => {
     try {
         security.updateToken(reponse);
         const result: Global.resultData = await reponse.json();
@@ -34,7 +34,7 @@ export const successHandler: REQUEST.responsehandler = async (reponse) => {
         }
 
         if (result.code == 0) {
-            return result.data || result.message || result;
+            return all ? result : result.data || result.message || result;
         } else {
             parseError(result);
         }

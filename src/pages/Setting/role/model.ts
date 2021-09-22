@@ -8,7 +8,6 @@ const RoleModel: modelType<ROLE.StateType> = {
 
     state: {
         perms: [],
-        rolelist: [],
         editRole: null,
     },
 

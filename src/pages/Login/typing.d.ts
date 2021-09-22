@@ -41,4 +41,8 @@ declare namespace LOGIN {
         _token?: string;
         requestId?: string;
     }
+
+    interface tokenType {
+        csrfToken: string;
+    }
 }

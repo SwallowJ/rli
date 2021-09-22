@@ -1,12 +1,12 @@
 import styles from "./style.less";
+import { connect } from "react-redux";
 import { TableColumnType } from "antd";
 import Config from "@/common/core/config";
 import Container from "@/component/Container";
-import React, { useEffect, useMemo, useRef, useState, MouseEvent } from "react";
-import { connect } from "react-redux";
 import { CreateRole, EditRole } from "./component";
-import { Button, Table, Input, Divider, Modal } from "@/component";
+import { Table, Input, Divider, Modal } from "@/component";
 import actions, { namespace } from "@/pages/Setting/role/actions";
+import React, { useEffect, useMemo, useRef, useState, MouseEvent } from "react";
 
 interface roleProps extends ROLE.StateType {}
 

@@ -14,14 +14,14 @@ class LoginService extends ReqService {
      * 登出
      */
     logout() {
-        return this.get("/api/xc/logout/password");
+        return this.get<string>("/api/xc/logout/password");
     }
 
     /**
      * 获取token, 对密码加密
      */
     getToken() {
-        return this.get("/xc/login/requestId");
+        return this.get<LOGIN.tokenType>("/xc/login/requestId");
     }
 
     /**

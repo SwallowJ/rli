@@ -21,7 +21,7 @@ interface EffectsCommandMap<S> {
      */
     put(action: AnyAction): void;
 
-    change(params: T): void;
+    change(params: S): void;
 
     /**
      * 异步函数调用

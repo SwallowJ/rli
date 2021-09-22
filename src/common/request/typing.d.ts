@@ -30,13 +30,18 @@ declare namespace REQUEST {
 
     type Client = (req: ReqType) => Promise<Response>;
 
-    type responsehandler<T = any> = (res: Response, req: ReqType) => Promise<T>;
+    type responsehandler<T = any> = (res: Response, req: ReqType, all?: boolean) => Promise<T>;
 
     type handlerType = "successHandler" | "errorHandler";
 
     interface reqOptions {
         handFunc?: responsehandler;
         errorFunc?: responsehandler;
+
+        /**
+         * 成功时返回所有参数
+         */
+        successResAll?: boolean;
 
         /**
          * 是否缓存在本地

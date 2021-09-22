@@ -15,7 +15,6 @@ process.on("unhandledRejection", (err) => {
 
 import fs from "fs";
 import path from "path";
-import paths from "./utils/paths";
 import Logger from "@swallowj/logjs";
 import { actions, model, service, typing } from "./utils/template";
 
@@ -42,7 +41,7 @@ const getArgvFile = () => {
     if (!p) {
         return;
     }
-    const dir = path.resolve(paths.appSrc, p);
+    const dir = path.resolve(process.cwd(), p);
     if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
         logger.Error(`目录[${dir}]不存在或者`);
         process.exit(9);

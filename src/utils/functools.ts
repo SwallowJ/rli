@@ -66,8 +66,8 @@ export const isEqual = (opionts: compareProps): boolean => {
         return obj1 === obj2;
     }
 
-    const type1 = Object.prototype.toString.call(obj1);
-    const type2 = Object.prototype.toString.call(obj2);
+    const type1 = callType(obj1);
+    const type2 = callType(obj2);
     if (type1 !== type2) {
         return false;
     }

@@ -1,10 +1,20 @@
 import styles from "./style.less";
-import React, { useRef } from "react";
-import { Button, Table } from "@/component";
+import { connect } from "react-redux";
 import Container from "@/component/Container";
-import { Select, Input, TableColumnType } from "antd";
+import { Select, TableColumnType } from "antd";
+import { Button, Table, Input } from "@/component";
+import actions, { namespace } from "@/pages/Setting/user/actions";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import roleActions, { namespace as roleNamespace } from "@/pages/Setting/role/actions";
 
-const user: React.FC = () => {
+interface userProps extends USER.StateType {
+    rolelist?: ROLE.entity[];
+}
+
+const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
+    const [roleName, setRoleName] = useState("");
+    const [searchKey, setSearchKey] = useState("");
+
     const columns = useRef<TableColumnType<USER.entity>[]>([
         { title: "用户名", dataIndex: "username" },
         { title: "真实姓名", dataIndex: "displayName" },
@@ -14,21 +24,72 @@ const user: React.FC = () => {
         { title: "操作", key: "operation" },
     ]);
 
+    const roleOptions = useMemo<Global.optionType[]>(
+        () =>
+            rolelist
+                ? [{ label: "所有角色", value: "" }, ...rolelist.map((r) => ({ label: r.roleDesc, value: r.roleName }))]
+                : (roleActions.listRole(), []),
+        [rolelist]
+    );
+
+    const changeRoleName = (value: string) => {
+        setRoleName(value ?? "");
+    };
+
+    const changeKeys = (keys: string) => {
+        setSearchKey(keys);
+    };
+
+    /**
+     * 获取用户列表
+     */
+    const list = (pageNum?: number, pageSize?: number) => {
+        actions.list(roleName, searchKey, pageNum ?? page?.pageNum, pageSize ?? page?.pageSize);
+    };
+
+    useEffect(() => {
+        list();
+    }, [roleName, searchKey]);
+
     return (
         <Container className={styles.User}>
             <Container.Head className={styles.head}>
                 <div>
-                    <Select className={styles.select} />
-                    <Input.Search className={styles.search} />
+                    <Select
+                        allowClear={true}
+                        options={roleOptions}
+                        className={styles.select}
+                        placeholder={"请选择角色"}
+                        onChange={changeRoleName}
+                    />
+                    <Input.Search className={styles.search} placeholder={"请输入手机号/用户名"} onSearch={changeKeys} />
                 </div>
                 <Button type={"primary"}>{"+添加用户"}</Button>
             </Container.Head>
 
             <Container.Content>
-                <Table columns={columns.current} />
+                <Table
+                    page={page}
+                    rowKey={"userId"}
+                    onPageChange={list}
+                    dataSource={userlist}
+                    columns={columns.current}
+                />
             </Container.Content>
         </Container>
     );
 };
 
-export default user;
+export default connect(
+    ({
+        [roleNamespace]: { rolelist },
+        [namespace]: { userlist, page },
+    }: {
+        [roleNamespace]: ROLE.StateType;
+        [namespace]: USER.StateType;
+    }) => ({
+        page,
+        rolelist,
+        userlist,
+    })
+)(user);

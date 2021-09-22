@@ -69,7 +69,7 @@ export class RequestManagement {
         } else {
             RS = errorFunc || this.errorHandler;
         }
-        return RS(response, req).then((result) => {
+        return RS(response, req, options?.successResAll).then((result) => {
             setTimeout(() => {
                 if (cache && engine) {
                     const stroageKey = key || this.parseStroageKey(req);

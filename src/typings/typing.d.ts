@@ -13,15 +13,6 @@ declare namespace Global {
      */
     type baseType = string | number | boolean;
 
-    /**
-     * 通用请求返回类型
-     */
-    interface resultData<T = any> {
-        code: 0 | 1;
-        data?: T;
-        message?: string;
-    }
-
     interface obj<T = number | string | boolean> {
         [key: string]: T;
     }
@@ -132,7 +123,35 @@ declare namespace Global {
          * 屏幕高度
          */
         screenHeight: number;
-        
+
         NODE_ENV: "development" | "production" | "test";
+    }
+
+    interface optionType {
+        label: React.ReactNode;
+        value: React.ReactText;
+        disabled?: boolean;
+        key?: React.Key;
+    }
+
+    /**
+     * 通用请求返回类型
+     */
+    interface resultData<T = any> {
+        code: 0 | 1;
+        data?: T;
+        message?: string;
+        page?: pageType;
+    }
+
+    type Result<T = any> = resultData<T> | undefined;
+
+    /**
+     * 分页
+     */
+    interface pageType {
+        total?: number;
+        pageNum?: number;
+        pageSize?: number;
     }
 }
