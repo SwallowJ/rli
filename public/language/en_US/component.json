@@ -1,0 +1,17 @@
+{
+    "password": "Password",
+    "password.new": "New pwd",
+    "password.current": "Current pwd",
+    "password.confirm": "Confirm pwd",
+    "password.length": "Password length is 8-20 digits",
+    "password.illegal": "There are illegal characters",
+    "password.rule": "password must consist of two combinations of uppercase,lowercase, symbols",
+    "password.placeholder": "Please enter the password",
+    "password.placeholder.confirm": "Please enter confirm password",
+    "password.new.same": "The new password cannot be the same as the old password",
+    "password.confirm.inconsistent": "Confirm password is inconsistent with new password",
+    "password.placeholder.current": "Please enter the current password",
+    "password.edit": "Edit Password",
+
+    "pagination.showTotal": "Currently showing ${start}-${end}, a total of ${total} records"
+}

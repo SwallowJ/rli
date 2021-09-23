@@ -4,13 +4,7 @@ import LanguageManager from "@/common/core/language";
 
 export const namespace = "language";
 
-export interface LangStateType {
-    lang?: Global.LANGUAGE.Type;
-    login?: Global.LANGUAGE.code;
-    layout?: Global.LANGUAGE.code;
-}
-
-const LanguageModel: modelType<LangStateType> = {
+const LanguageModel: modelType<Global.LANGUAGE.StateType> = {
     namespace,
 
     state: {
@@ -30,6 +24,11 @@ const LanguageModel: modelType<LangStateType> = {
             }
 
             yield change({ [name]: response });
+        },
+
+        *changeLanguage({ lang }, { change }) {
+            LanguageManager.save(lang);
+            change({ lang });
         },
     },
 

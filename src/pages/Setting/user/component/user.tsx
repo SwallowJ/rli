@@ -1,7 +1,8 @@
 import { Input } from "@/component";
 import { connect } from "react-redux";
-import Config from "@/common/core/config";
 import React, { useMemo } from "react";
+import Config from "@/common/core/config";
+import langservice from "@/common/core/language";
 import { PasswordForm } from "@/component/Scenes";
 import { Form, Select, FormInstance } from "antd";
 import { namespace as assertNamespace } from "@/pages/Assert/actions";
@@ -15,6 +16,7 @@ interface userFormProps {
 }
 
 const userForm: React.FC<userFormProps> = ({ form, rolelist, initialValues, corporations }) => {
+    const [lang] = langservice.useLanguage("system");
     const roleOptions = useMemo<Global.optionTypes>(
         () =>
             rolelist ? rolelist.map((r) => ({ label: r.roleDesc, value: r.roleName })) : (roleActions.listRole(), []),
@@ -32,48 +34,52 @@ const userForm: React.FC<userFormProps> = ({ form, rolelist, initialValues, corp
         <Form {...Config.formLayout.default} form={form}>
             <Form.Item
                 name={"username"}
-                label={"用户名"}
+                label={lang("user.name")}
+                rules={[{ required: true }]}
                 initialValue={initialValues?.userName}
-                rules={[{ required: true, message: "请输入用户名" }]}
             >
-                <Input placeholder={"请输入用户名"} disabled={isEdit} />
+                <Input placeholder={lang("user.form.msg.name")} disabled={isEdit} />
             </Form.Item>
 
             <Form.Item
-                label={"真实姓名"}
                 name={"displayName"}
+                rules={[{ required: true }]}
+                label={lang("user.displayName")}
                 initialValue={initialValues?.userDisplayName}
-                rules={[{ required: true, message: "请输入真实姓名" }]}
             >
-                <Input placeholder={"请输入真实姓名"} />
+                <Input placeholder={lang("user.form.msg.displayName")} />
             </Form.Item>
 
-            {isEdit || <PasswordForm label={"密码"} name={"password"} />}
+            {isEdit || <PasswordForm label={"password"} name={"password"} />}
 
-            <Form.Item name={"phone"} label={"手机号"} initialValue={initialValues?.userPhone}>
-                <Input placeholder={"请输入手机号"} />
+            <Form.Item name={"phone"} label={lang("user.phone")} initialValue={initialValues?.userPhone}>
+                <Input placeholder={lang("user.form.msg.phone")} />
             </Form.Item>
 
             <Form.Item
-                label={"邮箱"}
                 name={"email"}
+                label={lang("user.email")}
                 initialValue={initialValues?.userEmail}
-                rules={[{ type: "email", message: "请输入正确的邮箱地址" }]}
+                rules={[{ type: "email", message: lang("user.form.msg.emailCorrect") }]}
             >
-                <Input placeholder={"请输入邮箱"} />
+                <Input placeholder={lang("user.form.msg.email")} />
             </Form.Item>
 
             <Form.Item
                 name={"role"}
-                label={"角色"}
+                label={lang("user.role")}
                 initialValue={initialValues?.roleName}
-                rules={[{ required: true, message: "请请选择角色" }]}
+                rules={[{ required: true, message: lang("user.form.msg.role") }]}
             >
-                <Select allowClear={true} options={roleOptions} placeholder={"请选择角色"} />
+                <Select allowClear={true} options={roleOptions} placeholder={lang("user.form.msg.role")} />
             </Form.Item>
 
-            <Form.Item name={"corporationId"} label={"所属单位"} initialValue={initialValues?.userCorporationIdFk}>
-                <Select allowClear={true} options={corpOptions} placeholder={"请选择所属单位"} />
+            <Form.Item
+                name={"corporationId"}
+                label={lang("user.corporation")}
+                initialValue={initialValues?.userCorporationIdFk}
+            >
+                <Select allowClear={true} options={corpOptions} placeholder={"user.form.msg.corporation"} />
             </Form.Item>
         </Form>
     );

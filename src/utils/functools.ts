@@ -15,6 +15,20 @@ export function debounce<T extends Function>(fn: T, wait = 200) {
     };
 }
 
+export function throttle<T extends Function>(fn: T, delay = 200) {
+    let timer: NodeJS.Timeout | null;
+    return (...args: any) => {
+        if (timer) {
+            return;
+        }
+        fn(args);
+        timer = setTimeout(() => {
+            timer && clearTimeout(timer);
+            timer = null;
+        }, delay);
+    };
+}
+
 /**
  * 获取对象类型
  */

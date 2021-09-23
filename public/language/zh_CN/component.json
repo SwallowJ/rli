@@ -1,0 +1,17 @@
+{
+    "password": "密码",
+    "password.new": "新的密码",
+    "password.new.same": "新密码不能与旧密码一样",
+    "password.current": "当前密码",
+    "password.confirm": "确认密码",
+    "password.length": "密码长度在8~20位",
+    "password.illegal": "存在非法字符",
+    "password.rule": "密码必须由大小写字母数字和特殊符号中的两种组合",
+    "password.placeholder": "请输入密码",
+    "password.placeholder.confirm": "请输入确认密码",
+    "password.confirm.inconsistent": "确认密码与新密码不一致",
+    "password.placeholder.current": "请输入当前密码",
+    "password.edit": "修改密码",
+
+    "pagination.showTotal": "当前展示第${start}-${end}条，共${total}条记录"
+}

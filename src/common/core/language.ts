@@ -4,14 +4,13 @@
  * email         feihongjiang@caih.com
  * Description   语言包管理工具
  */
+import store from "@/common/reducer";
 import StorageManager from "./storage";
 import { useSelector } from "react-redux";
-import { ReactText, useCallback, useMemo } from "react";
 import zh_CN from "antd/lib/locale/zh_CN";
 import en_US from "antd/lib/locale/en_US";
-import moment from "moment";
-import loadable from "@loadable/component";
-import { LangStateType, namespace } from "@/models/language";
+import { namespace } from "@/models/language";
+import { ReactText, useCallback, useMemo } from "react";
 
 class LanguageManager {
     private storeName = "language";
@@ -21,11 +20,17 @@ class LanguageManager {
         ["en_US", en_US],
     ]);
 
+    langlist: Global.LANGUAGE.Type[] = ["zh_CN", "en_US"];
+
     /**
      * 获取初始语言类型
      */
     init(): Global.LANGUAGE.Type {
         return StorageManager.local.get<Global.LANGUAGE.Type>(this.storeName) || "zh_CN";
+    }
+
+    save(lang: Global.LANGUAGE.Type) {
+        StorageManager.local.save(this.storeName, lang);
     }
 
     /**
@@ -35,7 +40,7 @@ class LanguageManager {
      * @returns
      */
     useLanguage(
-        name: keyof LangStateType,
+        name: keyof Global.LANGUAGE.StateType,
         de?: ReactText
     ): [Global.LANGUAGE.langFunc, Global.LANGUAGE.langTempFunc, Global.LANGUAGE.langType] {
         const pack: Global.LANGUAGE.langType = useSelector((states) => states[namespace][name]);
@@ -83,6 +88,19 @@ class LanguageManager {
     uselocal(lang?: Global.LANGUAGE.Type) {
         const local = useMemo(() => this.langMap.get(lang ?? ""), [lang]);
         return [local];
+    }
+
+    /**
+     * 获取语言包函数
+     */
+    getLangAsync(name: keyof Global.LANGUAGE.StateType, key: string) {
+        const state = store.getState()["language"][name];
+        return state?.[key] ?? key;
+    }
+
+    getLangAsyncTemp(name: keyof Global.LANGUAGE.StateType, key: string, obj: Global.obj = {}): string {
+        const state = store.getState()["language"][name];
+        return this.template(state?.[key] ?? name, obj);
     }
 }
 

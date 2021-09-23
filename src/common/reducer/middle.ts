@@ -1,5 +1,6 @@
 import models from "./register";
 import { AnyAction, Middleware } from "redux";
+import langservice from "@/common/core/language";
 
 /**
  * action 拦截中间件
@@ -58,7 +59,14 @@ export const effectMiddleware: Middleware = ({ getState }) => (next) => (action:
         /**
          * effect 生成器
          */
-        const gen = model.effects[type](action, { call, put, select, change });
+        const gen = model.effects[type](action, {
+            call,
+            put,
+            select,
+            change,
+            language: langservice.getLangAsync.bind(langservice),
+            languageTemp: langservice.getLangAsyncTemp.bind(langservice),
+        });
         gen.next();
     } else {
         console.error(`No such action: ${action.type}`);

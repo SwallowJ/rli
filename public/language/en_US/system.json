@@ -1,0 +1,27 @@
+{
+    "user.name": "userName",
+    "user.displayName": "displayName",
+    "user.role": "roleName",
+    "user.phone": "phone",
+    "user.email": "email",
+    "user.changePwd": "Change Password",
+    "user.edit": "Edit",
+    "user.edit.title": "Edit User Information",
+    "user.placeholder.selectRole": "Please choose a role",
+    "user.placeholder.search": "Please enter your phone number/username",
+    "user.add": "+Add User",
+    "user.create": "Create User",
+    "user.corporation": "Corporation",
+    "user.form.msg.name": "please enter user name",
+    "user.form.msg.displayName": "please enter displayName",
+    "user.form.msg.phone": "Please enter phone number",
+    "user.form.msg.email": "please input your email",
+    "user.form.msg.emailCorrect": "Please input the correct email address",
+    "user.form.msg.role": "Please choose a role",
+    "user.form.msg.corporation": "Please select the corporation",
+    "user.changePassword.success": "User [${username}] changed password successfully",
+    "user.edit.success": "Update user [${username}] information successfully",
+    "user.create.success": "User [${username}] was successfully created",
+
+    "operation": "operation"
+}

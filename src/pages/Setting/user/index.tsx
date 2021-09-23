@@ -2,11 +2,12 @@ import styles from "./style.less";
 import { connect } from "react-redux";
 import Container from "@/component/Container";
 import { Select, TableColumnType } from "antd";
+import langservice from "@/common/core/language";
 import assertActions from "@/pages/Assert/actions";
 import { Table, Input, Divider } from "@/component";
+import React, { useEffect, useMemo, useState } from "react";
 import actions, { namespace } from "@/pages/Setting/user/actions";
 import { ChangePassword, EditUser, CreateUser } from "./component";
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import roleActions, { namespace as roleNamespace } from "@/pages/Setting/role/actions";
 
 interface userProps extends USER.StateType {
@@ -16,25 +17,29 @@ interface userProps extends USER.StateType {
 const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
     const [roleName, setRoleName] = useState("");
     const [searchKey, setSearchKey] = useState("");
+    const [lang] = langservice.useLanguage("system");
 
-    const columns = useRef<TableColumnType<USER.entity>[]>([
-        { title: "用户名", dataIndex: "username" },
-        { title: "真实姓名", dataIndex: "displayName" },
-        { title: "角色", dataIndex: "roleDesc" },
-        { title: "手机号", dataIndex: "phone" },
-        { title: "邮箱", dataIndex: "email" },
-        {
-            title: "操作",
-            key: "operation",
-            render: (_, { username, userId }) => (
-                <div className={styles.opration}>
-                    <a onClick={changePwd.bind(null, username)}>{"修改密码"}</a>
-                    <Divider height={13} />
-                    <a onClick={editUser.bind(null, userId)}>{"编辑资料"}</a>
-                </div>
-            ),
-        },
-    ]);
+    const columns = useMemo<TableColumnType<USER.entity>[]>(
+        () => [
+            { title: lang("user.name"), dataIndex: "username" },
+            { title: lang("user.displayName"), dataIndex: "displayName" },
+            { title: lang("user.role"), dataIndex: "roleDesc" },
+            { title: lang("user.phone"), dataIndex: "phone" },
+            { title: lang("user.email"), dataIndex: "email" },
+            {
+                title: lang("operation"),
+                key: "operation",
+                render: (_, { username, userId }) => (
+                    <div className={styles.opration}>
+                        <a onClick={changePwd.bind(null, username)}>{lang("user.changePwd")}</a>
+                        <Divider height={13} />
+                        <a onClick={editUser.bind(null, userId)}>{lang("user.edit")}</a>
+                    </div>
+                ),
+            },
+        ],
+        [lang]
+    );
 
     const roleOptions = useMemo<Global.optionType[]>(
         () =>
@@ -89,26 +94,24 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
                         allowClear={true}
                         options={roleOptions}
                         className={styles.select}
-                        placeholder={"请选择角色"}
                         onChange={changeRoleName}
+                        placeholder={lang("user.placeholder.selectRole")}
                     />
-                    <Input.Search className={styles.search} placeholder={"请输入手机号/用户名"} onSearch={changeKeys} />
+                    <Input.Search
+                        onSearch={changeKeys}
+                        className={styles.search}
+                        placeholder={lang("user.placeholder.search")}
+                    />
                 </div>
                 <CreateUser list={list} />
             </Container.Head>
 
             <Container.Content>
-                <Table
-                    page={page}
-                    rowKey={"userId"}
-                    onPageChange={list}
-                    dataSource={userlist}
-                    columns={columns.current}
-                />
+                <Table page={page} rowKey={"userId"} onPageChange={list} dataSource={userlist} columns={columns} />
             </Container.Content>
 
             <ChangePassword />
-            <EditUser list={list} />
+            <EditUser list={list} title={lang("user.edit.title")} />
         </Container>
     );
 };

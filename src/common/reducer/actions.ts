@@ -1,5 +1,5 @@
+import { AnyAction } from "redux";
 import store from "@/common/reducer";
-import { AnyAction, Dispatch } from "redux";
 
 export class Actions {
     namespace: string;

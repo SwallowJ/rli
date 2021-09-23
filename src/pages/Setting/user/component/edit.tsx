@@ -7,9 +7,10 @@ import actions, { namespace } from "@/pages/Setting/user/actions";
 
 interface editProps extends USER.StateType {
     list?: Function;
+    title?: string;
 }
 
-const edit: React.FC<editProps> = ({ editInfo, list }) => {
+const edit: React.FC<editProps> = ({ editInfo, list, title }) => {
     const [form] = Form.useForm();
 
     const onCancel = () => {
@@ -28,7 +29,7 @@ const edit: React.FC<editProps> = ({ editInfo, list }) => {
     };
 
     return (
-        <Modal onOk={handleOk} title={"编辑用户"} onCancel={onCancel} visible={Boolean(editInfo)}>
+        <Modal onOk={handleOk} title={title} onCancel={onCancel} visible={Boolean(editInfo)}>
             <UserForm form={form} initialValues={editInfo} />
         </Modal>
     );

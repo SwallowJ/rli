@@ -26,12 +26,12 @@ const UserModel: modelType<USER.StateType> = {
             loading.stop();
         },
 
-        *changePassword({ payload, callback }, { call }) {
+        *changePassword({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.changePassword(payload));
             if (response) {
                 callback?.();
-                service.message.success(`用户[${payload.username}]修改密码成功`);
+                service.message.success(languageTemp("system", "user.changePassword.success", payload));
             }
             loading.stop();
         },
@@ -43,22 +43,22 @@ const UserModel: modelType<USER.StateType> = {
             loading.stop();
         },
 
-        *updata({ payload, callback }, { call }) {
+        *updata({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.updata(payload));
             if (response) {
                 callback?.();
-                service.message.success(`更新用户[${payload.username}]信息成功`);
+                service.message.success(languageTemp("system", "user.edit.success", payload));
             }
             loading.stop();
         },
 
-        *create({ payload, callback }, { call }) {
+        *create({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.create(payload));
             if (response) {
                 callback?.();
-                service.message.success(`用户[${payload.username}]创建成功`);
+                service.message.success(languageTemp("system", "user.create.success", payload));
             }
             loading.stop();
         },

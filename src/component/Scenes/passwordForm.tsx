@@ -1,6 +1,7 @@
 import { Form, Input } from "antd";
 import { Rule } from "antd/lib/form";
 import React, { useMemo } from "react";
+import langservice from "@/common/core/language";
 
 interface passwordProps {
     label?: string;
@@ -9,11 +10,12 @@ interface passwordProps {
 }
 
 export const PasswordForm: React.FC<passwordProps> = ({ depends, label, name = "newPassword" }) => {
+    const [lang] = langservice.useLanguage("component");
     const rules = useMemo<Rule[]>(
         () => [
-            { required: true, message: "请输入密码" },
-            { min: 8, max: 20, message: "密码长度在8~20位" },
-            { pattern: /^[A-Za-z0-9—!@#$%^&*?\-_]+$/, message: "存在非法字符" },
+            { required: true },
+            { min: 8, max: 20, message: lang("password.length") },
+            { pattern: /^[A-Za-z0-9—!@#$%^&*?\-_]+$/, message: lang("password.illegal") },
             {
                 validator: (_, value) => {
                     return new Promise((resolve, reject) => {
@@ -42,7 +44,7 @@ export const PasswordForm: React.FC<passwordProps> = ({ depends, label, name = "
                             }
                         }
 
-                        reject("密码必须由大小写字母数字和特殊符号中的两种组合");
+                        reject(lang("password.rule"));
                     });
                 },
             },
@@ -56,28 +58,28 @@ export const PasswordForm: React.FC<passwordProps> = ({ depends, label, name = "
                 name={name}
                 hasFeedback={true}
                 validateFirst={true}
-                label={label ?? "新的密码"}
+                label={lang(label ?? "password.new")}
                 dependencies={depends ? [depends] : undefined}
                 rules={[
                     ...rules,
                     ({ getFieldValue }) => ({
                         validator(_, value) {
                             if (depends && value === getFieldValue(depends)) {
-                                return Promise.reject("新密码不能与旧密码一样");
+                                return Promise.reject(lang("password.new.same"));
                             }
                             return Promise.resolve();
                         },
                     }),
                 ]}
             >
-                <Input.Password placeholder={"请输入新的密码"} />
+                <Input.Password placeholder={lang("password.placeholder")} />
             </Form.Item>
             <Form.Item
-                label={"确认密码"}
                 hasFeedback={true}
                 validateFirst={true}
                 dependencies={[name]}
                 name={"confirmPassword"}
+                label={lang("password.confirm")}
                 rules={[
                     ...rules,
                     ({ getFieldValue }) => ({
@@ -86,12 +88,12 @@ export const PasswordForm: React.FC<passwordProps> = ({ depends, label, name = "
                                 return Promise.resolve();
                             }
 
-                            return Promise.reject("确认密码与新密码不一致!");
+                            return Promise.reject(lang("password.confirm.inconsistent"));
                         },
                     }),
                 ]}
             >
-                <Input.Password placeholder={"请输入确认密码"} />
+                <Input.Password placeholder={lang("password.placeholder.confirm")} />
             </Form.Item>
         </>
     );

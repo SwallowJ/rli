@@ -78,6 +78,15 @@ declare namespace Global {
     }
 
     namespace LANGUAGE {
+        interface StateType {
+            dev?: Global.LANGUAGE.code;
+            lang?: Global.LANGUAGE.Type;
+            login?: Global.LANGUAGE.code;
+            layout?: Global.LANGUAGE.code;
+            system?: Global.LANGUAGE.code;
+            component?: Global.LANGUAGE.code;
+        }
+
         /**
          * 语言类型
          */

@@ -3,6 +3,7 @@ import { Form, Input } from "antd";
 import { Modal } from "@/component";
 import { connect } from "react-redux";
 import action from "@/pages/Login/actions";
+import langservice from "@/common/core/language";
 import { PasswordForm } from "@/component/Scenes";
 import React, { useState, MouseEvent } from "react";
 
@@ -15,6 +16,7 @@ interface passwordProps {
 const password: React.FC<passwordProps> = ({ children, dispatch }) => {
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
+    const [lang] = langservice.useLanguage("component");
 
     const onClick = () => {
         setVisible(true);
@@ -44,14 +46,10 @@ const password: React.FC<passwordProps> = ({ children, dispatch }) => {
     return (
         <div onClick={onClick}>
             {children}
-            <Modal visible={visible} title={"修改密码"} onCancel={onCancel} onOk={handleOK}>
+            <Modal visible={visible} title={lang("password.edit")} onCancel={onCancel} onOk={handleOK}>
                 <Form {...__layout} form={form}>
-                    <Form.Item
-                        label={"当前密码"}
-                        name={"currentPassword"}
-                        rules={[{ required: true, message: "请输入当前密码" }]}
-                    >
-                        <Input.Password placeholder={"请输入当前密码"} />
+                    <Form.Item name={"currentPassword"} label={lang("password.current")} rules={[{ required: true }]}>
+                        <Input.Password placeholder={lang("password.placeholder.current")} />
                     </Form.Item>
                     <PasswordForm depends={"currentPassword"} />
                 </Form>

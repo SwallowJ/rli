@@ -27,6 +27,9 @@ interface EffectsCommandMap<S> {
      * 异步函数调用
      */
     call<T = any>(p: Promise<T>): void;
+
+    language: (name: keyof Global.LANGUAGE.StateType, key: string) => string;
+    languageTemp: (name: keyof Global.LANGUAGE.StateType, key: string, obj: Global.obj = {}) => string;
 }
 
 export interface modelType<S = any> {
