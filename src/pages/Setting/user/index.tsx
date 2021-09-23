@@ -54,7 +54,7 @@ const user: React.FC<userProps> = ({ rolelist, userlist, page }) => {
     };
 
     const changeKeys = (keys: string) => {
-        setSearchKey(keys);
+        setSearchKey(keys.trim());
     };
 
     /**

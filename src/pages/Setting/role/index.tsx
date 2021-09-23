@@ -64,7 +64,7 @@ const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
     };
 
     const changeKeys = (keys: string) => {
-        setSearchKey(keys);
+        setSearchKey(keys.trim());
     };
 
     useEffect(() => {
