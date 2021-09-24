@@ -33,7 +33,7 @@ const AuthModel: modelType<AuthStateType> = {
     state: {
         menus: [],
         paths: [],
-        homePage: security.getHomePage(),
+        homePage: "/",
     },
 
     effects: {
@@ -48,19 +48,17 @@ const AuthModel: modelType<AuthStateType> = {
 
             const [menus, paths] = parseMenu(router, auth.basePermCategory || []);
             const homePage = paths[0] ?? "/XC/home";
-            security.saveHomepage(homePage);
             change({ auth, menus, paths, homePage });
-
             callback && callback(homePage);
             loading.stop();
         },
 
-        *changePassword({ payload, callback }, { call }) {
+        *changePassword({ payload, callback }, { call, language }) {
             loading.run();
             const response = yield call(commonService.changePassword(payload));
 
             if (response) {
-                message.success("修改密码成功");
+                message.success(language("layout", "changePwd.success"));
                 callback && callback();
             }
             loading.stop();

@@ -1,3 +1,10 @@
+/**
+ * Author     jfh
+ * Date       2021-09-24 08:17:39.109
+ * email      feihongjiang@caih.com
+ * Desc       路由配置
+ */
+
 import styles from "./style.less";
 import { connect } from "react-redux";
 import Container from "@/component/Container";

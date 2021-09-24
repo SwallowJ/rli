@@ -20,5 +20,7 @@
     "menu.deliver": "发货管理",
     "menu.sign": "签收管理",
     "menu.contract": "合同管理",
-    "menu.ledger": "台账管理"
+    "menu.ledger": "台账管理",
+
+    "changePwd.success": "修改密码成功"
 }

@@ -22,7 +22,6 @@ export class SecurityManager {
     private loginFlag = "isLogin";
     private loginPath = "/login";
     private userInfo = "userInfo";
-    private homePage = "homePage";
 
     /**
      * 用户登录权限校验(获取用户信息)
@@ -46,7 +45,6 @@ export class SecurityManager {
         storage.local.remove(this.csrfToken);
         storage.local.remove(this.loginFlag);
 
-        storage.session.remove(this.homePage);
         location.href = this.loginPath;
     }
 
@@ -103,17 +101,6 @@ export class SecurityManager {
         } catch (_) {
             return null;
         }
-    }
-
-    /**
-     * 暂存首页地址
-     */
-    saveHomepage(path: string) {
-        storage.session.save(this.homePage, path);
-    }
-
-    getHomePage() {
-        return storage.session.get(this.homePage) || "/";
     }
 
     getCsrfToken() {
