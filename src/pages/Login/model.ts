@@ -14,7 +14,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
     },
 
     effects: {
-        *login({ payload, remember }, { call, change }) {
+        *login({ payload, remember }, { call, change, language }) {
             loading.run();
             const token: LOGIN.tokenType = yield call(loginService.getToken());
 
@@ -34,19 +34,19 @@ const LoginModel: modelType<LOGIN.StateType> = {
 
             const _token: string = yield call(loginService.login(params));
             if (_token) {
-                loginService.message.success("登录成功");
+                loginService.message.success(language("login", "login.success"));
                 security.login({ ...payload, requestId, _token }, remember);
                 yield change({ isLogin: true });
             }
             loading.stop();
         },
 
-        *logout(_, { call }) {
-            const response = yield call(loginService.logout());
+        *logout(_, {}) {
+            // const response = yield call(loginService.logout());
 
-            if (response) {
-                security.unauthorized();
-            }
+            // if (response) {
+            security.unauthorized();
+            // }
         },
 
         /**

@@ -23,5 +23,21 @@
     "user.edit.success": "更新用户【${username}】信息成功",
     "user.create.success": "用户【${username}】创建成功",
 
+    "role.name": "角色名",
+    "role.createTime": "创建时间",
+    "role.updateTime": "更新时间",
+    "role.edit": "编辑",
+    "role.edit.title": "编辑角色",
+    "role.edit.success": "角色【${roleName}】权限已更新",
+    "role.delete": "删除",
+    "role.delete.confirm": "确认要删除角色【${roleName}】?",
+    "role.delete.success": "角色【${roleName}】已删除",
+    "role.placeholder.roleName": "请输入角色名称",
+    "role.create": "+添加角色",
+    "role.create.title": "创建角色",
+    "role.create.success": "角色【${roleName}】创建成功",
+    "role.form.name.label": "角色名称",
+    "role.form.permission.label": "权限管理",
+
     "operation": "操作"
 }

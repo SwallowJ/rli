@@ -3,6 +3,7 @@ import { RoleInfo } from "./role";
 import React, { useState } from "react";
 import { DataNode } from "antd/lib/tree";
 import { Button, Modal } from "@/component";
+import langservice from "@/common/core/language";
 import actions from "@/pages/Setting/role/actions";
 
 interface createProps {
@@ -13,6 +14,7 @@ interface createProps {
 export const CreateRole: React.FC<createProps> = ({ permTree, updata }) => {
     const [form] = Form.useForm();
     const [visible, setVisible] = useState(false);
+    const [lang] = langservice.useLanguage("system");
 
     const onVisible = () => {
         setVisible(true);
@@ -45,15 +47,14 @@ export const CreateRole: React.FC<createProps> = ({ permTree, updata }) => {
     return (
         <>
             <Button type={"primary"} onClick={onVisible}>
-                {"+添加角色"}
+                {lang("role.create")}
             </Button>
             <Modal
-                okText={"创建"}
-                visible={visible}
-                title={"创建角色"}
-                maskClosable={false}
-                onCancel={onCancel}
                 onOk={handleOK}
+                visible={visible}
+                onCancel={onCancel}
+                maskClosable={false}
+                title={lang("role.create.title")}
             >
                 <RoleInfo form={form} permTree={permTree} />
             </Modal>

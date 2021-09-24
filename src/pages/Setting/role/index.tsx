@@ -3,42 +3,47 @@ import { connect } from "react-redux";
 import { TableColumnType } from "antd";
 import Config from "@/common/core/config";
 import Container from "@/component/Container";
+import langservice from "@/common/core/language";
 import { CreateRole, EditRole } from "./component";
 import { Table, Input, Divider, Modal } from "@/component";
 import actions, { namespace } from "@/pages/Setting/role/actions";
-import React, { useEffect, useMemo, useRef, useState, MouseEvent } from "react";
+import React, { useEffect, useMemo, useState, MouseEvent } from "react";
 
 interface roleProps extends ROLE.StateType {}
 
 const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
     const [searchKey, setSearchKey] = useState("");
+    const [lang, langT] = langservice.useLanguage("system");
 
     const permTree = useMemo(() => actions.parsePermTree(perms), [perms]);
-    const columns = useRef<TableColumnType<ROLE.entity>[]>([
-        { title: "角色名", dataIndex: "roleDesc" },
-        { title: "创建时间", dataIndex: "createdDate" },
-        { title: "更新时间", dataIndex: "updatedDate" },
-        {
-            title: "操作",
-            key: "operation",
-            render: (_, record) => (
-                <div className={styles.opration}>
-                    <a onClick={edit.bind(null, record)}>{"编辑"}</a>
-                    <Divider height={13} />
-                    <a onClick={del.bind(null, record)}>{"删除"}</a>
-                </div>
-            ),
-        },
-    ]);
+    const columns = useMemo<TableColumnType<ROLE.entity>[]>(
+        () => [
+            { title: lang("role.name"), dataIndex: "roleDesc" },
+            { title: lang("role.createTime"), dataIndex: "createdDate" },
+            { title: lang("role.updateTime"), dataIndex: "updatedDate" },
+            {
+                title: lang("operation"),
+                key: "operation",
+                render: (_, record) => (
+                    <div className={styles.opration}>
+                        <a onClick={edit.bind(null, record)}>{lang("role.edit")}</a>
+                        <Divider height={13} />
+                        <a onClick={del.bind(null, record.roleName)}>{lang("role.delete")}</a>
+                    </div>
+                ),
+            },
+        ],
+        [lang]
+    );
 
-    const del = (record: ROLE.entity, e: MouseEvent) => {
+    const del = (roleName: string, e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
         Modal.confirm({
-            title: `确认要删除角色[${record.roleName}]`,
+            title: langT("role.delete.confirm", { roleName: roleName }),
             onOk: () => {
-                actions.deleteRole(record.roleName, list);
+                actions.deleteRole(roleName, list);
             },
         });
     };
@@ -78,21 +83,25 @@ const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
     return (
         <Container className={styles.Role}>
             <Container.Head className={styles.head}>
-                <Input.Search className={styles.search} placeholder={"角色名称"} onSearch={changeKeys} />
+                <Input.Search
+                    onSearch={changeKeys}
+                    className={styles.search}
+                    placeholder={lang("role.placeholder.roleName")}
+                />
                 <CreateRole permTree={permTree} updata={list} />
             </Container.Head>
 
             <Container.Content>
                 <Table.Virtual
                     rowKey={"roleId"}
+                    columns={columns}
                     pagination={false}
                     dataSource={rolelist}
-                    columns={columns.current}
                     scroll={{ y: (Config.screenHeight || 0) - 358 }}
                 />
             </Container.Content>
 
-            <EditRole permTree={permTree} updata={list} />
+            <EditRole permTree={permTree} updata={list} title={lang("role.edit.title")} />
         </Container>
     );
 };

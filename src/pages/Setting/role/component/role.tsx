@@ -3,6 +3,7 @@ import { DataNode } from "antd/lib/tree";
 import { Form, FormInstance } from "antd";
 import Config from "@/common/core/config";
 import { Input, Tree } from "@/component";
+import langservice from "@/common/core/language";
 
 interface roleProps {
     edit?: boolean;
@@ -13,21 +14,22 @@ interface roleProps {
 }
 
 export const RoleInfo: React.FC<roleProps> = ({ permTree, form, edit = false, permissions, roleName }) => {
+    const [lang] = langservice.useLanguage("system");
     return (
         <Form form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 14 }}>
             <Form.Item
-                label={"角色名称"}
                 name={"roleName"}
                 initialValue={roleName}
-                rules={[{ required: true, message: "请输入角色名" }]}
+                rules={[{ required: true }]}
+                label={lang("role.form.name.label")}
             >
-                <Input placeholder={"请输入角色名"} disabled={edit} />
+                <Input placeholder={lang("role.placeholder.roleName")} disabled={edit} />
             </Form.Item>
-            <Form.Item label={"权限管理"} name={"permissions"} initialValue={permissions}>
+            <Form.Item label={lang("role.form.permission.label")} name={"permissions"} initialValue={permissions}>
                 <Tree.Controlled
                     checkable={true}
-                    treeData={permTree}
                     selectable={false}
+                    treeData={permTree}
                     defaultExpandAll={true}
                     height={Config.screenHeight - 500}
                 />

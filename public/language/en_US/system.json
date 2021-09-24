@@ -23,5 +23,21 @@
     "user.edit.success": "Update user [${username}] information successfully",
     "user.create.success": "User [${username}] was successfully created",
 
+    "role.name": "roleName",
+    "role.createTime": "createTime",
+    "role.updateTime": "updateTime",
+    "role.edit": "Edit",
+    "role.edit.title": "Edit Role",
+    "role.edit.success": "Role [${roleName}] permissions have been updated",
+    "role.delete": "Delete",
+    "role.delete.confirm": "Confirm that you want to delete the role [${roleName}]?",
+    "role.delete.success": "Role [${roleName}] deleted successfully",
+    "role.placeholder.roleName": "Please enter the role name",
+    "role.create": "+Add Role",
+    "role.create.title": "Create Role",
+    "role.create.success": "Role [${roleName}] successfully created",
+    "role.form.name.label": "Role Name",
+    "role.form.permission.label": "Perm Management",
+
     "operation": "operation"
 }

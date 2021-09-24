@@ -18,5 +18,7 @@
     "placeholder.username": "please enter user name",
     "placeholder.password": "please enter the password",
 
-    "appFooter": "Technical support: China-ASEAN Information Harbor Co. Ltd."
+    "appFooter": "Technical support: China-ASEAN Information Harbor Co. Ltd.",
+
+    "login.success": "Login Successful"
 }

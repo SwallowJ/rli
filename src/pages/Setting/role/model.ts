@@ -24,33 +24,35 @@ const RoleModel: modelType<ROLE.StateType> = {
             perms && change({ perms });
         },
 
-        *createRole({ payload, callback }, { call }) {
+        *createRole({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.create(payload));
 
             if (response) {
-                service.message.success(`角色【${payload.newRole.roleName}】创建成功`);
+                service.message.success(
+                    languageTemp("system", "role.create.success", { roleName: payload.newRole.roleName })
+                );
                 callback?.();
             }
             loading.stop();
         },
 
-        *deleteRole({ payload, callback }, { call }) {
+        *deleteRole({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.deleteRole(payload));
             if (response) {
-                service.message.success(`角色【${payload.roleName}】已删除`);
+                service.message.success(languageTemp("system", "role.delete.success", payload));
                 callback?.();
             }
             loading.stop();
         },
 
-        *updataPermissions({ payload, callback }, { call }) {
+        *updataPermissions({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.updataPerm(payload));
             if (response) {
                 console.log(response);
-                service.message.success(`角色【${payload.roleName}】已权限已更新`);
+                service.message.success(languageTemp("system", "role.edit.success", payload));
                 callback?.();
             }
             loading.stop();

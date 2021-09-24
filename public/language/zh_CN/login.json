@@ -17,5 +17,7 @@
     "placeholder.username": "请输入用户名",
     "placeholder.password": "请输入密码",
 
-    "appFooter": "技术支持：中国—东盟信息港股份有限公司"
+    "appFooter": "技术支持：中国—东盟信息港股份有限公司",
+
+    "login.success": "登录成功"
 }

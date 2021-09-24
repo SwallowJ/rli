@@ -8,6 +8,7 @@ import React, { useEffect, useMemo } from "react";
 import actions, { namespace } from "@/pages/Setting/role/actions";
 
 interface editProps extends ROLE.StateType {
+    title?: string;
     updata?: Function;
     permTree?: DataNode[];
 }
@@ -20,7 +21,7 @@ const _abandon_perm = [
     "XC_PROJECT_INNER_TASK_SET",
 ];
 
-const editRoleComponent: React.FC<editProps> = ({ updata, permTree, editRole }) => {
+const editRoleComponent: React.FC<editProps> = ({ updata, permTree, editRole, title }) => {
     const [form] = Form.useForm();
 
     const onCancel = () => {
@@ -55,13 +56,7 @@ const editRoleComponent: React.FC<editProps> = ({ updata, permTree, editRole }) 
     }, [editRole]);
 
     return (
-        <Modal
-            okText={"保存"}
-            onOk={handleOk}
-            title={"编辑角色"}
-            onCancel={onCancel}
-            visible={Boolean(editRole?.roleName)}
-        >
+        <Modal onOk={handleOk} onCancel={onCancel} title={title} visible={Boolean(editRole?.roleName)}>
             <RoleInfo
                 form={form}
                 edit={true}
