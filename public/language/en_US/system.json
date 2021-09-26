@@ -39,5 +39,40 @@
     "role.form.name.label": "Role Name",
     "role.form.permission.label": "Perm Management",
 
+    "log.placeholder.search": "Please enter the username",
+    "log.download": "Download log",
+    "log.userName": "Operator",
+    "log.type": "Operation type",
+    "log.obj": "Operation target",
+    "log.origin": "Before the change",
+    "log.target": "After the change",
+    "log.eventTime": "Operating time",
+    "log.detail": "Details",
+
+    "log.operation": {
+        "title": "Details",
+        "user": "User",
+        "name": "Name",
+        "type": "Type",
+        "time": "Time",
+        "target": "Target",
+
+        "before": "Before",
+        "after": "After",
+
+        "comments": "Comments",
+        "project": "project name",
+        "corp": "Corporation",
+        "projectType": "Project type",
+        "province": "Province",
+        "desc": "Describtion",
+        "username": "User Name",
+        "phone": "Phone Number",
+        "email": "Email",
+        "role": "Role",
+        "rolename": "Role Name",
+        "permission": "Permission"
+    },
+
     "operation": "operation"
 }

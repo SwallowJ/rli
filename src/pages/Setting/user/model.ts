@@ -31,7 +31,7 @@ const UserModel: modelType<USER.StateType> = {
             const response = yield call(service.changePassword(payload));
             if (response) {
                 callback?.();
-                service.message.success(languageTemp("system", "user.changePassword.success", payload));
+                service.message.success(languageTemp("system", payload, "user.changePassword.success"));
             }
             loading.stop();
         },
@@ -48,7 +48,7 @@ const UserModel: modelType<USER.StateType> = {
             const response = yield call(service.updata(payload));
             if (response) {
                 callback?.();
-                service.message.success(languageTemp("system", "user.edit.success", payload));
+                service.message.success(languageTemp("system", payload, "user.edit.success"));
             }
             loading.stop();
         },
@@ -58,7 +58,7 @@ const UserModel: modelType<USER.StateType> = {
             const response = yield call(service.create(payload));
             if (response) {
                 callback?.();
-                service.message.success(languageTemp("system", "user.create.success", payload));
+                service.message.success(languageTemp("system", payload, "user.create.success"));
             }
             loading.stop();
         },

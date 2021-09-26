@@ -96,17 +96,17 @@ declare namespace Global {
          * 语言类型
          */
         interface code {
-            [key: string]: string;
+            [key: string]: string | code;
         }
 
-        type langType = code | undefined | null;
+        type langType = code | undefined;
 
         /**
          * 语言包映射函数
          */
-        type langFunc = (key?: string) => string;
+        type langFunc = (...keys: (string | undefined)[]) => string;
 
-        type langTempFunc = (key?: string, obj?: Global.obj) => string;
+        type langTempFunc = (obj: Global.obj, ...keys: (string | undefined)[]) => string;
     }
 
     interface optionType {

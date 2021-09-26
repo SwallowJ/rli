@@ -98,7 +98,7 @@ export default RouterApi([
                         path: "/log",
                         name: "menu.log",
                         component: "@/pages/Setting/log",
-                        data: { permission: ["XC_APP_LOG"] },
+                        data: { permission: ["XC_APP_LOG_MANAGE"] },
                     },
                     {
                         path: "/system",

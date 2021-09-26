@@ -39,5 +39,40 @@
     "role.form.name.label": "角色名称",
     "role.form.permission.label": "权限管理",
 
+    "log.placeholder.search": "请输入操作用户名",
+    "log.download": "下载日志",
+    "log.userName": "操作人",
+    "log.type": "操作类型",
+    "log.obj": "操作对象",
+    "log.origin": "变更前",
+    "log.target": "变更后",
+    "log.eventTime": "操作时间",
+    "log.detail": "详情",
+
+    "log.operation": {
+        "title": "详情",
+        "user": "操作者用户",
+        "name": "操作者姓名",
+        "type": "操作类型",
+        "time": "操作时间",
+        "target": "操作对象",
+
+        "before": "变更前",
+        "after": "变更后",
+
+        "comments": "评论内容",
+        "project": "项目名称",
+        "corp": "单位",
+        "projectType": "项目类型",
+        "province": "所在省份",
+        "desc": "描述",
+        "username": "用户名",
+        "phone": "手机号码",
+        "email": "邮箱",
+        "role": "角色",
+        "rolename": "角色名",
+        "permission": "权限"
+    },
+
     "operation": "操作"
 }

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./style.less";
 import { Virtual } from "./virtual";
 import { Pagination } from "@/component";
-import { Table, TableProps } from "antd";
+import { Table, TableProps, TableColumnType } from "antd";
 import { VirtualList } from "./virtualList";
 
 interface tableProps<RecordType> extends TableProps<RecordType> {

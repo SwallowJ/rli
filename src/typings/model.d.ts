@@ -28,8 +28,12 @@ interface EffectsCommandMap<S> {
      */
     call<T = any>(p: Promise<T>): void;
 
-    language: (name: keyof Global.LANGUAGE.StateType, key: string) => string;
-    languageTemp: (name: keyof Global.LANGUAGE.StateType, key: string, obj: Global.obj = {}) => string;
+    language: (name: keyof Global.LANGUAGE.StateType, ...keys: string[]) => string | undefined;
+    languageTemp: (
+        name: keyof Global.LANGUAGE.StateType,
+        obj: Global.obj = {},
+        ...keys: string[]
+    ) => string | undefined;
 }
 
 export interface modelType<S = any> {

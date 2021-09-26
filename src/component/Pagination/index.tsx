@@ -9,7 +9,7 @@ function pagination(props: PaginationProps) {
 }
 
 pagination.config = (page?: Global.pageType, onChange?: changFunc): PaginationProps => {
-    const [_, lang] = langservice.useLanguage("component");
+    const [_, langT] = langservice.useLanguage("component");
 
     return {
         total: page?.total,
@@ -18,7 +18,7 @@ pagination.config = (page?: Global.pageType, onChange?: changFunc): PaginationPr
         current: page?.pageNum,
         onShowSizeChange: onChange,
         pageSizeOptions: ["10", "20", "50", "100"],
-        showTotal: (total, range) => lang("pagination.showTotal", { start: range[0], end: range[1], total }),
+        showTotal: (total, range) => langT({ start: range[0], end: range[1], total }, "pagination.showTotal"),
     };
 };
 

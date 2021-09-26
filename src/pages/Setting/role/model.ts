@@ -30,7 +30,7 @@ const RoleModel: modelType<ROLE.StateType> = {
 
             if (response) {
                 service.message.success(
-                    languageTemp("system", "role.create.success", { roleName: payload.newRole.roleName })
+                    languageTemp("system", { roleName: payload.newRole.roleName }, "role.create.success")
                 );
                 callback?.();
             }
@@ -41,7 +41,7 @@ const RoleModel: modelType<ROLE.StateType> = {
             loading.run();
             const response = yield call(service.deleteRole(payload));
             if (response) {
-                service.message.success(languageTemp("system", "role.delete.success", payload));
+                service.message.success(languageTemp("system", payload, "role.delete.success"));
                 callback?.();
             }
             loading.stop();
@@ -52,7 +52,7 @@ const RoleModel: modelType<ROLE.StateType> = {
             const response = yield call(service.updataPerm(payload));
             if (response) {
                 console.log(response);
-                service.message.success(languageTemp("system", "role.edit.success", payload));
+                service.message.success(languageTemp("system", payload, "role.edit.success"));
                 callback?.();
             }
             loading.stop();

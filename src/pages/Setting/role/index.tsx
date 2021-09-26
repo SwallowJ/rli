@@ -41,7 +41,7 @@ const role: React.FC<roleProps> = ({ rolelist, perms = [] }) => {
         e.stopPropagation();
 
         Modal.confirm({
-            title: langT("role.delete.confirm", { roleName: roleName }),
+            title: langT({ roleName: roleName }, "role.delete.confirm"),
             onOk: () => {
                 actions.deleteRole(roleName, list);
             },
