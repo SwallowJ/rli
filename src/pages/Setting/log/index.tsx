@@ -3,9 +3,10 @@ import styles from "./style.less";
 import { connect } from "react-redux";
 import { TableColumnType } from "antd";
 import { DetailLog } from "./component";
-import Container from "@/component/Container";
 import { detailArr } from "./component/data";
+import Container from "@/component/Container";
 import actions, { namespace } from "./actions";
+import fileService from "@/service/fileService";
 import langservice from "@/common/core/language";
 import { DownloadOutlined } from "@ant-design/icons";
 import React, { useEffect, useMemo, useState } from "react";
@@ -67,6 +68,10 @@ const log: React.FC<logProps> = ({ page, logs }) => {
         actions.changeState({ detailInfo: { ...record, obj: detail } });
     };
 
+    const download = () => {
+        fileService.worker();
+    };
+
     useEffect(() => {
         list();
     }, [searchKey, timeRange]);
@@ -80,7 +85,7 @@ const log: React.FC<logProps> = ({ page, logs }) => {
                     className={styles.search}
                     placeholder={lang("log.placeholder.search")}
                 />
-                <Button icon={<DownloadOutlined />} className={styles.downloadBtn}>
+                <Button icon={<DownloadOutlined />} className={styles.downloadBtn} onClick={download}>
                     {lang("log.download")}
                 </Button>
             </Container.Head>

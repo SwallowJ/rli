@@ -125,6 +125,7 @@ export default RouterApi([
     },
     {
         path: "/",
+        exact: true,
         redirect: "/login",
     },
 ]);

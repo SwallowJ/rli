@@ -7,7 +7,7 @@ class LoginService extends ReqService {
      * 登录
      */
     login(params: LOGIN.loginParams) {
-        return this.post<string>("/xc/login", { params, headers: { [security.csrfToken]: params.requestId ?? "" } });
+        return this.post<string>("/xc/login", { params, headers: { "X-CSRF-TOKEN": params.requestId ?? "" } });
     }
 
     /**

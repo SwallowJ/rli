@@ -34,9 +34,8 @@ const RouterRegister: React.FC<registerProps> = ({ routers }) => {
                         </Route>
                     );
                 } else if (r.redirect) {
-                    return <Redirect key={r.path} to={r.redirect || "/"} />;
+                    return <Redirect key={r.path} to={r.redirect || "/"} exact={r.exact} />;
                 }
-
                 return (
                     <Route path={r.path} key={r.path}>
                         <RouterRegister routers={r.routers} />

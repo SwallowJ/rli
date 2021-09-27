@@ -34,10 +34,7 @@ export class ReqService extends RequestManagement {
         return this.request<T>(
             method,
             url,
-            {
-                ...init,
-                headers: { TOKEN: security.getToken(), "X-CSRF-TOKEN": security.getCsrfToken(), ...init.headers },
-            },
+            { ...init, headers: { TOKEN: security.getToken(), ...init.headers } },
             options
         );
     }

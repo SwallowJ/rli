@@ -101,6 +101,10 @@ export const loadRouter = () => {
                             parseData(value, t + 1);
                             writeStream?.write("\n");
                             return;
+
+                        case "exact":
+                            writeStream?.write(`${t2}${key}: ${value},\n`);
+                            return;
                         case "path":
                             writeStream?.write(
                                 `${t2}${key}: "${
@@ -110,6 +114,7 @@ export const loadRouter = () => {
                                 }",\n`
                             );
                             return;
+
                         default:
                             writeStream?.write(`${t2}${key}: "${value}",\n`);
                             return;

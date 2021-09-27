@@ -18,7 +18,6 @@ interface wrapperProps {
 
 export class SecurityManager {
     private token = "TOKEN";
-    csrfToken = "X-CSRF-TOKEN";
     private loginFlag = "isLogin";
     private loginPath = "/login";
     private userInfo = "userInfo";
@@ -42,7 +41,6 @@ export class SecurityManager {
      */
     unauthorized() {
         storage.local.remove(this.token);
-        storage.local.remove(this.csrfToken);
         storage.local.remove(this.loginFlag);
 
         location.href = this.loginPath;
@@ -53,7 +51,6 @@ export class SecurityManager {
      */
     login(params: LOGIN.loginParams, remember?: boolean) {
         storage.local.save(this.loginFlag, true);
-        storage.local.save(this.csrfToken, params.requestId ?? "");
         storage.local.save(this.token, `Bearer ${params._token ?? ""}`);
 
         setTimeout(() => {
@@ -101,10 +98,6 @@ export class SecurityManager {
         } catch (_) {
             return null;
         }
-    }
-
-    getCsrfToken() {
-        return storage.local.get(this.csrfToken) || "";
     }
 
     getToken() {

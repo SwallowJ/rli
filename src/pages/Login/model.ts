@@ -35,7 +35,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
             const _token: string = yield call(loginService.login(params));
             if (_token) {
                 loginService.message.success(language("login", "login.success"));
-                security.login({ ...payload, requestId, _token }, remember);
+                security.login({ ...payload, _token }, remember);
                 yield change({ isLogin: true });
             }
             loading.stop();

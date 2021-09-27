@@ -126,6 +126,8 @@ export declare namespace GlobalConfig {
         data?: dataType;
 
         key?: string;
+
+        exact?: boolean;
     }
 
     interface loadFileProps<T = {}> {

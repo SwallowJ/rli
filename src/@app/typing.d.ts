@@ -37,6 +37,8 @@ declare namespace Aplication {
         data?: Object;
 
         key?: string;
+
+        exact?: boolean;
     }
 
     type routers = router[];
