@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import langservice from "@/common/core/language";
 import { Modal, Item, Table } from "@/component";
 import actions, { namespace } from "@/pages/Setting/log/actions";
-import { commentArr, codeMap, projectArr, userArr, roleArr } from "./data";
+import { commentArr,  projectArr, userArr, roleArr } from "./data";
 
 interface detailProps extends LOG.StateType {}
 
@@ -86,7 +86,7 @@ const detail: React.FC<detailProps> = ({ detailInfo }) => {
             <Item.Wrap style={{ marginBottom: "10px" }}>
                 <Item span={12} value={userDisplayName} labelWidth={__label_width} label={lang("user")} />
                 <Item span={12} labelWidth={__label_width} value={obj?.todoUserDisplayName} label={lang("name")} />
-                <Item span={12} labelWidth={__label_width} value={type ? codeMap[type] : ""} label={lang("type")} />
+                <Item span={12} labelWidth={__label_width} value={type ? lang(type) : ""} label={lang("type")} />
                 <Item label={lang("time")} value={eventTime} labelWidth={__label_width} span={12} />
                 <Item span={12} value={objDisplayName} labelWidth={__label_width} label={lang("target")} />
             </Item.Wrap>

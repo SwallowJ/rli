@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { TableColumnType } from "antd";
 import { DetailLog } from "./component";
 import Container from "@/component/Container";
+import { detailArr } from "./component/data";
 import actions, { namespace } from "./actions";
 import langservice from "@/common/core/language";
 import { DownloadOutlined } from "@ant-design/icons";
-import { codeMap, detailArr } from "./component/data";
 import React, { useEffect, useMemo, useState } from "react";
 import { Table, Input, Button, DatePicker } from "@/component";
 
@@ -21,7 +21,7 @@ const log: React.FC<logProps> = ({ page, logs }) => {
     const columns = useMemo<TableColumnType<LOG.entity>[]>(
         () => [
             { title: lang("log.userName"), dataIndex: "userDisplayName" },
-            { title: lang("log.type"), dataIndex: "type", render: (text: string) => codeMap[text] },
+            { title: lang("log.type"), dataIndex: "type", render: (text: string) => lang("log.operation", text) },
             { title: lang("log.obj"), dataIndex: "objDisplayName" },
             {
                 title: lang("log.origin"),
