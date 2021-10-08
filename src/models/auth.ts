@@ -45,8 +45,7 @@ const AuthModel: modelType<AuthStateType> = {
             }
 
             const router = routers.find((r) => r.key === "menu")?.routers || [];
-
-            const [menus, paths] = parseMenu(router, auth.basePermCategory || []);
+            const [menus, paths] = parseMenu(router, Object.keys(auth.basePermissions).concat(auth.basePermCategory));
             const homePage = paths[0] ?? "/XC/home";
             change({ auth, menus, paths, homePage });
             callback && callback(homePage);

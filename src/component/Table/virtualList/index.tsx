@@ -34,8 +34,6 @@ export const VirtualList: React.FC<tableProps<any>> = (props) => {
                 timeRef.current = undefined;
             }, 500);
         }
-
-        return null;
     }, [load]);
 
     return (

@@ -64,7 +64,8 @@ declare namespace Global {
             /**
              * 权限列表
              */
-            basePermCategory?: string[];
+            basePermCategory: string[];
+            basePermissions: obj<string>;
         }
 
         interface changePwdType extends passwordType {
