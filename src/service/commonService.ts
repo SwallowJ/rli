@@ -7,7 +7,7 @@ class CommonService {
      * 获取语言包
      */
     getlanguagePackage(lang: string, name: string) {
-        return request.get<Global.LANGUAGE.langType>(
+        return request.get<LANGUAGE.langType>(
             `/language/${lang}/${name}.json`,
             {},
             { cache: Config.NODE_ENV === "production", key: `language_${lang}_${name}`, engine: storage.session }

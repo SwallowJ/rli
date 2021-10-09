@@ -68,9 +68,10 @@ const log: React.FC<logProps> = ({ page, logs }) => {
         actions.changeState({ detailInfo: { ...record, obj: detail } });
     };
 
-    const download = () => {
-        fileService.worker();
-    };
+    /**
+     * 下载日志
+     */
+    const download = () => {};
 
     useEffect(() => {
         list();

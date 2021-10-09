@@ -22,21 +22,21 @@ class LanguageManager {
         ["en_US", en_US],
     ]);
 
-    private langMoment = new Map<Global.LANGUAGE.Type, string>([
+    private langMoment = new Map<LANGUAGE.Type, string>([
         ["zh_CN", "zh-cn"],
         ["en_US", "en"],
     ]);
 
-    langlist: Global.LANGUAGE.Type[] = ["zh_CN", "en_US"];
+    langlist: LANGUAGE.Type[] = ["zh_CN", "en_US"];
 
     /**
      * 获取初始语言类型
      */
-    init(): Global.LANGUAGE.Type {
-        return StorageManager.local.get<Global.LANGUAGE.Type>(this.storeName) || "zh_CN";
+    init(): LANGUAGE.Type {
+        return StorageManager.local.get<LANGUAGE.Type>(this.storeName) || "zh_CN";
     }
 
-    save(lang: Global.LANGUAGE.Type) {
+    save(lang: LANGUAGE.Type) {
         StorageManager.local.save(this.storeName, lang);
     }
 
@@ -47,10 +47,10 @@ class LanguageManager {
      * @returns
      */
     useLanguage(
-        name: keyof Global.LANGUAGE.StateType,
+        name: keyof LANGUAGE.StateType,
         ...defaultKeys: string[]
-    ): [Global.LANGUAGE.langFunc, Global.LANGUAGE.langTempFunc, Global.LANGUAGE.langType] {
-        const pack: Global.LANGUAGE.langType = useSelector((states) => states[namespace][name]);
+    ): [LANGUAGE.langFunc, LANGUAGE.langTempFunc, LANGUAGE.langType] {
+        const pack: LANGUAGE.langType = useSelector((states) => states[namespace][name]);
 
         /**
          * 语言包映射函数
@@ -102,12 +102,12 @@ class LanguageManager {
         return result.join("");
     }
 
-    private position(pack: Global.LANGUAGE.langType, keys: (string | undefined)[]): string | undefined {
+    private position(pack: LANGUAGE.langType, keys: (string | undefined)[]): string | undefined {
         if (!keys.length) {
             return;
         }
         const de = keys.join("-");
-        let words: Global.LANGUAGE.langType | string = pack;
+        let words: LANGUAGE.langType | string = pack;
 
         for (const key of keys) {
             if (!key) {
@@ -126,7 +126,7 @@ class LanguageManager {
         return words;
     }
 
-    uselocal(lang?: Global.LANGUAGE.Type) {
+    uselocal(lang?: LANGUAGE.Type) {
         const local = useMemo(() => this.langMap.get(lang ?? ""), [lang]);
 
         useEffect(() => {
@@ -142,12 +142,12 @@ class LanguageManager {
     /**
      * 获取语言包函数
      */
-    getLangAsync(name: keyof Global.LANGUAGE.StateType, ...keys: string[]) {
+    getLangAsync(name: keyof LANGUAGE.StateType, ...keys: string[]) {
         const pack = store.getState()["language"][name];
         return this.position(pack, keys) ?? keys.join("-");
     }
 
-    getLangAsyncTemp(name: keyof Global.LANGUAGE.StateType, obj: Global.obj = {}, ...keys: string[]) {
+    getLangAsyncTemp(name: keyof LANGUAGE.StateType, obj: Global.obj = {}, ...keys: string[]) {
         const pack = store.getState()["language"][name];
         const str = this.position(pack, keys);
         if (!str) {

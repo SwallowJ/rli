@@ -16,7 +16,7 @@ const _KEY = "POCKBALL";
 
 interface pockBallProps {
     dispatch: Dispatch;
-    lang?: Global.LANGUAGE.Type;
+    lang?: LANGUAGE.Type;
 }
 
 export const pockBall: React.FC<pockBallProps> = ({ lang = "zh_CN", dispatch }) => {
@@ -50,7 +50,7 @@ export const pockBall: React.FC<pockBallProps> = ({ lang = "zh_CN", dispatch }) 
         visible || setConfigVisible(visible);
     };
 
-    const changeLanguage = (l: Global.LANGUAGE.Type) => {
+    const changeLanguage = (l: LANGUAGE.Type) => {
         dispatch({ type: `${namespace}/changeLanguage`, lang: l });
     };
 
@@ -89,6 +89,6 @@ export const pockBall: React.FC<pockBallProps> = ({ lang = "zh_CN", dispatch }) 
     );
 };
 
-export const PockBall = connect(({ [namespace]: { lang } }: { [namespace]: Global.LANGUAGE.StateType }) => ({ lang }))(
+export const PockBall = connect(({ [namespace]: { lang } }: { [namespace]: LANGUAGE.StateType }) => ({ lang }))(
     pockBall
 );

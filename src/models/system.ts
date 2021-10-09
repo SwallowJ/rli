@@ -5,7 +5,7 @@ import LanguageManager from "@/common/core/language";
 
 export const namespace = "language";
 
-const LanguageModel: modelType<LANGUAGE.StateType> = {
+const SystemModel: modelType<LANGUAGE.StateType> = {
     namespace,
 
     state: {
@@ -36,4 +36,4 @@ const LanguageModel: modelType<LANGUAGE.StateType> = {
     reducers: {},
 };
 
-export default LanguageModel;
+export default SystemModel;

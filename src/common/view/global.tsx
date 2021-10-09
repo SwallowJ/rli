@@ -15,7 +15,7 @@ import { PockBall } from "./component/pockball";
 import langservice from "@/common/core/language";
 import React, { ReactNode, useEffect } from "react";
 
-interface globalProps extends Global.LANGUAGE.StateType {
+interface globalProps extends LANGUAGE.StateType {
     children: ReactNode;
     dispatch: Dispatch;
 }
@@ -28,7 +28,7 @@ const global: React.FC<globalProps> = ({ children, lang, dispatch }) => {
     /**
      * 加载语言包(json文件)
      */
-    const loadLanguagePackage = (name: keyof Global.LANGUAGE.StateType) => {
+    const loadLanguagePackage = (name: keyof LANGUAGE.StateType) => {
         dispatch({ type: "language/getPack", name });
     };
 
@@ -52,4 +52,4 @@ const global: React.FC<globalProps> = ({ children, lang, dispatch }) => {
     );
 };
 
-export default connect(({ language: { lang } }: { language: Global.LANGUAGE.StateType }) => ({ lang }))(global);
+export default connect(({ language: { lang } }: { language: LANGUAGE.StateType }) => ({ lang }))(global);
