@@ -5,8 +5,8 @@
  * Desc       actions 模板
  */
 
-import { Actions } from "@/common/reducer/actions";
 import timeutils from "@/utils/time";
+import { Actions } from "@/common/reducer/actions";
 
 export const namespace = "LOG";
 

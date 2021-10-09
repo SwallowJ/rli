@@ -1,35 +1,25 @@
 import { message } from "antd";
+import timeUtils from "@/utils/time";
+import { namespace } from "@/actions/system";
 import { modelType, Gen } from "@/typings/model";
-import commonService from "@/service/commonService";
+import fileService from "@/service/fileService";
 import LanguageManager from "@/common/core/language";
 
-export const namespace = "language";
-
-const SystemModel: modelType<LANGUAGE.StateType> = {
+const SystemModel: modelType<SYSTEM.StateType> = {
     namespace,
 
     state: {
-        lang: LanguageManager.init(),
-        login: {},
-        layout: {},
+        files: [],
     },
 
     effects: {
-        *getPack({ name }, { call, select, change }): Gen<LANGUAGE.langType> {
-            const { lang = "" } = select();
-            const response = yield call(commonService.getlanguagePackage(lang, name));
+        *download({ payload, callbacks, key }, { change, select }) {
+            const funcs: SYSTEM.fileCallback = callbacks;
+            funcs?.before?.();
+            const status: SYSTEM.fileStatus = { key, type: 1, createTime: timeUtils.now() };
+            change({ files: [status, ...(select().files || [])] });
 
-            if (!response) {
-                message.error(`语言包 ${lang}/${name}.json 不存在`);
-                return;
-            }
-
-            yield change({ [name]: response });
-        },
-
-        *changeLanguage({ lang }, { change }) {
-            LanguageManager.save(lang);
-            change({ lang });
+            console.log(status);
         },
     },
 

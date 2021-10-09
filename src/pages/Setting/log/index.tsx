@@ -1,8 +1,10 @@
 import moment from "moment";
 import styles from "./style.less";
+import timeutils from "@/utils/time";
 import { connect } from "react-redux";
 import { TableColumnType } from "antd";
 import { DetailLog } from "./component";
+import sysActions from "@/actions/system";
 import { detailArr } from "./component/data";
 import Container from "@/component/Container";
 import actions, { namespace } from "./actions";
@@ -71,7 +73,14 @@ const log: React.FC<logProps> = ({ page, logs }) => {
     /**
      * 下载日志
      */
-    const download = () => {};
+    const download = () => {
+        const begin = timeRange?.[0] ? timeutils.format(timeRange[0], "YYYY-MM-DD 00:00:00") : null;
+        const end = timeRange?.[1] ? timeutils.format(timeRange[1], "YYYY-MM-DD 23:59:59") : null;
+
+        sysActions.downloadFile("/api/xc/archive/log", "下载日志", {
+            params: { begin, end, usernameOrDisplayName: searchKey },
+        });
+    };
 
     useEffect(() => {
         list();

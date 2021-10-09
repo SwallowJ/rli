@@ -8,6 +8,8 @@
 
 @default-border-color: #d9d9d9;
 
+@default-light-bg: #ffffff;
+
 /*######################################## 文字样式 ################################*/
 @font-size-title: 22px;
 @font-size-subTitle: 18px;
@@ -274,4 +276,39 @@
     .rc-virtual-list-scrollbar-thumb {
         .scrollbar-thumb();
     }
+}
+
+/*######################################## system ################################*/
+@system-file-upload-color: #f5222d;
+@system-file-upload-bg: #ff787533;
+
+@system-file-download-color: #1890ff;
+@system-file-download-bg: #69c0ff33;
+@system-file-time-color: #389e0d;
+
+.xc-file-wrap {
+    background-color: @default-light-bg;
+}
+
+.xc-file-upload {
+    color: @system-file-upload-color;
+    background-color: @system-file-upload-bg;
+    border-bottom: 1px solid @default-border-color;
+
+    .wave {
+        background: linear-gradient(to right, #ff787533, #f5222d66);
+    }
+}
+
+.xc-file-download {
+    color: @system-file-download-color;
+    background-color: @system-file-download-bg;
+    border-bottom: 1px solid @default-border-color;
+    .wave {
+        background: linear-gradient(to right, #69c0ff33, #1890ff66);
+    }
+}
+
+.xc-file-time {
+    color: @system-file-time-color;
 }

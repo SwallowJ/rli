@@ -8,6 +8,7 @@ import avatar from "@/assert/header/user@2x.png";
 import langservice from "@/common/core/language";
 import logoImg from "@/assert/header/logo_white@2x.png";
 import { namespace, AuthStateType } from "@/models/auth";
+import { FileStatus } from "@/layout/component/filestatus";
 import React, { useEffect, useMemo, useState } from "react";
 import { ChangePassword } from "@/layout/component/changePassword";
 
@@ -102,6 +103,8 @@ const head: React.FC<headProps> = ({ auth, homePage = "/", menus, location }) =>
                         <a>{auth?.userDisplayName}</a>
                     </div>
                 </Dropdown>
+
+                <FileStatus />
             </div>
         </div>
     );

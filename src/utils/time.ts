@@ -9,6 +9,12 @@ import moment from "moment";
 
 class TimeUtils {
     /**
+     * 当前时间
+     */
+    now(format = "YYYY-MM-DD HH:mm:ss") {
+        return moment().format(format);
+    }
+    /**
      * 判断两个时间是否相等
      */
     equal(t1: TIME.timeType, t2: TIME.timeType) {
