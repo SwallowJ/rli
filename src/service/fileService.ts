@@ -1,4 +1,4 @@
-import { ReqService } from "@/common/request/service";
+import request from "@/common/request/service";
 
 interface messsageType {
     type: string;
@@ -6,12 +6,12 @@ interface messsageType {
     value: Global.obj;
 }
 
-class FileService extends ReqService {
+class FileService {
     /**
      * 文件上传
      */
     upload(url: string, init?: REQUEST.reqInit) {
-        return this.post(url, init);
+        return request.post(url, init);
     }
 
     private workerCode() {

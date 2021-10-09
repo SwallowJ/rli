@@ -1,13 +1,13 @@
 import Config from "@/common/core/config";
 import storage from "@/common/core/storage";
-import { ReqService } from "@/common/request/service";
+import request from "@/common/request/service";
 
-class CommonService extends ReqService {
+class CommonService {
     /**
      * 获取语言包
      */
     getlanguagePackage(lang: string, name: string) {
-        return this.get<Global.LANGUAGE.langType>(
+        return request.get<Global.LANGUAGE.langType>(
             `/language/${lang}/${name}.json`,
             {},
             { cache: Config.NODE_ENV === "production", key: `language_${lang}_${name}`, engine: storage.session }
@@ -18,14 +18,14 @@ class CommonService extends ReqService {
      * 获取用户信息
      */
     getAuthInfo() {
-        return this.get<Global.AUTH.entity>(`/api/xc/self`);
+        return request.get<Global.AUTH.entity>(`/api/xc/self`);
     }
 
     /**
      * 修改密码
      */
     changePassword(data: Global.AUTH.changePwdType) {
-        return this.post("/api/xc/self/password", { data });
+        return request.post("/api/xc/self/password", { data });
     }
 }
 

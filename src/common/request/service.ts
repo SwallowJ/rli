@@ -39,19 +39,19 @@ export class ReqService extends RequestManagement {
         );
     }
 
-    protected get<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+    get<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
         return this.extends<T>("GET", url, init, options);
     }
 
-    protected post<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+    post<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
         return this.extends<T>("POST", url, init, options);
     }
 
-    protected put<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+    put<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
         return this.extends<T>("PUT", url, init, options);
     }
 
-    protected delete<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
+    delete<T = any>(url: string, init?: REQUEST.reqInit, options?: REQUEST.reqOptions) {
         return this.extends<T>("DELETE", url, init, options);
     }
 }

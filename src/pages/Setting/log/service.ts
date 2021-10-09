@@ -5,14 +5,14 @@
  * Desc       service 模板
  */
 
-import { ReqService } from "@/common/request/service";
+import request from "@/common/request/service";
 
-class LogService extends ReqService {
+class LogService {
     /**
      * 获取操作日志
      */
     list(params: LOG.PARAMS.list) {
-        return this.get<Global.Result<LOG.entity[]>>("/api/xc/log/new", { params }, { successResAll: true });
+        return request.get<Global.Result<LOG.entity[]>>("/api/xc/log/new", { params }, { successResAll: true });
     }
 }
 

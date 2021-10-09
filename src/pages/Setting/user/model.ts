@@ -5,6 +5,7 @@
  * Desc       model 模板
  */
 
+import { message } from "antd";
 import service from "./service";
 import { namespace } from "./actions";
 import loading from "@/component/Loading";
@@ -31,7 +32,7 @@ const UserModel: modelType<USER.StateType> = {
             const response = yield call(service.changePassword(payload));
             if (response) {
                 callback?.();
-                service.message.success(languageTemp("system", payload, "user.changePassword.success"));
+                message.success(languageTemp("system", payload, "user.changePassword.success"));
             }
             loading.stop();
         },
@@ -48,7 +49,7 @@ const UserModel: modelType<USER.StateType> = {
             const response = yield call(service.updata(payload));
             if (response) {
                 callback?.();
-                service.message.success(languageTemp("system", payload, "user.edit.success"));
+                message.success(languageTemp("system", payload, "user.edit.success"));
             }
             loading.stop();
         },
@@ -58,7 +59,7 @@ const UserModel: modelType<USER.StateType> = {
             const response = yield call(service.create(payload));
             if (response) {
                 callback?.();
-                service.message.success(languageTemp("system", payload, "user.create.success"));
+                message.success(languageTemp("system", payload, "user.create.success"));
             }
             loading.stop();
         },

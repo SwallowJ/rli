@@ -1,4 +1,5 @@
 import service from "./service";
+import { message } from "antd";
 import { namespace } from "./actions";
 import loading from "@/component/Loading";
 import { modelType, resultType } from "@/typings/model";
@@ -27,11 +28,8 @@ const RoleModel: modelType<ROLE.StateType> = {
         *createRole({ payload, callback }, { call, languageTemp }) {
             loading.run();
             const response = yield call(service.create(payload));
-
             if (response) {
-                service.message.success(
-                    languageTemp("system", { roleName: payload.newRole.roleName }, "role.create.success")
-                );
+                message.success(languageTemp("system", { roleName: payload.newRole.roleName }, "role.create.success"));
                 callback?.();
             }
             loading.stop();
@@ -41,7 +39,7 @@ const RoleModel: modelType<ROLE.StateType> = {
             loading.run();
             const response = yield call(service.deleteRole(payload));
             if (response) {
-                service.message.success(languageTemp("system", payload, "role.delete.success"));
+                message.success(languageTemp("system", payload, "role.delete.success"));
                 callback?.();
             }
             loading.stop();
@@ -51,8 +49,7 @@ const RoleModel: modelType<ROLE.StateType> = {
             loading.run();
             const response = yield call(service.updataPerm(payload));
             if (response) {
-                console.log(response);
-                service.message.success(languageTemp("system", payload, "role.edit.success"));
+                message.success(languageTemp("system", payload, "role.edit.success"));
                 callback?.();
             }
             loading.stop();

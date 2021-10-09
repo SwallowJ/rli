@@ -1,3 +1,4 @@
+import { message } from "antd";
 import loginService from "./service";
 import { namespace } from "./actions";
 import loading from "@/component/Loading";
@@ -26,7 +27,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
             const [encodePassword, err] = WASM_CRYPTO_enAES(payload.password, requestId);
 
             if (err) {
-                loginService.message.error(err);
+                message.error(err);
                 return;
             }
 
@@ -34,7 +35,7 @@ const LoginModel: modelType<LOGIN.StateType> = {
 
             const _token: string = yield call(loginService.login(params));
             if (_token) {
-                loginService.message.success(language("login", "login.success"));
+                message.success(language("login", "login.success"));
                 security.login({ ...payload, _token }, remember);
                 yield change({ isLogin: true });
             }

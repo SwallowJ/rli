@@ -3,7 +3,6 @@ import routers from "@/@temp/router";
 import loading from "@/component/Loading";
 import { parseMenu } from "@/utils/utils";
 import { modelType } from "@/typings/model";
-import security from "@/common/core/security";
 import commonService from "@/service/commonService";
 
 export const namespace = "AUTH";
