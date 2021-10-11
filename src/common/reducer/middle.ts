@@ -54,7 +54,7 @@ export const effectMiddleware: Middleware = ({ getState }) => (next) => (action:
         /**
          * 获取当前State
          */
-        const select = () => getState()[namespace];
+        const select = (name = namespace) => getState()[name];
 
         /**
          * effect 生成器

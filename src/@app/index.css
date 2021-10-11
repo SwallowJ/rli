@@ -9,5 +9,7 @@ body {
 
 #root {
     flex: 1;
-    overflow: hidden;
+    min-width: 1300px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }

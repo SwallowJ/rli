@@ -14,7 +14,7 @@ interface EffectsCommandMap<S> {
     /**
      * 获取 State属性
      */
-    select(): S;
+    select<T = S>(): T;
 
     /**
      * 调用reducer

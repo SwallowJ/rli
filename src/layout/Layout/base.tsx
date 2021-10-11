@@ -1,9 +1,10 @@
 import * as H from "history";
 import styles from "./style.less";
 import { connect } from "react-redux";
-import React, { useMemo } from "react";
+import sysActions from "@/actions/system";
 import { BaseHead } from "@/layout/Header";
 import NotFoundPage from "@/common/view/404";
+import React, { useEffect, useMemo } from "react";
 import ErrorBoundary from "@/common/view/errBoundary";
 import { namespace, AuthStateType } from "@/models/auth";
 
@@ -18,6 +19,10 @@ const baseLayout: React.FC<layoutProps> = ({ children, location, menus = [], pat
         pathname,
         menus,
     ]);
+
+    useEffect(() => {
+        menus.length && sysActions.downloadConfirm();
+    }, [menus]);
 
     return (
         <div className={styles.BaseLayout}>

@@ -27,6 +27,13 @@ class CommonService {
     changePassword(data: Global.AUTH.changePwdType) {
         return request.post("/api/xc/self/password", { data });
     }
+
+    /**
+     * 文件下载密码确认
+     */
+    downloadConfirm() {
+        return request.get("/api/xc/setting/downloadConfirm");
+    }
 }
 
 export default new CommonService();

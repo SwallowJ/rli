@@ -21,6 +21,7 @@ export class SecurityManager {
     private loginFlag = "isLogin";
     private loginPath = "/login";
     private userInfo = "userInfo";
+    csrfToken = "X-CSRF-TOKEN";
 
     /**
      * 用户登录权限校验(获取用户信息)
@@ -41,6 +42,7 @@ export class SecurityManager {
      */
     unauthorized() {
         storage.local.remove(this.token);
+        storage.local.remove(this.csrfToken);
         storage.local.remove(this.loginFlag);
 
         location.href = this.loginPath;
@@ -51,6 +53,7 @@ export class SecurityManager {
      */
     login(params: LOGIN.loginParams, remember?: boolean) {
         storage.local.save(this.loginFlag, true);
+        storage.local.save(this.csrfToken, params.requestId ?? "");
         storage.local.save(this.token, `Bearer ${params._token ?? ""}`);
 
         setTimeout(() => {
@@ -102,6 +105,10 @@ export class SecurityManager {
 
     getToken() {
         return storage.local.get(this.token) || "";
+    }
+
+    getCsrfToken() {
+        return storage.local.get(this.csrfToken) || "";
     }
 
     /**

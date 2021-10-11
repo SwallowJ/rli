@@ -25,12 +25,7 @@ export class ReqService extends RequestManagement {
         super({ ...initOptions, ...options });
     }
 
-    private extends<T>(
-        method: REQUEST.MethodType,
-        url: string,
-        init: REQUEST.reqInit = {},
-        options?: REQUEST.reqOptions
-    ) {
+    extends<T>(method: REQUEST.MethodType, url: string, init: REQUEST.reqInit = {}, options?: REQUEST.reqOptions) {
         return this.request<T>(
             method,
             url,

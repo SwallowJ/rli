@@ -183,5 +183,9 @@
         "ASSET_CONSUMER_SIGNED": "Owner sign for receipt"
     },
 
+    "file.download": "File [${filename}] successfully downloaded",
+    "file.download.confirm.title": "Password verification",
+    "file.download.confirm.require": "Please enter the password",
+
     "operation": "operation"
 }

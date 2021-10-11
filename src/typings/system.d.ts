@@ -1,6 +1,7 @@
 declare namespace SYSTEM {
     interface StateType {
         files?: fileStatus[];
+        downloadConfirm?: boolean;
     }
 
     /**

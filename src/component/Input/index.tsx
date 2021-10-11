@@ -27,5 +27,6 @@ const Search: React.FC<serchProps> = (props) => {
 };
 
 input.Search = Search;
+input.Password = Input.Password;
 
 export default input;

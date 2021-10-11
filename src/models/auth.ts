@@ -1,9 +1,9 @@
 import { message } from "antd";
 import routers from "@/@temp/router";
+import service from "@/service/system";
 import loading from "@/component/Loading";
 import { parseMenu } from "@/utils/utils";
 import { modelType } from "@/typings/model";
-import commonService from "@/service/commonService";
 
 export const namespace = "AUTH";
 
@@ -38,7 +38,7 @@ const AuthModel: modelType<AuthStateType> = {
     effects: {
         *getAuthInfo({ callback }, { call, change }) {
             loading.run();
-            const auth: Global.AUTH.entity = yield call(commonService.getAuthInfo());
+            const auth: Global.AUTH.entity = yield call(service.getAuthInfo());
             if (!auth) {
                 return;
             }
@@ -53,7 +53,7 @@ const AuthModel: modelType<AuthStateType> = {
 
         *changePassword({ payload, callback }, { call, language }) {
             loading.run();
-            const response = yield call(commonService.changePassword(payload));
+            const response = yield call(service.changePassword(payload));
 
             if (response) {
                 message.success(language("layout", "changePwd.success"));

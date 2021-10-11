@@ -7,13 +7,15 @@ export class SystemActions extends Actions {
      * 下载文件
      */
     downloadFile(url: string, key: string, options?: REQUEST.reqInit, callbacks?: SYSTEM.fileCallback) {
-        this.callAction("download", { payload: { url, options }, callbacks, key });
+        this.callAction("download", { url, options, callbacks, key });
     }
 
     /**
-     * 创建文件对象
+     * 下载文件是否需要密码校验
      */
-    createFileType() {}
+    downloadConfirm() {
+        this.callAction("downloadConfirm");
+    }
 }
 
 export default new SystemActions(namespace);

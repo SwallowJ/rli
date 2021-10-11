@@ -1,6 +1,6 @@
 import { message } from "antd";
+import service from "@/service/system";
 import { modelType, Gen } from "@/typings/model";
-import commonService from "@/service/commonService";
 import LanguageManager from "@/common/core/language";
 
 export const namespace = "language";
@@ -17,7 +17,7 @@ const LanguageModel: modelType<LANGUAGE.StateType> = {
     effects: {
         *getPack({ name }, { call, select, change }): Gen<LANGUAGE.langType> {
             const { lang = "" } = select();
-            const response = yield call(commonService.getlanguagePackage(lang, name));
+            const response = yield call(service.getlanguagePackage(lang, name));
 
             if (!response) {
                 message.error(`语言包 ${lang}/${name}.json 不存在`);

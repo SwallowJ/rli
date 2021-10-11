@@ -113,3 +113,25 @@ export const isEqual = (opionts: compareProps): boolean => {
 };
 
 export const isNull = (target: any) => target === null || target === undefined;
+
+export class Random {
+    /**
+     * 随机字符串
+     * @param len 字符串长度
+     * @param list 待选字符集x
+     * @returns string
+     */
+    static string(len = 8, list = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") {
+        return Array(len)
+            .fill("")
+            .map((_) => list[Math.round(Math.random() * (list.length - 1))])
+            .join("");
+    }
+
+    /**
+     * 随机颜色
+     */
+    static color() {
+        return `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
+    }
+}

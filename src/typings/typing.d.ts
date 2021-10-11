@@ -91,7 +91,7 @@ declare namespace Global {
      * 通用请求返回类型
      */
     interface resultData<T = any> {
-        code: 0 | 1;
+        code: -1 | 0 | 1;
         data?: T;
         message?: string;
         page?: pageType;

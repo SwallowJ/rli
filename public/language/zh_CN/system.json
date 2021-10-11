@@ -199,5 +199,9 @@
         "ASSET_CONSUMER_SIGNED": "业主签收"
     },
 
+    "file.download": "文件【${filename}】下载成功",
+    "file.download.confirm.title": "密码校验",
+    "file.download.confirm.require": "请输入密码",
+
     "operation": "操作"
 }

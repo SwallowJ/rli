@@ -17,6 +17,7 @@ import { Table, Input, Button, DatePicker } from "@/component";
 interface logProps extends LOG.StateType {}
 
 const log: React.FC<logProps> = ({ page, logs }) => {
+    const [loading, setloading] = useState(false);
     const [searchKey, setSearchKey] = useState("");
     const [lang] = langservice.useLanguage("system");
     const [timeRange, setTimeRange] = useState<TIME.range>([moment().subtract(1, "M"), moment()]);
@@ -77,9 +78,12 @@ const log: React.FC<logProps> = ({ page, logs }) => {
         const begin = timeRange?.[0] ? timeutils.format(timeRange[0], "YYYY-MM-DD 00:00:00") : null;
         const end = timeRange?.[1] ? timeutils.format(timeRange[1], "YYYY-MM-DD 23:59:59") : null;
 
-        sysActions.downloadFile("/api/xc/archive/log", "下载日志", {
-            params: { begin, end, usernameOrDisplayName: searchKey },
-        });
+        sysActions.downloadFile(
+            "/api/xc/archive/log",
+            "下载日志",
+            { params: { begin, end, usernameOrDisplayName: searchKey } },
+            { before: () => setloading(true), finally: () => setloading(false) }
+        );
     };
 
     useEffect(() => {
@@ -95,7 +99,7 @@ const log: React.FC<logProps> = ({ page, logs }) => {
                     className={styles.search}
                     placeholder={lang("log.placeholder.search")}
                 />
-                <Button icon={<DownloadOutlined />} className={styles.downloadBtn} onClick={download}>
+                <Button icon={<DownloadOutlined />} className={styles.downloadBtn} onClick={download} loading={loading}>
                     {lang("log.download")}
                 </Button>
             </Container.Head>
