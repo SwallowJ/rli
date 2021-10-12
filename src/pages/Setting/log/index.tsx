@@ -8,7 +8,6 @@ import sysActions from "@/actions/system";
 import { detailArr } from "./component/data";
 import Container from "@/component/Container";
 import actions, { namespace } from "./actions";
-import fileService from "@/service/fileService";
 import langservice from "@/common/core/language";
 import { DownloadOutlined } from "@ant-design/icons";
 import React, { useEffect, useMemo, useState } from "react";
